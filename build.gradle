@@ -9,12 +9,12 @@ buildscript {
     maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
   }
   dependencies {
-
-
+    classpath "io.freefair.gradle:lombok-plugin:8.10"
   }
 }
 
 allprojects {
+  apply plugin: "io.freefair.lombok"
   apply plugin: 'eclipse'
   apply plugin: 'idea'
 
