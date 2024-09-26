@@ -20,6 +20,12 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void render() {
+        // Main loop goes here
+        // https://gameprogrammingpatterns.com
+        // https://gameprogrammingpatterns.com/game-loop.html
+        // https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
+        // Render happens once per frame, so thank god we don't have to handle the full loop, just the internals
+
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         batch.begin();
         batch.draw(image, 140, 210);
