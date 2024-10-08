@@ -47,7 +47,7 @@ public class Main extends ApplicationAdapter {
 
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         batch.begin();
-        batch.draw(image, player.getPosition().x, player.getPosition().y);
+        gameState.render(batch);
         batch.end();
     }
 

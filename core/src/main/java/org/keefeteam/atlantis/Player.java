@@ -1,6 +1,7 @@
 package org.keefeteam.atlantis;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import lombok.*;
 
@@ -17,7 +18,7 @@ public class Player implements Entity, Renderable {
     @NonNull
     private Texture texture;
 
-    private final int PLAYER_SPEED = 5;
+    private final int PLAYER_SPEED = 300;
 
     @Override
     public void update(GameState gameState, List<InputEvent> events) {
@@ -25,25 +26,25 @@ public class Player implements Entity, Renderable {
         for (InputEvent event : events) {
             switch (event) {
                 case Up:
-                    newPos.y += 5;
+                    newPos.y += 1;
                     break;
                 case Down:
-                    newPos.y -= 5;
+                    newPos.y -= 1;
                     break;
                 case Left:
-                    newPos.x -= 5;
+                    newPos.x -= 1;
                     break;
                 case Right:
-                    newPos.x += 5;
+                    newPos.x += 1;
                     break;
             }
         }
 
-        position = position.add(newPos.nor().scl(PLAYER_SPEED));
+        position = position.add(newPos.nor().scl(PLAYER_SPEED * gameState.getDelta()));
     }
 
     @Override
-    public void render() {
-
+    public void render(SpriteBatch batch) {
+        batch.draw(texture, position.x, position.y);
     }
 }

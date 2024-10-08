@@ -1,6 +1,7 @@
 package org.keefeteam.atlantis;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,14 @@ public class GameState {
 
         for (Entity entity : entities) {
             entity.update(this, events);
+        }
+    }
+
+    public void render(SpriteBatch batch) {
+        for (Entity entity : entities) {
+            if (entity instanceof Renderable renderable) {
+                renderable.render(batch);
+            }
         }
     }
 }
