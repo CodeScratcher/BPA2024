@@ -22,16 +22,17 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void create() {
+        batch = new SpriteBatch();
+        image = new Texture("libgdx.png");
+
         controller = new Controller();
 
-        player = new Player();
+        player = new Player(image);
         entities = new ArrayList<>();
         entities.add(player);
 
         gameState = new GameState(entities);
 
-        batch = new SpriteBatch();
-        image = new Texture("libgdx.png");
     }
 
     @Override
@@ -46,7 +47,7 @@ public class Main extends ApplicationAdapter {
 
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         batch.begin();
-        batch.draw(image, player.x, player.y);
+        batch.draw(image, player.getPosition().x, player.getPosition().y);
         batch.end();
     }
 

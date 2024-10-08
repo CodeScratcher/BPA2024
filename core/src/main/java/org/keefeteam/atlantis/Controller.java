@@ -18,7 +18,7 @@ public class Controller {
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             events.add(InputEvent.Up);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             events.add(InputEvent.Down);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.E)) {
