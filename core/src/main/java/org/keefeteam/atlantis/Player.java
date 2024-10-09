@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import lombok.*;
+import org.keefeteam.atlantis.coordinates.WorldCoordinate;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public class Player implements Entity, Renderable {
     @Getter
     @Setter
-    private Vector2 position = new Vector2(0, 0);
+    private WorldCoordinate position = new WorldCoordinate(new Vector2(0, 0));
 
     @Setter
     @NonNull
@@ -22,29 +23,29 @@ public class Player implements Entity, Renderable {
 
     @Override
     public void update(GameState gameState, List<InputEvent> events) {
-        Vector2 newPos = new Vector2(0, 0);
+        Vector2 posChange = new Vector2(0, 0);
         for (InputEvent event : events) {
             switch (event) {
                 case Up:
-                    newPos.y += 1;
+                    posChange.y += 1;
                     break;
                 case Down:
-                    newPos.y -= 1;
+                    posChange.y -= 1;
                     break;
                 case Left:
-                    newPos.x -= 1;
+                    posChange.x -= 1;
                     break;
                 case Right:
-                    newPos.x += 1;
+                    posChange.x += 1;
                     break;
             }
         }
 
-        position = position.add(newPos.nor().scl(PLAYER_SPEED * gameState.getDelta()));
+        position = WorldCoordinate.addWorldCoordinates(position, new WorldCoordinate(posChange.nor().scl(PLAYER_SPEED * gameState.getDelta())));
     }
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(texture, position.x, position.y);
+        batch.draw(texture, position.getCoord().x, position.getCoord().y);
     }
 }
