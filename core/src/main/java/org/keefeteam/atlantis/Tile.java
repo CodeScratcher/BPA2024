@@ -11,6 +11,6 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class Tile {
-    private List<Triangle> colliders    ;
+    private List<Triangle> colliders;
     private Texture texture;
 }

@@ -19,7 +19,7 @@ public class Player implements Entity, Renderable {
     @NonNull
     private Texture texture;
 
-    private final int PLAYER_SPEED = 300;
+    public static final int PLAYER_SPEED = 300;
 
     @Override
     public void update(GameState gameState, List<InputEvent> events) {

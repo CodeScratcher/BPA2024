@@ -6,4 +6,5 @@ public abstract class Coordinate {
     public static Coordinate addCoordinates(Coordinate a, Coordinate b) {
         return WorldCoordinate.addWorldCoordinates(a.toWorldCoordinate(), b.toWorldCoordinate());
     }
+
 }

@@ -25,6 +25,8 @@ allprojects {
       testOutputDir file('build/classes/java/test')
     }
   }
+
+
 }
 
 configure(subprojects) {
