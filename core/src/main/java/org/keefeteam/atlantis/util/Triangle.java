@@ -2,10 +2,12 @@ package org.keefeteam.atlantis.util;
 
 import com.badlogic.gdx.math.Vector2;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
+@EqualsAndHashCode
 public class Triangle {
     Vector2 p1;
     Vector2 p2;

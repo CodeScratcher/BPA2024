@@ -2,8 +2,10 @@ package org.keefeteam.atlantis.coordinates;
 
 import com.badlogic.gdx.math.Vector2;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class TileCoordinate extends Coordinate {
     int x, y;
     private static final float TILE_SIZE = 64.0f;
