@@ -20,6 +20,7 @@ public class TriangleTest {
         Triangle triangle3 = new Triangle(new Vector2(3, 0), new Vector2(-2, -2), new Vector2(3, -2));
 
         assertTrue(triangle.triangleOverlap(triangle2), "Simple right triangle collision");
+
         assertTrue(triangle2.triangleOverlap(triangle3), "Simple right triangle collision #2");
         assertFalse(triangle.triangleOverlap(triangle3), "Simple right triangle collision - no overlap");
     }
@@ -53,7 +54,8 @@ public class TriangleTest {
         Triangle t3 = new Triangle(new Vector2(1, 0), new Vector2(-1, 4), new Vector2(3, 2));
 
         assertTrue(t1.triangleOverlap(t2), "Completely contained");
-        assertTrue(t1.triangleOverlap(t2), "No point overlap");
+        assertTrue(t2.triangleOverlap(t1), "And vice versa");
+        assertTrue(t1.triangleOverlap(t3), "No point overlap");
     }
 
     @Test public void onEdgePointInTriangle() {
