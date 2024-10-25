@@ -47,7 +47,7 @@ public class Triangle {
             Vector2 expectedPoint1 = new Vector2(pa.x, pa.x * slope + intercept);
             Vector2 expectedPoint2 = new Vector2(pb.x, pb.x * slope + intercept);
 
-            return !pointRightSign(p1, p2, expectedPoint1, pa) && !pointRightSign(p1, p2, expectedPoint2, pb);
+            return pointRightSign(p1, p2, p3, expectedPoint1) == pointRightSign(p1, p2, p3, expectedPoint2);
 
         }
         else if (!crossesSideTwo) {
@@ -57,7 +57,7 @@ public class Triangle {
             Vector2 expectedPoint1 = new Vector2(pa.x, pa.x * slope + intercept);
             Vector2 expectedPoint2 = new Vector2(pb.x, pb.x * slope + intercept);
 
-            return !pointRightSign(p1, p2, expectedPoint1, pa) && !pointRightSign(p1, p2, expectedPoint2, pb);
+            return pointRightSign(p1, p2, p3, expectedPoint1) == pointRightSign(p1, p2, p3, expectedPoint2);
         }
         else {
             float slope = (p2.y - p3.y) / (p2.x - p3.x);
@@ -66,7 +66,7 @@ public class Triangle {
             Vector2 expectedPoint1 = new Vector2(pa.x, pa.x * slope + intercept);
             Vector2 expectedPoint2 = new Vector2(pb.x, pb.x * slope + intercept);
 
-            return !pointRightSign(p3, p1, expectedPoint1, pa) && !pointRightSign(p3, p1, expectedPoint2, pb);
+            return pointRightSign(p3, p1, p2, expectedPoint1) == pointRightSign(p3, p1, p2, expectedPoint2);
         }
 
     }
