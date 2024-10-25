@@ -1,5 +1,6 @@
 package org.keefeteam.atlantis;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +30,8 @@ public class Tilemap implements Entity {
     }
 
     public Tile getTileFromVector2(Vector2 point) {
-        return tiles.get(coordFromVector2(point));
+        Tile fauxTile = new Tile(new ArrayList<>(), null);
+        return tiles.getOrDefault(coordFromVector2(point), fauxTile);
 
     }
 
