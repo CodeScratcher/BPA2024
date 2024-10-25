@@ -75,10 +75,6 @@ public class Triangle {
         return pointRightSign(p1, p2, p3, p) && pointRightSign(p2, p3, p1, p) && pointRightSign(p3, p1, p2, p);
     }
 
-    public boolean triangleInside(Triangle t) {
-        return t.pointInTriangle(p1)  || t.pointInTriangle(p2) || t.pointInTriangle(p3);
-    }
-
     public boolean triangleOverlap(Triangle t) {
         // return triangleInside(t) || t.triangleInside(this);
         return lineOverlapsTriangle(t.p1, t.p2) || lineOverlapsTriangle(t.p2, t.p3) || lineOverlapsTriangle(t.p3, t.p1) ||
