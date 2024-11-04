@@ -16,7 +16,7 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Tilemap implements Entity {
+public class Tilemap implements Entity, Collider {
     private Map<TileCoordinate, Tile> tiles = new HashMap<>();
 
     public void addTiles(TileCoordinate coord, Tile tile) {
@@ -69,6 +69,11 @@ public class Tilemap implements Entity {
         }
 
         return false;
+    }
+
+    @Override
+    public Set<ColliderTypes> getColliderTypes() {
+        return Set.of(ColliderTypes.WALL);
     }
 
     @Override

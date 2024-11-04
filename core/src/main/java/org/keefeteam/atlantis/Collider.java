@@ -3,7 +3,15 @@ package org.keefeteam.atlantis;
 import org.keefeteam.atlantis.util.Triangle;
 
 import java.util.List;
+import java.util.Set;
+
 
 public interface Collider {
-    public boolean collidesWith(List<Triangle> tris);
+    enum ColliderTypes {
+        WALL,
+        ENEMY
+    }
+
+    boolean collidesWith(List<Triangle> tris);
+    Set<ColliderTypes> getColliderTypes();
 }
