@@ -6,10 +6,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
+import org.keefeteam.atlantis.coordinates.TileCoordinate;
+import org.keefeteam.atlantis.util.Triangle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
@@ -24,12 +29,32 @@ public class Main extends ApplicationAdapter {
     public void create() {
         batch = new SpriteBatch();
         image = new Texture("libgdx.png");
+        Texture img2 = new Texture("blackplaceholder.png");
 
         controller = new Controller();
 
-        player = new Player(image);
+        player = new Player(img2);
+
         entities = new ArrayList<>();
         entities.add(player);
+
+        Vector2 p1 = new Vector2(0, 0);
+        Vector2 p2 = new Vector2(p1.x + 64, p1.y);
+        Vector2 p3 = new Vector2(p1.x, p1.y + 64);
+        Vector2 p4 = new Vector2(p2.x, p3.y);
+
+        List<Triangle> tris = new ArrayList<>();
+        tris.add(new Triangle(p1, p2, p3));
+        tris.add(new Triangle(p2, p3, p4));
+
+        Tile tile = new Tile(tris, img2);
+
+        Map<TileCoordinate, Tile> tiles = new HashMap<>();
+        tiles.put(new TileCoordinate(1, 1), tile);
+
+        Tilemap tilemap = new Tilemap(tiles);
+
+        entities.add(tilemap);
 
         gameState = new GameState(entities);
 

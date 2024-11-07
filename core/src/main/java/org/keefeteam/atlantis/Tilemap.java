@@ -1,6 +1,7 @@
 package org.keefeteam.atlantis;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +17,7 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Tilemap implements Entity, Collider {
+public class Tilemap implements Entity, Collider, Renderable {
     private Map<TileCoordinate, Tile> tiles = new HashMap<>();
 
     public void addTiles(TileCoordinate coord, Tile tile) {
@@ -82,4 +83,10 @@ public class Tilemap implements Entity, Collider {
     }
 
 
+    @Override
+    public void render(SpriteBatch batch) {
+        for (TileCoordinate key : tiles.keySet()) {
+            batch.draw(tiles.get(key).getTexture(), key.toWorldCoordinate().getCoord().x, key.toWorldCoordinate().getCoord().y);
+        }
+    }
 }

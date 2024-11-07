@@ -57,12 +57,19 @@ public class Player implements Entity, Renderable {
 
         position = WorldCoordinate.addWorldCoordinates(position, new WorldCoordinate(posChange.nor().scl(PLAYER_SPEED * gameState.getDelta())));
 
+        boolean colliding = false;
         for (Entity entity : gameState.getEntities()) {
             if (entity instanceof Collider collider) {
                 if (collider.getColliderTypes().contains(Collider.ColliderTypes.WALL) && collider.collidesWith(getTris())) {
+                    System.out.println("Colliding");
+                    colliding = true;
                     WorldCoordinate.addWorldCoordinates(position, new WorldCoordinate(posChange.nor().scl(-PLAYER_SPEED * gameState.getDelta())));
                 }
             }
+        }
+
+        if (!colliding) {
+            System.out.println("Not colliding");
         }
 
 
