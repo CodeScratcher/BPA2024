@@ -3,9 +3,11 @@ package org.keefeteam.atlantis;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import org.keefeteam.atlantis.coordinates.TileCoordinate;
@@ -24,13 +26,16 @@ public class Main extends ApplicationAdapter {
     private ArrayList<Entity> entities;
     private Player player; // TODO REMOVE AND REPLACE LOGIC FOR RENDERING, JUST FOR TESTING
     private Controller controller;
+    private ShapeRenderer sr;
+    private Tile testTile;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
+        sr = new ShapeRenderer();
+
         image = new Texture("libgdx.png");
         Texture img2 = new Texture("blackplaceholder.png");
-
         controller = new Controller();
 
         player = new Player(img2);
@@ -47,10 +52,10 @@ public class Main extends ApplicationAdapter {
         tris.add(new Triangle(p1, p2, p3));
         tris.add(new Triangle(p2, p3, p4));
 
-        Tile tile = new Tile(tris, img2);
+        testTile = new Tile(tris, img2);
 
         Map<TileCoordinate, Tile> tiles = new HashMap<>();
-        tiles.put(new TileCoordinate(1, 1), tile);
+        tiles.put(new TileCoordinate(1, 1), testTile);
 
         Tilemap tilemap = new Tilemap(tiles);
 
@@ -74,6 +79,20 @@ public class Main extends ApplicationAdapter {
         batch.begin();
         gameState.render(batch);
         batch.end();
+
+        sr.begin(ShapeRenderer.ShapeType.Filled);
+        sr.setColor(new Color(255, 255, 255, 255));
+        List<Triangle> tris = testTile.getTriangles(new TileCoordinate(1, 1));
+        Vector2 p1 = tris.get(0).getP1();
+        Vector2 p2 = tris.get(0).getP2();
+        Vector2 p3 = tris.get(0).getP3();
+        Vector2 p4 = tris.get(1).getP3();
+
+        System.out.println(tris.get(0));
+
+        sr.triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+        sr.triangle(p2.x, p2.y, p3.x, p3.y, p4.x, p4.y);
+        sr.end();
     }
 
     @Override

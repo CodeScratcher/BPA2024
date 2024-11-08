@@ -80,4 +80,9 @@ public class Triangle {
         return lineOverlapsTriangle(t.p1, t.p2) || lineOverlapsTriangle(t.p2, t.p3) || lineOverlapsTriangle(t.p3, t.p1) ||
             t.lineOverlapsTriangle(p1, p2) || t.lineOverlapsTriangle(p2, p3) || t.lineOverlapsTriangle(p3, p1);
     }
+
+    @Override
+    public String toString() {
+        return p1 + " " + p2 +  " " + p3;
+    }
 }

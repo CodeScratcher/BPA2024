@@ -38,8 +38,8 @@ public class Tilemap implements Entity, Collider, Renderable {
 
     public boolean collidesWith(Triangle tri) {
         Tile t1 = getTileFromVector2(tri.getP1());
-        Tile t2 = getTileFromVector2(tri.getP1());
-        Tile t3 = getTileFromVector2(tri.getP1());
+        Tile t2 = getTileFromVector2(tri.getP2());
+        Tile t3 = getTileFromVector2(tri.getP3());
 
         Set<Triangle> tris = new HashSet<>();
 
