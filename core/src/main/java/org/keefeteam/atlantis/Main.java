@@ -60,6 +60,8 @@ public class Main extends ApplicationAdapter {
 
         Map<TileCoordinate, Tile> tiles = new HashMap<>();
         tiles.put(new TileCoordinate(1, 1), testTile);
+        tiles.put(new TileCoordinate(1, 2), testTile);
+        tiles.put(new TileCoordinate(2, 1), testTile);
 
         Tilemap tilemap = new Tilemap(tiles);
 
