@@ -9,11 +9,10 @@ import org.keefeteam.atlantis.util.Triangle;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class Player implements Entity, Renderable {
+public class Enemy implements Entity, Renderable {
     @Getter
     @Setter
     private WorldCoordinate position = new WorldCoordinate(new Vector2(0, 0));
@@ -22,7 +21,9 @@ public class Player implements Entity, Renderable {
     @NonNull
     private Texture texture;
 
-    public static final int PLAYER_SPEED = 300;
+    private Player tracking;
+
+    public static final int ENEMY_SPEED = 200;
     public static final float REPAIR_SPEED = 0.5f;
 
     public List<Triangle> getTris() {
@@ -42,24 +43,32 @@ public class Player implements Entity, Renderable {
     @Override
     public void update(GameState gameState, List<InputEvent> events) {
         Vector2 posChange = new Vector2(0, 0);
-        for (InputEvent event : events) {
-            switch (event) {
-                case Up:
-                    posChange.y += 1;
+
+        if (tracking != null) {
+            if (tracking.getPosition().getCoord().x < getPosition().getCoord().x) {
+                posChange.x = -1;
+            }
+            else if (tracking.getPosition().getCoord().x > getPosition().getCoord().x) {
+                posChange.x = 1;
+            }
+
+            if (tracking.getPosition().getCoord().y < getPosition().getCoord().y) {
+                posChange.y = -1;
+            }
+            else if (tracking.getPosition().getCoord().y > getPosition().getCoord().y) {
+                posChange.y = 1;
+            }
+        }
+        else {
+            for (Entity entity : gameState.getEntities()) {
+                if (entity instanceof Player player) {
+                    tracking = player;
                     break;
-                case Down:
-                    posChange.y -= 1;
-                    break;
-                case Left:
-                    posChange.x -= 1;
-                    break;
-                case Right:
-                    posChange.x += 1;
-                    break;
+                }
             }
         }
 
-        position = WorldCoordinate.addWorldCoordinates(position, new WorldCoordinate(posChange.nor().scl(PLAYER_SPEED * gameState.getDelta())));
+        position = WorldCoordinate.addWorldCoordinates(position, new WorldCoordinate(posChange.nor().scl(ENEMY_SPEED * gameState.getDelta())));
 
         boolean colliding = false;
         for (Entity entity : gameState.getEntities()) {

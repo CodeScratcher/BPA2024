@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import org.keefeteam.atlantis.coordinates.TileCoordinate;
+import org.keefeteam.atlantis.coordinates.WorldCoordinate;
 import org.keefeteam.atlantis.util.Triangle;
 
 import java.util.ArrayList;
@@ -42,6 +43,9 @@ public class Main extends ApplicationAdapter {
 
         entities = new ArrayList<>();
         entities.add(player);
+
+        Enemy enemy = new Enemy(new WorldCoordinate(new Vector2(100,  100)), img2, null);
+        entities.add(enemy);
 
         Vector2 p1 = new Vector2(0, 0);
         Vector2 p2 = new Vector2(p1.x + 64, p1.y);
