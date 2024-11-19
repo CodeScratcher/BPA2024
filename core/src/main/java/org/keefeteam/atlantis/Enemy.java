@@ -61,7 +61,7 @@ public class Enemy implements Entity, Renderable {
         }
         else {
             for (Entity entity : gameState.getEntities()) {
-                if (entity instanceof Player player) {
+                if (entity instanceof Player player && player.getPosition().getCoord().dst(position.getCoord()) < 200) {
                     tracking = player;
                     break;
                 }

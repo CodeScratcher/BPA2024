@@ -44,7 +44,7 @@ public class Main extends ApplicationAdapter {
         entities = new ArrayList<>();
         entities.add(player);
 
-        Enemy enemy = new Enemy(new WorldCoordinate(new Vector2(100,  100)), img2, null);
+        Enemy enemy = new Enemy(new WorldCoordinate(new Vector2(300,  300)), img2, null);
         entities.add(enemy);
 
         Vector2 p1 = new Vector2(0, 0);
