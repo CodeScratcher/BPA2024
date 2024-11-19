@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
+    /**
+     * Converts key presses into input events
+     * @return A list of input events
+     */
     public List<InputEvent> getEvents() {
         List<InputEvent> events = new ArrayList<>();
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
