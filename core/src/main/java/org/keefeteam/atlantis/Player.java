@@ -18,14 +18,14 @@ import static org.keefeteam.atlantis.coordinates.TileCoordinate.TILE_SIZE;
 public class Player implements Entity, Renderable {
     @Getter
     @Setter
-    private WorldCoordinate position = new WorldCoordinate(new Vector2(0, 0));
+    private WorldCoordinate position = new WorldCoordinate(new Vector2(-1, -1));
 
     @Setter
     @NonNull
     private Texture texture;
 
     public static final int PLAYER_SPEED = 300;
-    public static final float REPAIR_SPEED = 0.2f;
+    public static final float REPAIR_SPEED = 1f;
 
     public List<Triangle> getTris() {
         return getTris(position.getCoord());
@@ -67,29 +67,29 @@ public class Player implements Entity, Renderable {
         for (Entity entity : gameState.getEntities()) {
             if (entity instanceof Collider collider) {
                 if (collider.getColliderTypes().contains(Collider.ColliderTypes.WALL) && collider.collidesWith(getTris()) && !posChange.equals(new Vector2(0, 0))) {
-                    colliding = true;
-                    float repairX = 0;
-                    float repairY = 0;
+                    Vector2 change = new Vector2(posChange).nor().scl(PLAYER_SPEED * gameState.getDelta());
+                    position = WorldCoordinate.addWorldCoordinates(position, new WorldCoordinate(new Vector2(posChange).nor().scl(-PLAYER_SPEED * gameState.getDelta())));
 
-                    while (collider.collidesWith(getTris(new Vector2(position.getCoord().x + repairX, position.getCoord().y)))) {
-                        repairX -= REPAIR_SPEED * (posChange.x == 0 ? 10000000 : (posChange.x / Math.abs(posChange.x)));
-                    }
+                    double amount = 0.0f;
 
-                    while (collider.collidesWith(getTris(new Vector2(position.getCoord().x , position.getCoord().y + repairY)))) {
-                        repairY -= REPAIR_SPEED * (posChange.y == 0 ? 10000000 : (posChange.y / Math.abs(posChange.y)));
+                    while (!collider.collidesWith(getTris()) && Math.abs(amount) < Math.abs(change.x)) {
+                        amount += change.x * REPAIR_SPEED / PLAYER_SPEED;
+                        position.getCoord().x += change.x * REPAIR_SPEED / PLAYER_SPEED;
                     }
 
-                    if (Math.abs(repairX) > Math.abs(repairY) && Math.abs(repairY) < TILE_SIZE) {
-                        position.getCoord().y += repairY;
+                    if (collider.collidesWith(getTris())) {
+                        position.getCoord().x -= change.x * REPAIR_SPEED / PLAYER_SPEED;
                     }
-                    else if (Math.abs(repairY) > Math.abs(repairX) && Math.abs(repairX) < TILE_SIZE) {
-                        position.getCoord().x += repairX;
+
+                    amount = 0.0f;
+
+                    while (!collider.collidesWith(getTris()) && Math.abs(amount) < Math.abs(change.y)) {
+                        amount += change.y * REPAIR_SPEED / PLAYER_SPEED;
+                        position.getCoord().y += change.y * REPAIR_SPEED / PLAYER_SPEED;
                     }
-                    else {
-                        while (collider.collidesWith(getTris(new Vector2(position.getCoord().x, position.getCoord().y)))) {
-                            position.getCoord().x -= REPAIR_SPEED * posChange.x / Math.abs(posChange.x);
-                            position.getCoord().y -= REPAIR_SPEED * posChange.y / Math.abs(posChange.y);
-                        }
+
+                    if (collider.collidesWith(getTris())) {
+                        position.getCoord().y -= change.y * REPAIR_SPEED / PLAYER_SPEED;
                     }
                 }
             }
