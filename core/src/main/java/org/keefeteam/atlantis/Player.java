@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import static org.keefeteam.atlantis.coordinates.TileCoordinate.TILE_SIZE;
+
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class Player implements Entity, Renderable {
@@ -23,7 +25,7 @@ public class Player implements Entity, Renderable {
     private Texture texture;
 
     public static final int PLAYER_SPEED = 300;
-    public static final float REPAIR_SPEED = 0.5f;
+    public static final float REPAIR_SPEED = 0.2f;
 
     public List<Triangle> getTris() {
         return getTris(position.getCoord());
@@ -77,14 +79,17 @@ public class Player implements Entity, Renderable {
                         repairY -= REPAIR_SPEED * (posChange.y == 0 ? 10000000 : (posChange.y / Math.abs(posChange.y)));
                     }
 
-                    if (Math.abs(repairX) > Math.abs(repairY)) {
+                    if (Math.abs(repairX) > Math.abs(repairY) && Math.abs(repairY) < TILE_SIZE) {
                         position.getCoord().y += repairY;
                     }
-                    else if (Math.abs(repairY) > Math.abs(repairX)) {
+                    else if (Math.abs(repairY) > Math.abs(repairX) && Math.abs(repairX) < TILE_SIZE) {
                         position.getCoord().x += repairX;
                     }
                     else {
-                        position = WorldCoordinate.addWorldCoordinates(position, new WorldCoordinate(new Vector2(repairX, repairY)));
+                        while (collider.collidesWith(getTris(new Vector2(position.getCoord().x, position.getCoord().y)))) {
+                            position.getCoord().x -= REPAIR_SPEED * posChange.x / Math.abs(posChange.x);
+                            position.getCoord().y -= REPAIR_SPEED * posChange.y / Math.abs(posChange.y);
+                        }
                     }
                 }
             }

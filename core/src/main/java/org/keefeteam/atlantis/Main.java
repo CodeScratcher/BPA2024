@@ -86,19 +86,7 @@ public class Main extends ApplicationAdapter {
         gameState.render(batch);
         batch.end();
 
-        sr.begin(ShapeRenderer.ShapeType.Filled);
-        sr.setColor(new Color(255, 255, 255, 255));
-        List<Triangle> tris = testTile.getTriangles(new TileCoordinate(1, 1));
-        Vector2 p1 = tris.get(0).getP1();
-        Vector2 p2 = tris.get(0).getP2();
-        Vector2 p3 = tris.get(0).getP3();
-        Vector2 p4 = tris.get(1).getP3();
 
-        System.out.println(tris.get(0));
-
-        sr.triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
-        sr.triangle(p2.x, p2.y, p3.x, p3.y, p4.x, p4.y);
-        sr.end();
     }
 
     @Override

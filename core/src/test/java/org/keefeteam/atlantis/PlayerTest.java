@@ -52,6 +52,7 @@ public class PlayerTest {
         player.update(gameState, inputs);
 
         assertEquals(player.getPosition(), new WorldCoordinate(new Vector2(-Player.PLAYER_SPEED, 0)));
+        
 
         player.update(gameState, inputs);
 
