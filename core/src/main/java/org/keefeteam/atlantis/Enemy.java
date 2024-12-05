@@ -6,13 +6,17 @@ import com.badlogic.gdx.math.Vector2;
 import lombok.*;
 import org.keefeteam.atlantis.coordinates.WorldCoordinate;
 import org.keefeteam.atlantis.util.Triangle;
+import org.w3c.dom.DOMStringList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
+import static org.keefeteam.atlantis.Player.PLAYER_SPEED;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class Enemy implements Entity, Renderable {
+public class Enemy implements Entity, Renderable, Collider {
     @Getter
     @Setter
     private WorldCoordinate position = new WorldCoordinate(new Vector2(0, 0));
@@ -74,26 +78,29 @@ public class Enemy implements Entity, Renderable {
         for (Entity entity : gameState.getEntities()) {
             if (entity instanceof Collider collider) {
                 if (collider.getColliderTypes().contains(Collider.ColliderTypes.WALL) && collider.collidesWith(getTris()) && !posChange.equals(new Vector2(0, 0))) {
-                    colliding = true;
-                    float repairX = 0;
-                    float repairY = 0;
+                    Vector2 change = new Vector2(posChange).nor().scl(PLAYER_SPEED * gameState.getDelta());
+                    position = WorldCoordinate.addWorldCoordinates(position, new WorldCoordinate(new Vector2(posChange).nor().scl(-PLAYER_SPEED * gameState.getDelta())));
 
-                    while (collider.collidesWith(getTris(new Vector2(position.getCoord().x + repairX, position.getCoord().y)))) {
-                        repairX -= REPAIR_SPEED * (posChange.x == 0 ? 10000000 : (posChange.x / Math.abs(posChange.x)));
-                    }
+                    double amount = 0.0f;
 
-                    while (collider.collidesWith(getTris(new Vector2(position.getCoord().x , position.getCoord().y + repairY)))) {
-                        repairY -= REPAIR_SPEED * (posChange.y == 0 ? 10000000 : (posChange.y / Math.abs(posChange.y)));
+                    while (!collider.collidesWith(getTris()) && Math.abs(amount) < Math.abs(change.x)) {
+                        amount += change.x * REPAIR_SPEED / PLAYER_SPEED;
+                        position.getCoord().x += change.x * REPAIR_SPEED / PLAYER_SPEED;
                     }
 
-                    if (Math.abs(repairX) > Math.abs(repairY)) {
-                        position.getCoord().y += repairY;
+                    if (collider.collidesWith(getTris())) {
+                        position.getCoord().x -= change.x * REPAIR_SPEED / PLAYER_SPEED;
                     }
-                    else if (Math.abs(repairY) > Math.abs(repairX)) {
-                        position.getCoord().x += repairX;
+
+                    amount = 0.0f;
+
+                    while (!collider.collidesWith(getTris()) && Math.abs(amount) < Math.abs(change.y)) {
+                        amount += change.y * REPAIR_SPEED / PLAYER_SPEED;
+                        position.getCoord().y += change.y * REPAIR_SPEED / PLAYER_SPEED;
                     }
-                    else {
-                        position = WorldCoordinate.addWorldCoordinates(position, new WorldCoordinate(new Vector2(repairX, repairY)));
+
+                    if (collider.collidesWith(getTris())) {
+                        position.getCoord().y -= change.y * REPAIR_SPEED / PLAYER_SPEED;
                     }
                 }
             }
@@ -109,5 +116,23 @@ public class Enemy implements Entity, Renderable {
     @Override
     public void render(SpriteBatch batch) {
         batch.draw(texture, position.getCoord().x, position.getCoord().y);
+    }
+
+    @Override
+    public boolean collidesWith(List<Triangle> tris) {
+        for (Triangle tri : getTris()) {
+            for (Triangle tri2 : tris) {
+                if (tri.triangleOverlap(tri2)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public Set<ColliderTypes> getColliderTypes() {
+        return Set.of(ColliderTypes.ENEMY);
     }
 }

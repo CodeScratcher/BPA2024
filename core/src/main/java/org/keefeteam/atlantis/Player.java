@@ -24,6 +24,9 @@ public class Player implements Entity, Renderable {
     @NonNull
     private Texture texture;
 
+    private double iframes = 0;
+    private int hp = 100;
+
     public static final int PLAYER_SPEED = 300;
     public static final float REPAIR_SPEED = 1f;
 
@@ -92,13 +95,18 @@ public class Player implements Entity, Renderable {
                         position.getCoord().y -= change.y * REPAIR_SPEED / PLAYER_SPEED;
                     }
                 }
+
+                if (iframes <= 0 && collider.getColliderTypes().contains(Collider.ColliderTypes.ENEMY) && collider.collidesWith(getTris())) {
+                    // take damage
+                    hp -= 10;
+                    iframes = 1;
+                }
             }
         }
 
-        if (!colliding) {
-            System.out.println("Not colliding");
-        }
+        System.out.println("HP: " + hp);
 
+        iframes -= gameState.getDelta();
 
     }
 
