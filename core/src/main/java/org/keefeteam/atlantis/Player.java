@@ -9,9 +9,6 @@ import org.keefeteam.atlantis.util.Triangle;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
-
-import static org.keefeteam.atlantis.coordinates.TileCoordinate.TILE_SIZE;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
@@ -105,5 +102,13 @@ public class Player implements Entity, Renderable {
     @Override
     public void render(SpriteBatch batch) {
         batch.draw(texture, position.getCoord().x, position.getCoord().y);
+    }
+
+
+    public float getWorldX(){
+        return this.position.getCoord().x;
+    }
+    public float getWorldY(){
+        return this.position.getCoord().y;
     }
 }

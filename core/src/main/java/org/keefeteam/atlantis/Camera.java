@@ -2,8 +2,6 @@ package org.keefeteam.atlantis;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import lombok.Getter;
 import org.keefeteam.atlantis.coordinates.WorldCoordinate;
 
 import java.util.List;
@@ -28,9 +26,9 @@ public class Camera implements Entity {
 
     @Override
     public void update(GameState gameState, List<InputEvent> events) {
-
+        this.updateTheCamera();
     }
-    public Vector2 convertCoordinates(WorldCoordinate c){
-        return null;
+    public void updateTheCamera(WorldCoordinate c){
+
     }
 }
