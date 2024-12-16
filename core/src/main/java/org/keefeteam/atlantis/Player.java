@@ -44,6 +44,9 @@ public class Player implements Entity, Renderable {
         return tris;
     }
 
+    public WorldCoordinate getPosition() { return position; }
+
+
     @Override
     public void update(GameState gameState, List<InputEvent> events) {
         Vector2 posChange = move(events);
