@@ -30,11 +30,7 @@ public class Main extends ApplicationAdapter {
     private Controller controller;
     private ShapeRenderer sr;
     private Tile testTile;
-    //private Camera theCamera; OLD
-
-    private OrthographicCamera cam;
-    private int WORLD_WIDTH;
-    private int WORLD_HEIGHT;
+    private Camera theCamera;
 
 
     @Override
@@ -46,18 +42,20 @@ public class Main extends ApplicationAdapter {
         Texture img2 = new Texture("blackplaceholder.png");
         controller = new Controller();
 
-        WORLD_WIDTH = 1000;
-        WORLD_HEIGHT = 1000;
 
         player = new Player(img2);
-        WorldCoordinate playerPosition = player.getPosition();
-        theCamera = new Camera(playerPosition);
 
         entities = new ArrayList<>();
         entities.add(player);
 
+        /*
         Enemy enemy = new Enemy(new WorldCoordinate(new Vector2(300,  300)), img2, null);
         entities.add(enemy);
+        */
+
+        WorldCoordinate playerPosition = player.getPosition();
+        theCamera = new Camera(playerPosition);
+        entities.add(theCamera);
 
         Vector2 p1 = new Vector2(0, 0);
         Vector2 p2 = new Vector2(p1.x + 64, p1.y);
@@ -79,6 +77,7 @@ public class Main extends ApplicationAdapter {
 
         entities.add(tilemap);
 
+
         gameState = new GameState(entities);
 
     }
@@ -92,8 +91,8 @@ public class Main extends ApplicationAdapter {
         // Render happens once per frame, so thank god we don't have to handle the full loop, just the internals
         List<InputEvent> eventList = controller.getEvents();
         gameState.update(eventList);
-
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
+        batch.setProjectionMatrix(theCamera.getCamera().combined);
         batch.begin();
         gameState.render(batch);
         batch.end();
