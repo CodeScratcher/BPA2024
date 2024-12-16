@@ -34,4 +34,9 @@ public class GameState {
             }
         }
     }
+    
+    private void setMenu(Menu menu) {
+        menu.initialize();
+        this.menu = menu;
+    }
 }
