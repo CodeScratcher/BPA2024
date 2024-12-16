@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import org.keefeteam.atlantis.coordinates.Coordinate;
 
 @Getter
 @Setter
@@ -24,12 +25,12 @@ public class InteractZone implements Collider, Entity {
         void call(GameState state, Player player);
     }
 
-    WorldCoordinate position;
+    Coordinate position;
     List<Triangle> triangles;
     InteractFunction onInteract;
 
     public List<Triangle> getTris() {
-        return getTris(position.getCoord());
+        return getTris(position.toWorldCoordinate().getCoord());
     }
 
     public List<Triangle> getTris(Vector2 basis) {

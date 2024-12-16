@@ -16,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GameState {
     @NonNull private List<Entity> entities;
+    private Menu menu;
     private float delta = 0.0f;
 
     public void update(List<InputEvent> events) {

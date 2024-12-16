@@ -33,8 +33,6 @@ public class Main extends ApplicationAdapter {
     private ShapeRenderer sr;
     private Tile testTile;
     private Camera theCamera;
-    private UIManager uiManager;
-
 
     @Override
     public void create() {
@@ -65,9 +63,6 @@ public class Main extends ApplicationAdapter {
         theCamera = new Camera(playerPosition);
         entities.add(theCamera);
 
-        uiManager = new UIManager();
-        uiManager.createStage();
-
         Vector2 p1 = new Vector2(0, 0);
         Vector2 p2 = new Vector2(p1.x + 64, p1.y);
         Vector2 p3 = new Vector2(p1.x, p1.y + 64);
@@ -87,7 +82,12 @@ public class Main extends ApplicationAdapter {
         Tilemap tilemap = new Tilemap(tiles);
 
         entities.add(tilemap);
-
+        
+        InteractZone interactZone = new InteractZone(new TileCoordinate(2, 2), tris, (gameState, player) -> {
+            gameState.setMenu(null);
+        });
+        
+        entities.add(interactZone);
 
         gameState = new GameState(entities);
 
@@ -110,7 +110,9 @@ public class Main extends ApplicationAdapter {
         gameState.render(batch);
         batch.end();
 
-        uiManager.update(eventList);
+        if (gameState.getMenu() != null) {
+            gameState.getMenu().update(eventList);
+        }
 
     }
 
