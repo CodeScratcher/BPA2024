@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import org.keefeteam.atlantis.coordinates.TileCoordinate;
 import org.keefeteam.atlantis.coordinates.WorldCoordinate;
@@ -31,10 +33,16 @@ public class Main extends ApplicationAdapter {
     private ShapeRenderer sr;
     private Tile testTile;
     private Camera theCamera;
+    private Skin skin;
+    private Stage stage;
 
 
     @Override
     public void create() {
+        stage = new Stage();
+        
+
+        skin = new Skin(Gdx.files.internal("ui/pixthulhu-ui.json"));
         batch = new SpriteBatch();
         sr = new ShapeRenderer();
 
