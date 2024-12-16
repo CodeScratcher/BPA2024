@@ -9,7 +9,8 @@ import java.util.Set;
 public interface Collider {
     enum ColliderTypes {
         WALL,
-        ENEMY
+        ENEMY,
+        INTERACTABLE
     }
 
     boolean collidesWith(List<Triangle> tris);
