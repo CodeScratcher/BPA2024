@@ -102,7 +102,7 @@ public class Main extends ApplicationAdapter {
         // Render happens once per frame, so thank god we don't have to handle the full loop, just the internals
         List<InputEvent> eventList = controller.getEvents();
 
-        gameState.update(eventList);
+        if (!gameState.getPaused()) gameState.update(eventList);
 
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         batch.setProjectionMatrix(theCamera.getCamera().combined);

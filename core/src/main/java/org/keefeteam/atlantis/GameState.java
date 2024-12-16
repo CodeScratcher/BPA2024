@@ -18,6 +18,7 @@ public class GameState {
     @NonNull private List<Entity> entities;
     private Menu menu;
     private float delta = 0.0f;
+    private boolean paused = false;
 
     public void update(List<InputEvent> events) {
         delta = Gdx.graphics.getDeltaTime();
