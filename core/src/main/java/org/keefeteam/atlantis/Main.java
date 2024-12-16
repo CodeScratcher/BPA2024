@@ -5,6 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -29,6 +30,12 @@ public class Main extends ApplicationAdapter {
     private Controller controller;
     private ShapeRenderer sr;
     private Tile testTile;
+    //private Camera theCamera; OLD
+
+    private OrthographicCamera cam;
+    private int WORLD_WIDTH;
+    private int WORLD_HEIGHT;
+
 
     @Override
     public void create() {
@@ -39,7 +46,12 @@ public class Main extends ApplicationAdapter {
         Texture img2 = new Texture("blackplaceholder.png");
         controller = new Controller();
 
+        WORLD_WIDTH = 1000;
+        WORLD_HEIGHT = 1000;
+
         player = new Player(img2);
+        WorldCoordinate playerPosition = player.getPosition();
+        theCamera = new Camera(playerPosition);
 
         entities = new ArrayList<>();
         entities.add(player);
