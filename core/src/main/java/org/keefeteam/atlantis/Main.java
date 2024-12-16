@@ -33,16 +33,14 @@ public class Main extends ApplicationAdapter {
     private ShapeRenderer sr;
     private Tile testTile;
     private Camera theCamera;
-    private Skin skin;
-    private Stage stage;
+    private UIManager uiManager;
 
 
     @Override
     public void create() {
-        stage = new Stage();
-        
 
-        skin = new Skin(Gdx.files.internal("ui/pixthulhu-ui.json"));
+
+
         batch = new SpriteBatch();
         sr = new ShapeRenderer();
 
@@ -60,10 +58,15 @@ public class Main extends ApplicationAdapter {
         Enemy enemy = new Enemy(new WorldCoordinate(new Vector2(300,  300)), img2, null);
         entities.add(enemy);
         */
+        DialogueEntity test = new DialogueEntity();
+        entities.add(test);
 
         WorldCoordinate playerPosition = player.getPosition();
         theCamera = new Camera(playerPosition);
         entities.add(theCamera);
+
+        uiManager = new UIManager();
+        uiManager.createStage();
 
         Vector2 p1 = new Vector2(0, 0);
         Vector2 p2 = new Vector2(p1.x + 64, p1.y);
@@ -98,13 +101,16 @@ public class Main extends ApplicationAdapter {
         // https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
         // Render happens once per frame, so thank god we don't have to handle the full loop, just the internals
         List<InputEvent> eventList = controller.getEvents();
+
         gameState.update(eventList);
+
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         batch.setProjectionMatrix(theCamera.getCamera().combined);
         batch.begin();
         gameState.render(batch);
         batch.end();
 
+        uiManager.update(eventList);
 
     }
 
