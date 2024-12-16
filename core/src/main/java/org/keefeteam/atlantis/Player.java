@@ -46,6 +46,60 @@ public class Player implements Entity, Renderable {
 
     @Override
     public void update(GameState gameState, List<InputEvent> events) {
+        Vector2 posChange = move(events);
+        
+        handleCollision(gameState, posChange, events);
+
+        System.out.println("HP: " + hp);
+
+        iframes -= gameState.getDelta();
+
+    }
+
+    private void handleCollision(GameState gameState, Vector2 posChange, List<InputEvents> events) {
+        boolean colliding = false;
+        
+        boolean isInteracting = events.contains(InputEvent.Interact);
+        
+        for (Entity entity : gameState.getEntities()) {
+            if (entity instanceof Collider collider) {
+                if (collider.getColliderTypes().contains(Collider.ColliderTypes.WALL) && collider.collidesWith(getTris()) && !posChange.equals(new Vector2(0, 0))) {
+                    Vector2 change = new Vector2(posChange).nor().scl(PLAYER_SPEED * gameState.getDelta());
+                    position = WorldCoordinate.addWorldCoordinates(position, new WorldCoordinate(new Vector2(posChange).nor().scl(-PLAYER_SPEED * gameState.getDelta())));
+
+                    double amount = 0.0f;
+
+                    while (Math.abs(amount) < Math.abs(change.x) && !collider.collidesWith(getTris())) {
+                        amount += change.x * REPAIR_SPEED / PLAYER_SPEED;
+                        position.getCoord().x += change.x * REPAIR_SPEED / PLAYER_SPEED;
+                    }
+
+                    if (collider.collidesWith(getTris())) {
+                        position.getCoord().x -= change.x * REPAIR_SPEED / PLAYER_SPEED;
+                    }
+
+                    amount = 0.0f;
+
+                    while (Math.abs(amount) < Math.abs(change.y) && !collider.collidesWith(getTris())) {
+                        amount += change.y * REPAIR_SPEED / PLAYER_SPEED;
+                        position.getCoord().y += change.y * REPAIR_SPEED / PLAYER_SPEED;
+                    }
+
+                    if (collider.collidesWith(getTris())) {
+                        position.getCoord().y -= change.y * REPAIR_SPEED / PLAYER_SPEED;
+                    }
+                }
+
+                if (isInteracting && collider.getColliderTypes().contains(Collider.ColliderTypes.INTERACTABLE) && collider.collidesWith(getTris())) {
+                    InteractZone interactZone = (InteractZone)collider;
+                    
+                    interactZone.onInteract.call(gameState, this);
+                }
+            }
+        }
+    }
+
+    private Vector2 move(List<InputEvent> events) {
         Vector2 posChange = new Vector2(0, 0);
         for (InputEvent event : events) {
             switch (event) {
@@ -63,51 +117,10 @@ public class Player implements Entity, Renderable {
                     break;
             }
         }
-
+        
         position = WorldCoordinate.addWorldCoordinates(position, new WorldCoordinate(posChange.nor().scl(PLAYER_SPEED * gameState.getDelta())));
 
-        boolean colliding = false;
-        for (Entity entity : gameState.getEntities()) {
-            if (entity instanceof Collider collider) {
-                if (collider.getColliderTypes().contains(Collider.ColliderTypes.WALL) && collider.collidesWith(getTris()) && !posChange.equals(new Vector2(0, 0))) {
-                    Vector2 change = new Vector2(posChange).nor().scl(PLAYER_SPEED * gameState.getDelta());
-                    position = WorldCoordinate.addWorldCoordinates(position, new WorldCoordinate(new Vector2(posChange).nor().scl(-PLAYER_SPEED * gameState.getDelta())));
-
-                    double amount = 0.0f;
-
-                    while (!collider.collidesWith(getTris()) && Math.abs(amount) < Math.abs(change.x)) {
-                        amount += change.x * REPAIR_SPEED / PLAYER_SPEED;
-                        position.getCoord().x += change.x * REPAIR_SPEED / PLAYER_SPEED;
-                    }
-
-                    if (collider.collidesWith(getTris())) {
-                        position.getCoord().x -= change.x * REPAIR_SPEED / PLAYER_SPEED;
-                    }
-
-                    amount = 0.0f;
-
-                    while (!collider.collidesWith(getTris()) && Math.abs(amount) < Math.abs(change.y)) {
-                        amount += change.y * REPAIR_SPEED / PLAYER_SPEED;
-                        position.getCoord().y += change.y * REPAIR_SPEED / PLAYER_SPEED;
-                    }
-
-                    if (collider.collidesWith(getTris())) {
-                        position.getCoord().y -= change.y * REPAIR_SPEED / PLAYER_SPEED;
-                    }
-                }
-
-                if (iframes <= 0 && collider.getColliderTypes().contains(Collider.ColliderTypes.ENEMY) && collider.collidesWith(getTris())) {
-                    // take damage
-                    hp -= 10;
-                    iframes = 1;
-                }
-            }
-        }
-
-        System.out.println("HP: " + hp);
-
-        iframes -= gameState.getDelta();
-
+        return posChange;
     }
 
     @Override
