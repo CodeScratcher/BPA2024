@@ -50,6 +50,8 @@ public class Player implements Entity, Renderable {
     @Override
     public void update(GameState gameState, List<InputEvent> events) {
         Vector2 posChange = move(events);
+        position = WorldCoordinate.addWorldCoordinates(position, new WorldCoordinate(posChange.nor().scl(PLAYER_SPEED * gameState.getDelta())));
+
         
         handleCollision(gameState, posChange, events);
 
@@ -59,7 +61,7 @@ public class Player implements Entity, Renderable {
 
     }
 
-    private void handleCollision(GameState gameState, Vector2 posChange, List<InputEvents> events) {
+    private void handleCollision(GameState gameState, Vector2 posChange, List<InputEvent> events) {
         boolean colliding = false;
         
         boolean isInteracting = events.contains(InputEvent.Interact);
@@ -121,7 +123,6 @@ public class Player implements Entity, Renderable {
             }
         }
         
-        position = WorldCoordinate.addWorldCoordinates(position, new WorldCoordinate(posChange.nor().scl(PLAYER_SPEED * gameState.getDelta())));
 
         return posChange;
     }
