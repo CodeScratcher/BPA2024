@@ -30,6 +30,10 @@ public class Player implements Entity, Renderable {
     public static final int PLAYER_SPEED = 300;
     public static final float REPAIR_SPEED = 1f;
 
+    @Getter
+    @Setter
+    public List<Item> inventory = new ArrayList<>();
+    
     public List<Triangle> getTris() {
         return getTris(position.getCoord());
     }
