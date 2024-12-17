@@ -81,7 +81,7 @@ public class Player implements Entity, Renderable {
                     while (Math.abs(amount) < Math.abs(change.x) && !collider.collidesWith(getTris())) {
                         amount += change.x * REPAIR_SPEED / PLAYER_SPEED;
                         position.getCoord().x += change.x * REPAIR_SPEED / PLAYER_SPEED;
-                    }
+                    }NewClass
 
                     if (collider.collidesWith(getTris())) {
                         position.getCoord().x -= change.x * REPAIR_SPEED / PLAYER_SPEED;
