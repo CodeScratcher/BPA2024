@@ -38,23 +38,23 @@ public class DialogueMenu implements Menu {
         textIndexOne = 0;
         textIndexTwo = textIndexOne + maxLength;
         boolean done = false;
-        while(!done){
-            String temp = "";
-            int remainder = 0;
-            if(textIndexTwo > text.length()){
-                remainder = textIndexTwo - text.length();
-                done = true;
-            }
-            for(int i=textIndexOne; i< textIndexTwo - remainder; i++){
-                temp += text.charAt(i);
-
-            }
-
-            if (text.length() > maxLength){
-                textDivision.add(temp);
-            }
-            //INCREMENT TEXTINDEX VARS HERE
-        }
+//        while(!done){
+//            String temp = "";
+//            int remainder = 0;
+//            if(textIndexTwo > text.length()){
+//                remainder = textIndexTwo - text.length();
+//                done = true;
+//            }
+//            for(int i=textIndexOne; i< textIndexTwo - remainder; i++){
+//                temp += text.charAt(i);
+//
+//            }
+//
+//            if (text.length() > maxLength){
+//                textDivision.add(temp);
+//            }
+//            //INCREMENT TEXTINDEX VARS HERE
+//        }
 
         Label label = new Label(text.substring(0, maxLength), skin);
 
