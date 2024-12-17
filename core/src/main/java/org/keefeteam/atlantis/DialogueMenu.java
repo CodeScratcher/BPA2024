@@ -2,6 +2,8 @@ package org.keefeteam.atlantis;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -11,7 +13,7 @@ import java.util.*;
 
 public class DialogueMenu implements Menu {
     private String text;
-    private final int maxLength = 5;
+    private int maxLength;
     private int textIndexOne;
     private int textIndexTwo;
     private boolean textFinished;
@@ -19,46 +21,42 @@ public class DialogueMenu implements Menu {
     private Stage stage;
     private Table table;
     private Skin skin;
+    private Label textLabel;
     private GameState gameState;
+
     public DialogueMenu(String t){
         this.text = t;
     }
+
     @Override
     public void initialize(GameState g) {
+        maxLength = 5;
         this.gameState = g;
         this.gameState.setPaused(true);
         stage = new Stage();
-        skin = new Skin(Gdx.files.internal("ui/pixthulhu-ui.json"));
+
+        BitmapFont font = new BitmapFont();
+        Skin tempSkin = new Skin();
+        tempSkin.add("default-font", font);
+        tempSkin.add("default", new Label.LabelStyle(font, Color.WHITE));
+        skin = tempSkin;
+        //skin = new Skin(Gdx.files.internal("ui/pixthulhu-ui.json"));
         Gdx.input.setInputProcessor(stage);
         table = new Table();
         table.setFillParent(true);
-        textFinished = true;
+        String firstOutput = "";
+        if(text.length() > maxLength){
+            firstOutput =  text.substring(0, maxLength);
+            this.textFinished = false;
+        }
+        else{
+            firstOutput = text;
+            this.textFinished = true;
+        }
 
-        List<String> textDivision = new ArrayList<>();
-        textIndexOne = 0;
-        textIndexTwo = textIndexOne + maxLength;
-        boolean done = false;
-//        while(!done){
-//            String temp = "";
-//            int remainder = 0;
-//            if(textIndexTwo > text.length()){
-//                remainder = textIndexTwo - text.length();
-//                done = true;
-//            }
-//            for(int i=textIndexOne; i< textIndexTwo - remainder; i++){
-//                temp += text.charAt(i);
-//
-//            }
-//
-//            if (text.length() > maxLength){
-//                textDivision.add(temp);
-//            }
-//            //INCREMENT TEXTINDEX VARS HERE
-//        }
+        textLabel = new Label(firstOutput, skin);
 
-        Label label = new Label(text.substring(0, maxLength), skin);
-
-        table.add(label);
+        table.add(textLabel);
         stage.addActor(table);
     }
 
@@ -70,16 +68,23 @@ public class DialogueMenu implements Menu {
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
         if(inputEvents.contains(InputEvent.UIConfirm)){
-            if (text.length() > maxLength){
-                textFinished = false;
-                textIndexOne = 0;
-                textIndexTwo = maxLength;
-                boolean done = false;
-
+            if(!textFinished){
+                textIndexOne += maxLength;
+                textIndexTwo = textIndexOne + maxLength;
+                if(textIndexTwo > text.length()){
+                    textIndexTwo = text.length();
+                    textFinished = true;
+                }
+                String newValue = text.substring(textIndexOne, textIndexTwo);
+                textLabel = new Label(newValue, skin);
+                table.remove();
+                table.add(textLabel);
+                stage.addActor(table);
             }
             else{
+                //Destroy label
+                table.remove();
                 this.gameState.setPaused(false);
-                this.gameState.setMenu(null);
             }
         }
 

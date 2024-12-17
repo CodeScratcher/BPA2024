@@ -76,7 +76,7 @@ public class Main extends ApplicationAdapter {
         entities.add(tilemap);
 
         InteractZone interactZone = new InteractZone(new TileCoordinate(2, 2), tris, (gameState, player) -> {
-            DialogueMenu test = new DialogueMenu("LABELATOR");
+            DialogueMenu test = new DialogueMenu("scubi jew");
             gameState.setMenu(test);
         });
 
