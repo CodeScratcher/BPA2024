@@ -18,7 +18,7 @@ public class Camera implements Entity{
     public Camera(WorldCoordinate playerPos) {
         this.pos = playerPos;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());  // Set the viewport width and height.
+
 
 
 
@@ -26,7 +26,8 @@ public class Camera implements Entity{
     public void update(GameState gameState, List<InputEvent> events){
 
         Vector2 camCoords = pos.getCoord();
-        camera.position.set(camCoords.x, camCoords.y, 0);  // Set the camera position.
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());  // Set the viewport width and height.
+        camera.position.set(camCoords.x + 31, camCoords.y + 31, 0);  // Set the camera position.
         camera.update();
     }
 

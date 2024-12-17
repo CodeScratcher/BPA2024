@@ -1,17 +1,10 @@
 package org.keefeteam.atlantis;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import org.keefeteam.atlantis.coordinates.TileCoordinate;
 import org.keefeteam.atlantis.coordinates.WorldCoordinate;
@@ -56,8 +49,7 @@ public class Main extends ApplicationAdapter {
         Enemy enemy = new Enemy(new WorldCoordinate(new Vector2(300,  300)), img2, null);
         entities.add(enemy);
         */
-        DialogueEntity test = new DialogueEntity();
-        entities.add(test);
+
 
         WorldCoordinate playerPosition = player.getPosition();
         theCamera = new Camera(playerPosition);
@@ -82,11 +74,12 @@ public class Main extends ApplicationAdapter {
         Tilemap tilemap = new Tilemap(tiles);
 
         entities.add(tilemap);
-        
+
         InteractZone interactZone = new InteractZone(new TileCoordinate(2, 2), tris, (gameState, player) -> {
-            gameState.setMenu(null);
+            DialogueMenu test = new DialogueMenu("LABELATOR");
+            gameState.setMenu(test);
         });
-        
+
         entities.add(interactZone);
 
         gameState = new GameState(entities);
