@@ -48,7 +48,7 @@ public class Player implements Entity, Renderable {
         return tris;
     }
 
-    public WorldCoordinate getPosition() { return position; }
+    //public WorldCoordinate getPosition() { return position; }
 
 
     @Override
@@ -56,7 +56,7 @@ public class Player implements Entity, Renderable {
         Vector2 posChange = move(events);
         position = WorldCoordinate.addWorldCoordinates(position, new WorldCoordinate(posChange.nor().scl(PLAYER_SPEED * gameState.getDelta())));
 
-        
+
         handleCollision(gameState, posChange, events);
 
         System.out.println("HP: " + hp);
@@ -67,9 +67,9 @@ public class Player implements Entity, Renderable {
 
     private void handleCollision(GameState gameState, Vector2 posChange, List<InputEvent> events) {
         boolean colliding = false;
-        
+
         boolean isInteracting = events.contains(InputEvent.Interact);
-        
+
         for (Entity entity : gameState.getEntities()) {
             if (entity instanceof Collider collider) {
                 if (collider.getColliderTypes().contains(Collider.ColliderTypes.WALL) && collider.collidesWith(getTris()) && !posChange.equals(new Vector2(0, 0))) {
@@ -101,7 +101,7 @@ public class Player implements Entity, Renderable {
 
                 if (isInteracting && collider.getColliderTypes().contains(Collider.ColliderTypes.INTERACTABLE) && collider.collidesWith(getTris())) {
                     InteractZone interactZone = (InteractZone)collider;
-                    
+
                     interactZone.onInteract.call(gameState, this);
                 }
             }
@@ -126,7 +126,7 @@ public class Player implements Entity, Renderable {
                     break;
             }
         }
-        
+
 
         return posChange;
     }

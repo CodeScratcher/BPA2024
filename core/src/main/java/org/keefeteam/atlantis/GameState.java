@@ -35,10 +35,10 @@ public class GameState {
             }
         }
     }
-    
+
     public void setMenu(Menu menu) {
         if (this.menu != null) this.menu.dispose();
-        if (menu != null) menu.initialize();
+        if (menu != null) menu.initialize(this);
         this.menu = menu;
     }
 }
