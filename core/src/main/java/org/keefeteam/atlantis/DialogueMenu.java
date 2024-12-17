@@ -76,14 +76,17 @@ public class DialogueMenu implements Menu {
                     textFinished = true;
                 }
                 String newValue = text.substring(textIndexOne, textIndexTwo);
+
+                stage.getActors().removeValue(table, true);
+
                 textLabel = new Label(newValue, skin);
-                table.remove();
+                table = new Table();
                 table.add(textLabel);
                 stage.addActor(table);
             }
             else{
                 //Destroy label
-                table.remove();
+                stage.getActors().removeValue(table, true);
                 this.gameState.setPaused(false);
             }
         }
