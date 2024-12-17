@@ -5,5 +5,6 @@ public enum InputEvent {
     Right,
     Up,
     Down,
-    Interact
+    Interact,
+    UIConfirm
 }
