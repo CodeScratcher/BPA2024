@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import lombok.*;
 import org.keefeteam.atlantis.GameState;
+import org.keefeteam.atlantis.ui.InventoryMenu;
 import org.keefeteam.atlantis.util.coordinates.WorldCoordinate;
 import org.keefeteam.atlantis.util.collision.Collider;
 import org.keefeteam.atlantis.util.input.InputEvent;
@@ -65,8 +66,8 @@ public class Player implements Entity, Renderable {
 
         iframes -= gameState.getDelta();
 
-        if (events.contains(InputEvent.Inventory)) {
-
+        if (events.contains(InputEvent.Inventory) && gameState.getMenu() == null) {
+            gameState.setMenu(new InventoryMenu(this));
         }
 
     }
