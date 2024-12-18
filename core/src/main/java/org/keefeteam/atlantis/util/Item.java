@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.keefeteam.atlantis.SQLLoader;
 
 import java.util.Map;
 
@@ -33,5 +34,8 @@ public class Item {
         this.description = d;
         this.picture = null;
         this.recipes =  null;
+    }
+    public Item(String n){
+        SQLLoader query = new SQLLoader("SELECT * FROM items WHERE name=" + "\"" + n + "\"");
     }
 }
