@@ -39,7 +39,7 @@ public class InventoryMenu implements Menu {
         this.gameState = g;
         this.gameState.setPaused(true);
         stage = new Stage();
-
+        Gdx.input.setInputProcessor(stage);
         BitmapFont font = new BitmapFont();
         Skin tempSkin = new Skin();
         tempSkin.add("default-font", font);
@@ -48,35 +48,50 @@ public class InventoryMenu implements Menu {
         //skin = new Skin(Gdx.files.internal("ui/pixthulhu-ui.json"));
         Gdx.input.setInputProcessor(stage);
         menu = new Table();
+
         menu.setFillParent(true);
+        menu.setDebug(true);
+        for(int i = 0; i < 3; i++){
+            Item goofyTemp = new Item("Goofy", "Temporary item");
+            player.addItem(goofyTemp);
+        }
+        int size = player.getInventory().size();
+        for(int i = 0; i < size; i++){
+            Item current = player.getInventory().get(i);
+            System.out.println(current.getName() + "-" + current.getDescription());
+            Label nameLabel = new Label(current.getName(), skin);
+            Label midLabel = new Label("-", skin);
+            Label descLabel = new Label(current.getDescription(), skin);
+            nameLabel.addListener(new ClickListener() {
+                @Override
+                public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                    // Put whatever you want the item to do here
+                    System.out.println("Label clicked at: " + x + ", " + y);
+                }
+            });
+
+            menu.add(nameLabel);
+            menu.add(midLabel);
+            menu.add(descLabel);
+            menu.row();
+        }
+        stage.addActor(menu);
 
     }
 
     @Override
     public void update(Set<InputEvent> inputEvents) {
+        stage.act(Gdx.graphics.getDeltaTime());
+        stage.draw();
         if(inputEvents.contains(InputEvent.Inventory)){
-            int size = player.getInventory().size();
-            for(int i = 0; i < size; i++){
-                Item current = player.getInventory().get(i);
-                System.out.println(current.getName() + "-------" + current.getDescription());
-
-                Label l = new Label(current.getName() + "-------" + current.getDescription(), skin);
-                l.addListener(new ClickListener() {
-                    @Override
-                    public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                        // Put whatever you want the item to do here
-                        System.out.println("Label clicked at: " + x + ", " + y);
-                    }
-                });
-
-                menu.add(l);
-            }
+            gameState.setMenu(null);
+            menu.remove();
+            this.gameState.setPaused(false);
         }
+
     }
 
     @Override
-    public void dispose() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    public void dispose() {stage.dispose();}
 
 }
