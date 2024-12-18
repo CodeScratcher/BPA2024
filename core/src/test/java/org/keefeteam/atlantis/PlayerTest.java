@@ -9,7 +9,9 @@ import org.keefeteam.atlantis.entities.Player;
 import org.keefeteam.atlantis.util.input.InputEvent;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -25,7 +27,7 @@ public class PlayerTest {
         GameState gameState = new GameState(entities);
 
 
-        List<InputEvent> inputs = new ArrayList<>();
+        Set<InputEvent> inputs = new HashSet<>();
 
         assertEquals(player.getPosition(), new WorldCoordinate(new Vector2(0, 0)));
 
