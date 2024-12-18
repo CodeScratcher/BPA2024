@@ -16,6 +16,16 @@ dependencies {
   testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
   testImplementation group: 'org.mockito', name: 'mockito-core', version: '5.14.2'
+  
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+  implementation 'com.fasterxml.jackson.core:jackson-core:2.18.2'
+  // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+  implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
+  // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
+  implementation 'com.fasterxml.jackson.core:jackson-annotations:2.18.2'
+
+
+
 }
 
 tasks.named('test') {

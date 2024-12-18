@@ -14,6 +14,7 @@ import org.keefeteam.atlantis.util.input.InputEvent;
 import org.keefeteam.atlantis.util.collision.Triangle;
 
 import java.util.*;
+import org.keefeteam.atlantis.util.TiledTilemapHandler;
 
 @Getter
 @Setter
@@ -21,6 +22,7 @@ import java.util.*;
 @AllArgsConstructor
 public class Tilemap implements Entity, Collider, Renderable {
     private Map<TileCoordinate, Tile> tiles = new HashMap<>();
+    private TiledTilemapHandler handler;
 
     public void addTiles(TileCoordinate coord, Tile tile) {
         tiles.put(coord, tile);
@@ -33,7 +35,7 @@ public class Tilemap implements Entity, Collider, Renderable {
     }
 
     public Tile getTileFromVector2(Vector2 point) {
-        Tile fauxTile = new Tile(new ArrayList<>(), null);
+        Tile fauxTile = new Tile(new ArrayList<>());
         return tiles.getOrDefault(coordFromVector2(point), fauxTile);
 
     }
@@ -87,8 +89,6 @@ public class Tilemap implements Entity, Collider, Renderable {
 
     @Override
     public void render(SpriteBatch batch) {
-        for (TileCoordinate key : tiles.keySet()) {
-            batch.draw(tiles.get(key).getTexture(), key.toWorldCoordinate().getCoord().x, key.toWorldCoordinate().getCoord().y);
-        }
+        handler.render(batch);
     }
 }

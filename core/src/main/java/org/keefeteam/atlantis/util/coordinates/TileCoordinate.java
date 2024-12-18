@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class TileCoordinate extends Coordinate {
     int x, y;
-    public static final float TILE_SIZE = 64.0f;
+    public static final float TILE_SIZE = 16.0f;
     @Override
     public WorldCoordinate toWorldCoordinate() {
         return new WorldCoordinate(new Vector2(x * TILE_SIZE,y * TILE_SIZE));

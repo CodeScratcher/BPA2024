@@ -16,6 +16,8 @@ import org.keefeteam.atlantis.util.input.InputEvent;
 import org.keefeteam.atlantis.util.collision.Triangle;
 
 import java.util.*;
+import org.keefeteam.atlantis.util.TiledTilemapHandler;
+import static org.keefeteam.atlantis.util.coordinates.TileCoordinate.TILE_SIZE;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
@@ -26,7 +28,6 @@ public class Main extends ApplicationAdapter {
     private Player player; // TODO REMOVE AND REPLACE LOGIC FOR RENDERING, JUST FOR TESTING
     private Controller controller;
     private ShapeRenderer sr;
-    private Tile testTile;
     private Camera theCamera;
 
     @Override
@@ -56,27 +57,22 @@ public class Main extends ApplicationAdapter {
         WorldCoordinate playerPosition = player.getPosition();
         theCamera = new Camera(playerPosition);
         entities.add(theCamera);
-
+        
         Vector2 p1 = new Vector2(0, 0);
-        Vector2 p2 = new Vector2(p1.x + 64, p1.y);
-        Vector2 p3 = new Vector2(p1.x, p1.y + 64);
+        Vector2 p2 = new Vector2(p1.x + TILE_SIZE, p1.y);
+        Vector2 p3 = new Vector2(p1.x, p1.y + TILE_SIZE);
         Vector2 p4 = new Vector2(p2.x, p3.y);
 
         List<Triangle> tris = new ArrayList<>();
         tris.add(new Triangle(p1, p2, p3));
         tris.add(new Triangle(p2, p3, p4));
+        
+        TiledTilemapHandler handler = new TiledTilemapHandler();
+        handler.readFile("tileset/test.tmx");
+        entities.add(handler.createTilemap());
+        
 
-        testTile = new Tile(tris, img2);
-
-        Map<TileCoordinate, Tile> tiles = new HashMap<>();
-        tiles.put(new TileCoordinate(1, 1), testTile);
-        tiles.put(new TileCoordinate(1, 2), testTile);
-        tiles.put(new TileCoordinate(2, 1), testTile);
-
-        Tilemap tilemap = new Tilemap(tiles);
-
-        entities.add(tilemap);
-
+      
         InteractZone interactZone = new InteractZone(new TileCoordinate(2, 2), tris, (gameState, player) -> {
             DialogueMenu test = new DialogueMenu("scubi jew");
             gameState.setMenu(test);

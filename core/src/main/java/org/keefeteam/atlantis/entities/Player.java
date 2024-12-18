@@ -15,6 +15,7 @@ import org.keefeteam.atlantis.util.collision.Triangle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import static org.keefeteam.atlantis.util.coordinates.TileCoordinate.TILE_SIZE;
 
 @RequiredArgsConstructor
 @AllArgsConstructor

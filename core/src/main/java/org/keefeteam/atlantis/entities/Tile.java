@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class Tile {
     private final List<Triangle> colliders;
-    private Texture texture;
 
     public List<Triangle> getTriangles(TileCoordinate tileCoordinate) {
         System.out.println(colliders);
