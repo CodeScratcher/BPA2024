@@ -63,7 +63,7 @@ public class InventoryMenu implements Menu {
                 Label l = new Label(current.getName() + "-------" + current.getDescription(), skin);
                 l.addListener(new ClickListener() {
                     @Override
-                    public void clicked(InputEvent event, float x, float y) {
+                    public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                         // Put whatever you want the item to do here
                         System.out.println("Label clicked at: " + x + ", " + y);
                     }
