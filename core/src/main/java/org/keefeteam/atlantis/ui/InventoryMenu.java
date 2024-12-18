@@ -61,7 +61,7 @@ public class InventoryMenu implements Menu {
                 System.out.println(current.getName() + "-------" + current.getDescription());
                 Label l = new Label(current.getName() + "-------" + current.getDescription(), skin);
                 l.addListener(new ClickListener() {
-                    public void clicked(InputEvent event, float x, float y) {
+                    public void itemClicked() {
                         //put whatever we want to have the item do here, I do not know what
                     }
                 });
