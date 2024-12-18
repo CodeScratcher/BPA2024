@@ -26,6 +26,7 @@ import org.keefeteam.atlantis.entities.Renderable;
 import org.keefeteam.atlantis.entities.Tile;
 import org.keefeteam.atlantis.entities.Tilemap;
 import org.keefeteam.atlantis.util.collision.Triangle;
+import org.keefeteam.atlantis.util.coordinates.Camera;
 import org.keefeteam.atlantis.util.coordinates.TileCoordinate;
 import static org.keefeteam.atlantis.util.coordinates.TileCoordinate.TILE_SIZE;
 import org.keefeteam.atlantis.util.input.InputEvent;
@@ -40,11 +41,13 @@ import org.keefeteam.atlantis.util.input.InputEvent;
 public class TiledTilemapHandler implements Renderable {
     TiledMap map;
     OrthogonalTiledMapRenderer renderer;
+    Camera camera;
     
-    public void readFile(String url) {
+    public void initialize(String url, SpriteBatch batch, Camera camera) {
         map = new TmxMapLoader().load(url);
-        float unitScale = 1 / 16f;
-        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+        float unitScale = 1f;
+        renderer = new OrthogonalTiledMapRenderer(map, unitScale, batch);
+        this.camera = camera;
     }
     
     public Tilemap createTilemap() {
@@ -76,6 +79,8 @@ public class TiledTilemapHandler implements Renderable {
 
     @Override
     public void render(SpriteBatch batch) {
-        renderer.render();
+        renderer.setView(camera.getCamera());
+        renderer.renderTileLayer((TiledMapTileLayer)map.getLayers().get(0));
+        renderer.renderTileLayer((TiledMapTileLayer)map.getLayers().get(1));
     }
 }

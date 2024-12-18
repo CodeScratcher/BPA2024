@@ -29,7 +29,8 @@ public class Main extends ApplicationAdapter {
     private Controller controller;
     private ShapeRenderer sr;
     private Camera theCamera;
-
+    private TiledTilemapHandler handler;
+    
     @Override
     public void create() {
 
@@ -46,7 +47,6 @@ public class Main extends ApplicationAdapter {
         player = new Player(img2);
 
         entities = new ArrayList<>();
-        entities.add(player);
 
         /*
         Enemy enemy = new Enemy(new WorldCoordinate(new Vector2(300,  300)), img2, null);
@@ -67,9 +67,11 @@ public class Main extends ApplicationAdapter {
         tris.add(new Triangle(p1, p2, p3));
         tris.add(new Triangle(p2, p3, p4));
         
-        TiledTilemapHandler handler = new TiledTilemapHandler();
-        handler.readFile("tileset/test.tmx");
+        handler = new TiledTilemapHandler();
+        handler.initialize("tileset/test.tmx", batch, theCamera);
         entities.add(handler.createTilemap());
+        entities.add(player);
+
         
 
       
@@ -97,6 +99,7 @@ public class Main extends ApplicationAdapter {
 
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         batch.setProjectionMatrix(theCamera.getCamera().combined);
+        
         batch.begin();
         gameState.render(batch);
         batch.end();
