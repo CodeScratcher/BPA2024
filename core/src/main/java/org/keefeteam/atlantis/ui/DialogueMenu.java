@@ -59,6 +59,7 @@ public class DialogueMenu implements Menu {
         textLabel = new Label(firstOutput, skin);
 
         table.add(textLabel);
+        table.setFillParent(true);
         stage.addActor(table);
     }
 
@@ -78,17 +79,16 @@ public class DialogueMenu implements Menu {
                     textFinished = true;
                 }
                 String newValue = text.substring(textIndexOne, textIndexTwo);
-
-                stage.getActors().removeValue(table, true);
-
+                table.remove(); // Safely remove the old table
                 textLabel = new Label(newValue, skin);
                 table = new Table();
+                table.setFillParent(true);
                 table.add(textLabel);
                 stage.addActor(table);
             }
             else{
                 //Destroy label
-                stage.getActors().removeValue(table, true);
+                table.remove();
                 this.gameState.setPaused(false);
             }
         }
