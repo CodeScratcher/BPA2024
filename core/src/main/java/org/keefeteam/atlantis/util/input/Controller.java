@@ -33,7 +33,7 @@ public class Controller {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             events.add(InputEvent.UIConfirm);
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             events.add(InputEvent.Inventory);
         }
         return events;

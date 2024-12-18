@@ -5,6 +5,7 @@
 package org.keefeteam.atlantis.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -31,6 +32,8 @@ public class InventoryMenu implements Menu {
     private Skin skin;
     private Table menu;
     private boolean fframe;
+    private boolean submenu;
+    private Label controlsLabel;
     public InventoryMenu(Player player) {
         this.player = player;
     }
@@ -38,6 +41,7 @@ public class InventoryMenu implements Menu {
     @Override
     public void initialize(GameState g) {
         this.fframe = true;
+        this.submenu = false;
         this.gameState = g;
         this.gameState.setPaused(true);
         stage = new Stage();
@@ -47,11 +51,16 @@ public class InventoryMenu implements Menu {
         tempSkin.add("default-font", font);
         tempSkin.add("default", new Label.LabelStyle(font, Color.WHITE));
         skin = tempSkin;
+        controlsLabel = new Label("Press Esc to Return", skin);
         //skin = new Skin(Gdx.files.internal("ui/pixthulhu-ui.json"));
         Gdx.input.setInputProcessor(stage);
         menu = new Table();
 
         menu.setFillParent(true);
+
+        menu.add(controlsLabel);
+        menu.row();
+
         //adds three temporary items to the inventory for debugger purposes
         for(int i = 0; i < 3; i++){
             Item goofyTemp = new Item("Goofy", "Temporary item");
@@ -62,19 +71,22 @@ public class InventoryMenu implements Menu {
             Item current = player.getInventory().get(i);
             System.out.println(current.getName() + "-" + current.getDescription());
             Label nameLabel = new Label(current.getName(), skin);
-            Label midLabel = new Label("-", skin);
-            Label descLabel = new Label(current.getDescription(), skin);
+
             nameLabel.addListener(new ClickListener() {
                 @Override
                 public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                     // Put whatever you want the item to do here
                     System.out.println("Label clicked at: " + x + ", " + y);
+
+                    Label descLabel = new Label(current.getDescription(), skin);
+                    menu.clear();
+                    menu.add(controlsLabel);
+                    menu.row();
+                    menu.add(descLabel);
+                    submenu = true;
                 }
             });
-
             menu.add(nameLabel);
-            menu.add(midLabel);
-            menu.add(descLabel);
             menu.row();
         }
         stage.addActor(menu);
@@ -86,9 +98,15 @@ public class InventoryMenu implements Menu {
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
         if(inputEvents.contains(InputEvent.Inventory) && !fframe){
-            gameState.setMenu(null);
-            menu.remove();
-            this.gameState.setPaused(false);
+            if(submenu){
+                initialize(gameState);
+            }
+            else{
+                gameState.setMenu(null);
+                menu.remove();
+                this.gameState.setPaused(false);
+            }
+
         }
         fframe = false;
     }
