@@ -35,7 +35,7 @@ public class Player implements Entity, Renderable {
 
     @Getter
     @Setter
-    public List<Item> inventory = new ArrayList<>();
+    private List<Item> inventory = new ArrayList<>();
 
     public List<Triangle> getTris() {
         return getTris(position.getCoord());
