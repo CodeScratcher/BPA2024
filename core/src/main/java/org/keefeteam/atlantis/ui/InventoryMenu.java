@@ -59,12 +59,17 @@ public class InventoryMenu implements Menu {
             for(int i = 0; i < size; i++){
                 Item current = player.getInventory().get(i);
                 System.out.println(current.getName() + "-------" + current.getDescription());
+
                 Label l = new Label(current.getName() + "-------" + current.getDescription(), skin);
                 l.addListener(new ClickListener() {
-                    public void itemClicked() {
-                        //put whatever we want to have the item do here, I do not know what
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        // Put whatever you want the item to do here
+                        System.out.println("Label clicked at: " + x + ", " + y);
                     }
                 });
+
+                menu.add(l);
             }
         }
     }
