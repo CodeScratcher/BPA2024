@@ -9,12 +9,15 @@ CREATE TABLE IF NOT EXISTS Items (
     texture VARCHAR(20)
 );
 
+DROP TABLE IF EXISTS Recipes;
+
 CREATE TABLE IF NOT EXISTS Recipes (
-    result_id INTEGER NOT NULL PRIMARY KEY,
+    recipe_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     item_id INTEGER NOT NULL,
     combines_with_id INTEGER NOT NULL,
+    result_id INTEGER NOT NULL,
     uses INTEGER DEFAULT 1 NOT NULL,
-    idkWhatThisIsforOliver INTEGER DEFAULT 0 NOT NULL,
+    drops INTEGER DEFAULT 0 NOT NULL,
     FOREIGN KEY (item_id) REFERENCES Items (id),
     FOREIGN KEY (combines_with_id) REFERENCES Items (id),
     FOREIGN KEY (result_id) REFERENCES Items (id)
@@ -47,17 +50,45 @@ INSERT INTO Items (name, description, texture) VALUES
 -- 12
 ('Bronze Key', 'The tablet is inserted into the apparatus, showing the same characters as the dials, and opening a hatch in the bottom with a bronze key.', 'bronze_key'),
 -- 13
-('Raw Meat', 'Tasty when cooked, unless you are a caveman.', 'meat'),
+('Raw Meat', 'Slimy, Mushy Meat. Tasty when cooked, unless you are a caveman.', 'raw_meat'),
 -- 14
-('', '', ''),
+('Flint', 'Mineral, not very useful, aside from using to start fires', 'flint'),
 -- 15
-('', '', ''),
+('Unlit Torch', 'Useful for lighting up corridors, and for starting fires.', 'unlit_torch'),
 -- 16
-('', '', '');
+('Cooked Meat', 'Seared "Steak". Can give you a second wind.', 'cooked_meat'),
+-- 17
+('Cooked Eye', 'Something is very, very wrong with you.', 'cooked_eye'),
+-- 18
+('Lit Torch', 'Lit up for a few minutes, usable to cook things or burn things.', 'lit_torch');
 
-INSERT INTO Recipes (item_id, combines_with_id, result_id, uses, idkWhatThisIsforOliver) VALUES
-(2, 2, 5, 1, 0), -- Key Half + Key Half = Full Key
-(1, 3, 6, 2, 0), -- Drift Wood + Eye = Makeshift Sword
+INSERT INTO Recipes (item_id, combines_with_id, result_id, uses, drops) VALUES
+(2, 2, 5, 1, 0),  -- Key Half + Key Half = Full Key
+(1, 4, 6, 20, 0), -- Drift Wood + Eye = Makeshift Sword
+(14, 4, 17, 2, 0), -- Flint + Eye = Cooked Eye
+(18, 4, 17, 2, 1), -- Lit Torch + Eye = Cooked Eye
 (7, 8, 9, 30, 0), -- Scale + Cloth = Scale Armor
-(10, 11, 12, 1, 0); -- Bronze Device + Stone Tablet = Bronze Key
+(10, 11, 12, 1, 0), -- Bronze Device + Stone Tablet = Bronze Key
+(18, 13, 16, 10, 0), -- Lit Torch + Raw Meat = Cooked Meat
+(1, 14, 15, 1, 0), -- Drift Wood + Flint = Unlit Torch
+(14, 15, 18, 5, 0); -- Flint + Unlit Torch = Lit Torch
 
+
+
+
+
+SELECT * FROM ITEMS;
+SELECT * FROM RECIPES;
+SELECT
+    r.recipe_id AS RecipeID,
+    i1.name AS Item,
+    i2.name AS Combines,
+    i3.name AS Result
+FROM
+    Recipes r
+JOIN
+    Items i1 ON r.item_id = i1.id
+JOIN
+    Items i2 ON r.combines_with_id = i2.id
+JOIN
+    Items i3 ON r.result_id = i3.id;
