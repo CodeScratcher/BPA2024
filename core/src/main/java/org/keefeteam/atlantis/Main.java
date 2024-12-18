@@ -15,10 +15,7 @@ import org.keefeteam.atlantis.util.input.Controller;
 import org.keefeteam.atlantis.util.input.InputEvent;
 import org.keefeteam.atlantis.util.collision.Triangle;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
@@ -98,7 +95,7 @@ public class Main extends ApplicationAdapter {
         // https://gameprogrammingpatterns.com/game-loop.html
         // https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
         // Render happens once per frame, so thank god we don't have to handle the full loop, just the internals
-        List<InputEvent> eventList = controller.getEvents();
+        Set<InputEvent> eventList = controller.getEvents();
 
         if (!gameState.isPaused()) gameState.update(eventList);
 

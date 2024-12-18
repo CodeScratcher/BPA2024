@@ -9,6 +9,7 @@ import org.keefeteam.atlantis.entities.Player;
 import org.keefeteam.atlantis.util.input.InputEvent;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -27,7 +28,7 @@ public class InventoryMenu implements Menu {
     }
 
     @Override
-    public void update(List<InputEvent> inputEvents) {
+    public void update(Set<InputEvent> inputEvents) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

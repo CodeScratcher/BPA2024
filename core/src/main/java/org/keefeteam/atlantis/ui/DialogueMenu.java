@@ -64,7 +64,7 @@ public class DialogueMenu implements Menu {
     }
 
     @Override
-    public void update(List<InputEvent> inputEvents) {
+    public void update(Set<InputEvent> inputEvents) {
         if (Gdx.input.isKeyPressed(Input.Keys.E)) {
             System.out.println(this.text);
         }

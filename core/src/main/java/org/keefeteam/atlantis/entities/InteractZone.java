@@ -55,7 +55,7 @@ public class InteractZone implements Collider, Entity {
     }
 
     @Override
-    public void update(GameState gameState, List<InputEvent> events) {
+    public void update(GameState gameState, Set<InputEvent> events) {
 
     }
 

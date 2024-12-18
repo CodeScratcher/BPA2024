@@ -6,5 +6,6 @@ public enum InputEvent {
     Up,
     Down,
     Interact,
-    UIConfirm
+    UIConfirm,
+    Inventory,
 }

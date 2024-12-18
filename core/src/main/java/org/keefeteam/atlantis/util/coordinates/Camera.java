@@ -8,7 +8,8 @@ import org.keefeteam.atlantis.entities.Entity;
 import org.keefeteam.atlantis.GameState;
 import org.keefeteam.atlantis.util.input.InputEvent;
 
-import java.util.List;
+import java.util.Set;
+
 @Getter
 public class Camera implements Entity {
     private int follow;
@@ -19,7 +20,7 @@ public class Camera implements Entity {
         this.pos = playerPos;
         camera = new OrthographicCamera();
     }
-    public void update(GameState gameState, List<InputEvent> events){
+    public void update(GameState gameState, Set<InputEvent> events){
 
         Vector2 camCoords = pos.getCoord();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());  // Set the width and height

@@ -12,6 +12,7 @@ import org.keefeteam.atlantis.ui.Menu;
 import org.keefeteam.atlantis.util.input.InputEvent;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,7 +23,7 @@ public class GameState {
     private float delta = 0.0f;
     private boolean paused = false;
 
-    public void update(List<InputEvent> events) {
+    public void update(Set<InputEvent> events) {
         delta = Gdx.graphics.getDeltaTime();
 
         for (Entity entity : entities) {

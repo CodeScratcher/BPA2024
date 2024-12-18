@@ -80,7 +80,7 @@ public class Tilemap implements Entity, Collider, Renderable {
     }
 
     @Override
-    public void update(GameState gameState, List<InputEvent> events) {
+    public void update(GameState gameState, Set<InputEvent> events) {
 
     }
 

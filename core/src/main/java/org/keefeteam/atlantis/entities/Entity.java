@@ -1,5 +1,6 @@
 package org.keefeteam.atlantis.entities;
 import java.util.List;
+import java.util.Set;
 
 import org.keefeteam.atlantis.GameState;
 import org.keefeteam.atlantis.util.input.InputEvent;
@@ -13,5 +14,6 @@ public interface Entity {
      * @param gameState The current state of the game
      * @param events Input events
      */
-    void update(GameState gameState, List<InputEvent> events);
+    void update(GameState gameState, Set<InputEvent> events);
 }
+
