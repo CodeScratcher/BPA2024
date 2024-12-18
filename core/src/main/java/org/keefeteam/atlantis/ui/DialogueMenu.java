@@ -89,6 +89,7 @@ public class DialogueMenu implements Menu {
             else{
                 //Destroy label
                 table.remove();
+                gameState.setMenu(null);
                 this.gameState.setPaused(false);
             }
         }

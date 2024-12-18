@@ -139,8 +139,12 @@ public class Player implements Entity, Renderable {
         return posChange;
     }
 
+
     @Override
     public void render(SpriteBatch batch) {
         batch.draw(texture, position.getCoord().x, position.getCoord().y);
+    }
+    public void addItem(Item a){
+        this.inventory.add(a);
     }
 }
