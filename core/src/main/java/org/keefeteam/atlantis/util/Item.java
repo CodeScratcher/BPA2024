@@ -11,6 +11,7 @@ import java.util.Map;
 @Setter
 @EqualsAndHashCode
 public class Item {
+    private String name;
     private String description;
     private Texture picture;
     private Map<Item, Item> recipes;
