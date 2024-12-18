@@ -1,12 +1,12 @@
-
+DROP DATABASE items;
 CREATE DATABASE IF NOT EXISTS items;
 USE items;
 
 CREATE TABLE IF NOT EXISTS Items (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    name TEXT NOT NULL,
-    description TEXT,
-    texture TEXT
+    name VARCHAR(20) NOT NULL,
+    description VARCHAR(200),
+    texture VARCHAR(20)
 );
 
 CREATE TABLE IF NOT EXISTS Recipes (
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS Recipes (
     item_id INTEGER NOT NULL,
     combines_with_id INTEGER NOT NULL,
     uses INTEGER DEFAULT 1 NOT NULL,
-    brian INTEGER DEFAULT 0 NOT NULL,
+    idkWhatThisIsforOliver INTEGER DEFAULT 0 NOT NULL,
     FOREIGN KEY (item_id) REFERENCES Items (id),
     FOREIGN KEY (combines_with_id) REFERENCES Items (id),
     FOREIGN KEY (result_id) REFERENCES Items (id)
@@ -25,7 +25,7 @@ INSERT INTO Items (name, description, texture) VALUES
 -- 1
 ('Drift Wood', 'A weak bit of driftwood, fairly dry, somehow.', 'drift_wood'),
 -- 2
-('Key Half', 'Half a key, likely broken by the passage of time.', 'drift_wood'),
+('Key Half', 'Half a key, likely broken by the passage of time.', 'key_half'),
 -- 3
 ('Rubble Chunk', 'A solid chunk of rubble, likely collapsed from the wall or ceiling.', 'rubble'),
 -- 4
@@ -47,7 +47,7 @@ INSERT INTO Items (name, description, texture) VALUES
 -- 12
 ('Bronze Key', 'The tablet is inserted into the apparatus, showing the same characters as the dials, and opening a hatch in the bottom with a bronze key.', 'bronze_key'),
 -- 13
-('', '', ''),
+('Raw Meat', 'Tasty when cooked, unless you are a caveman.', 'meat'),
 -- 14
 ('', '', ''),
 -- 15
@@ -55,8 +55,9 @@ INSERT INTO Items (name, description, texture) VALUES
 -- 16
 ('', '', '');
 
-INSERT INTO Recipes (item_id, combines_with_id, result_id, uses, brian) VALUES
+INSERT INTO Recipes (item_id, combines_with_id, result_id, uses, idkWhatThisIsforOliver) VALUES
 (2, 2, 5, 1, 0), -- Key Half + Key Half = Full Key
 (1, 3, 6, 2, 0), -- Drift Wood + Eye = Makeshift Sword
 (7, 8, 9, 30, 0), -- Scale + Cloth = Scale Armor
 (10, 11, 12, 1, 0); -- Bronze Device + Stone Tablet = Bronze Key
+

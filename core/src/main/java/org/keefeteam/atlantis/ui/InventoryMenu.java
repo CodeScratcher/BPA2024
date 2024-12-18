@@ -30,12 +30,14 @@ public class InventoryMenu implements Menu {
     private Stage stage;
     private Skin skin;
     private Table menu;
+    private boolean fframe;
     public InventoryMenu(Player player) {
         this.player = player;
     }
 
     @Override
     public void initialize(GameState g) {
+        this.fframe = true;
         this.gameState = g;
         this.gameState.setPaused(true);
         stage = new Stage();
@@ -50,7 +52,7 @@ public class InventoryMenu implements Menu {
         menu = new Table();
 
         menu.setFillParent(true);
-        menu.setDebug(true);
+        //adds three temporary items to the inventory for debugger purposes
         for(int i = 0; i < 3; i++){
             Item goofyTemp = new Item("Goofy", "Temporary item");
             player.addItem(goofyTemp);
@@ -83,12 +85,12 @@ public class InventoryMenu implements Menu {
     public void update(Set<InputEvent> inputEvents) {
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
-        if(inputEvents.contains(InputEvent.Inventory)){
+        if(inputEvents.contains(InputEvent.Inventory) && !fframe){
             gameState.setMenu(null);
             menu.remove();
             this.gameState.setPaused(false);
         }
-
+        fframe = false;
     }
 
     @Override

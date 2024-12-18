@@ -43,5 +43,6 @@ public class GameState {
         if (this.menu != null) this.menu.dispose();
         if (menu != null) menu.initialize(this);
         this.menu = menu;
+        System.out.println(this.menu == null);
     }
 }
