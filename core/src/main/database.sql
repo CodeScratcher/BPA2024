@@ -1,3 +1,4 @@
+@ -0,0 +1,63 @@
 CREATE DATABASE IF NOT EXISTS items;
 USE items;
 
@@ -61,4 +62,3 @@ INSERT INTO Recipes (item_id, combines_with_id, result_id, uses, return) VALUES
 (10, 11, 12, 1, 0) -- Bronze Device + Stone Tablet = Bronze Key
 (, , , , )
 (, , , , )
---
