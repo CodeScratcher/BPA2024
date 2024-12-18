@@ -1,18 +1,20 @@
-package org.keefeteam.atlantis;
+package org.keefeteam.atlantis.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import lombok.*;
-import org.keefeteam.atlantis.coordinates.WorldCoordinate;
-import org.keefeteam.atlantis.util.Triangle;
-import org.w3c.dom.DOMStringList;
+import org.keefeteam.atlantis.*;
+import org.keefeteam.atlantis.util.coordinates.WorldCoordinate;
+import org.keefeteam.atlantis.util.collision.Collider;
+import org.keefeteam.atlantis.util.input.InputEvent;
+import org.keefeteam.atlantis.util.collision.Triangle;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static org.keefeteam.atlantis.Player.PLAYER_SPEED;
+import static org.keefeteam.atlantis.entities.Player.PLAYER_SPEED;
 
 @RequiredArgsConstructor
 @AllArgsConstructor

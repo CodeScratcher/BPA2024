@@ -6,9 +6,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
-import org.keefeteam.atlantis.coordinates.TileCoordinate;
-import org.keefeteam.atlantis.coordinates.WorldCoordinate;
-import org.keefeteam.atlantis.util.Triangle;
+import org.keefeteam.atlantis.util.coordinates.TileCoordinate;
+import org.keefeteam.atlantis.util.coordinates.WorldCoordinate;
+import org.keefeteam.atlantis.entities.*;
+import org.keefeteam.atlantis.ui.DialogueMenu;
+import org.keefeteam.atlantis.util.coordinates.Camera;
+import org.keefeteam.atlantis.util.input.Controller;
+import org.keefeteam.atlantis.util.input.InputEvent;
+import org.keefeteam.atlantis.util.collision.Triangle;
 
 import java.util.ArrayList;
 import java.util.HashMap;

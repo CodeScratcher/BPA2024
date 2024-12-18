@@ -1,4 +1,4 @@
-package org.keefeteam.atlantis;
+package org.keefeteam.atlantis.util.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

@@ -1,4 +1,4 @@
-package org.keefeteam.atlantis.coordinates;
+package org.keefeteam.atlantis.util.coordinates;
 
 import com.badlogic.gdx.math.Vector2;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,7 @@
-package org.keefeteam.atlantis;
+package org.keefeteam.atlantis.ui;
+
+import org.keefeteam.atlantis.GameState;
+import org.keefeteam.atlantis.util.input.InputEvent;
 
 import java.util.List;
 

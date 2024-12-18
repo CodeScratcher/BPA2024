@@ -1,16 +1,16 @@
-package org.keefeteam.atlantis;
+package org.keefeteam.atlantis.util.coordinates;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import lombok.Getter;
-import org.keefeteam.atlantis.coordinates.WorldCoordinate;
+import org.keefeteam.atlantis.entities.Entity;
+import org.keefeteam.atlantis.GameState;
+import org.keefeteam.atlantis.util.input.InputEvent;
 
-import java.time.OffsetTime;
 import java.util.List;
 @Getter
-public class Camera implements Entity{
+public class Camera implements Entity {
     private int follow;
     private WorldCoordinate pos;
     private OrthographicCamera camera;

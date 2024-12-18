@@ -1,4 +1,4 @@
-package org.keefeteam.atlantis.coordinates;
+package org.keefeteam.atlantis.util.coordinates;
 
 public abstract class Coordinate {
     public abstract WorldCoordinate toWorldCoordinate();

@@ -3,14 +3,13 @@ package org.keefeteam.atlantis;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import org.junit.jupiter.api.Test;
-import org.keefeteam.atlantis.coordinates.TileCoordinate;
-import org.keefeteam.atlantis.util.Triangle;
-import org.mockito.Mock;
+import org.keefeteam.atlantis.util.coordinates.TileCoordinate;
+import org.keefeteam.atlantis.entities.Tile;
+import org.keefeteam.atlantis.entities.Tilemap;
+import org.keefeteam.atlantis.util.collision.Triangle;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;

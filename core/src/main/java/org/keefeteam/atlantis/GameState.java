@@ -2,12 +2,14 @@ package org.keefeteam.atlantis;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.keefeteam.atlantis.entities.Entity;
+import org.keefeteam.atlantis.entities.Renderable;
+import org.keefeteam.atlantis.ui.Menu;
+import org.keefeteam.atlantis.util.input.InputEvent;
 
 import java.util.List;
 

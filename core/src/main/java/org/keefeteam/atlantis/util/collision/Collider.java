@@ -1,6 +1,4 @@
-package org.keefeteam.atlantis;
-
-import org.keefeteam.atlantis.util.Triangle;
+package org.keefeteam.atlantis.util.collision;
 
 import java.util.List;
 import java.util.Set;

@@ -1,4 +1,4 @@
-package org.keefeteam.atlantis.util;
+package org.keefeteam.atlantis.util.collision;
 
 import com.badlogic.gdx.math.Vector2;
 import lombok.Getter;

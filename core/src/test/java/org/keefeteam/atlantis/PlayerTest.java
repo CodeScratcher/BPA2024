@@ -3,7 +3,10 @@ package org.keefeteam.atlantis;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import org.junit.jupiter.api.Test;
-import org.keefeteam.atlantis.coordinates.WorldCoordinate;
+import org.keefeteam.atlantis.util.coordinates.WorldCoordinate;
+import org.keefeteam.atlantis.entities.Entity;
+import org.keefeteam.atlantis.entities.Player;
+import org.keefeteam.atlantis.util.input.InputEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +55,7 @@ public class PlayerTest {
         player.update(gameState, inputs);
 
         assertEquals(player.getPosition(), new WorldCoordinate(new Vector2(-Player.PLAYER_SPEED, 0)));
-        
+
 
         player.update(gameState, inputs);
 

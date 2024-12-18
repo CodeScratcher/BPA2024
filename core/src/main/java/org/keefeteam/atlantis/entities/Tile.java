@@ -1,16 +1,13 @@
-package org.keefeteam.atlantis;
+package org.keefeteam.atlantis.entities;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.keefeteam.atlantis.coordinates.TileCoordinate;
-import org.keefeteam.atlantis.util.Triangle;
+import org.keefeteam.atlantis.util.coordinates.TileCoordinate;
+import org.keefeteam.atlantis.util.collision.Triangle;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor

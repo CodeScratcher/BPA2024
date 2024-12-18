@@ -1,7 +1,8 @@
-package org.keefeteam.atlantis;
+package org.keefeteam.atlantis.entities;
 import java.util.List;
 
-import com.badlogic.gdx.Game;
+import org.keefeteam.atlantis.GameState;
+import org.keefeteam.atlantis.util.input.InputEvent;
 
 /**
  * An interface defining something which updates over time

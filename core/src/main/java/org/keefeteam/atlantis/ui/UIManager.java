@@ -1,11 +1,11 @@
-package org.keefeteam.atlantis;
+package org.keefeteam.atlantis.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import org.keefeteam.atlantis.util.input.InputEvent;
 
 import java.util.List;
 

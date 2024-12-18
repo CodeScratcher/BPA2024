@@ -1,4 +1,4 @@
-package org.keefeteam.atlantis;
+package org.keefeteam.atlantis.util;
 
 import com.badlogic.gdx.graphics.Texture;
 import lombok.EqualsAndHashCode;

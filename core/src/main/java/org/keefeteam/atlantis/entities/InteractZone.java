@@ -1,19 +1,18 @@
-package org.keefeteam.atlantis;
+package org.keefeteam.atlantis.entities;
 
 import com.badlogic.gdx.math.Vector2;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.keefeteam.atlantis.coordinates.WorldCoordinate;
-import org.keefeteam.atlantis.util.Triangle;
+import org.keefeteam.atlantis.GameState;
+import org.keefeteam.atlantis.util.collision.Collider;
+import org.keefeteam.atlantis.util.input.InputEvent;
+import org.keefeteam.atlantis.util.collision.Triangle;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.Vector;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import org.keefeteam.atlantis.coordinates.Coordinate;
+
+import org.keefeteam.atlantis.util.coordinates.Coordinate;
 
 @Getter
 @Setter
@@ -21,13 +20,13 @@ import org.keefeteam.atlantis.coordinates.Coordinate;
 public class InteractZone implements Collider, Entity {
 
     @FunctionalInterface
-    interface InteractFunction {
+    public interface InteractFunction {
         void call(GameState state, Player player);
     }
 
-    Coordinate position;
-    List<Triangle> triangles;
-    InteractFunction onInteract;
+    private Coordinate position;
+    private List<Triangle> triangles;
+    private InteractFunction onInteract;
 
     public List<Triangle> getTris() {
         return getTris(position.toWorldCoordinate().getCoord());

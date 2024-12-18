@@ -2,6 +2,7 @@ package org.keefeteam.atlantis.util;
 
 import com.badlogic.gdx.math.Vector2;
 import org.junit.jupiter.api.Test;
+import org.keefeteam.atlantis.util.collision.Triangle;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

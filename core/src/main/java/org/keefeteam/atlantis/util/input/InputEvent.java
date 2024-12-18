@@ -1,4 +1,4 @@
-package org.keefeteam.atlantis;
+package org.keefeteam.atlantis.util.input;
 
 public enum InputEvent {
     Left,

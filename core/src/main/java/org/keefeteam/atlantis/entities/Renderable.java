@@ -1,4 +1,4 @@
-package org.keefeteam.atlantis;
+package org.keefeteam.atlantis.entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
