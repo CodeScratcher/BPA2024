@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import org.keefeteam.atlantis.GameState;
 import org.keefeteam.atlantis.entities.Player;
+import org.keefeteam.atlantis.util.ClickableLabel;
 import org.keefeteam.atlantis.util.Item;
 import org.keefeteam.atlantis.util.input.InputEvent;
 
@@ -34,9 +35,8 @@ public class InventoryMenu implements Menu {
     private boolean fframe;
     private boolean submenu;
     private Label controlsLabel;
-    private  Label descLabel;
+    private  ClickableLabel descLabel;
     private boolean isHover;
-    private boolean isClicked;
     public InventoryMenu(Player player) {
         this.player = player;
     }
@@ -75,23 +75,30 @@ public class InventoryMenu implements Menu {
         for(int i = 0; i < size; i++){
             Item current = player.getInventory().get(i);
             System.out.println(current.getName() + "-" + current.getDescription());
-            Label nameLabel = new Label(current.getName(), skin);
+            ClickableLabel nameLabel = new ClickableLabel(current.getName(), skin);
 
             nameLabel.addListener(new ClickListener() {
                 @Override
                 public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                     // Put whatever you want the item to do here
                     System.out.println("Label clicked at: " + x + ", " + y);
-                    nameLabel.setColor(Color.RED);
+                    if(!nameLabel.getIsClicked()){
+                        nameLabel.setIsClicked(true);
+                        nameLabel.setColor(Color.RED);
+                    }
+                    else{
+                        nameLabel.setIsClicked(false);
+                        nameLabel.setColor(Color.WHITE);
+                    }
                 }
             });
             nameLabel.addListener(new InputListener() {
                 @Override
                 public boolean mouseMoved(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                    if(!isHover){
+                    if(!isHover && !nameLabel.getIsClicked()){
                         nameLabel.setColor(Color.BLUE);
                         descMenu.row();
-                        descLabel = new Label(current.getDescription(), skin);
+                        descLabel = new ClickableLabel(current.getDescription(), skin);
                         descMenu.add(descLabel).padLeft(150);
                     }
                     isHover = true;
@@ -100,7 +107,9 @@ public class InventoryMenu implements Menu {
 
                 @Override
                 public void exit(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y, int pointer, Actor toActor) {
-                    nameLabel.setColor(Color.WHITE);
+                    if (!nameLabel.getIsClicked()) { // Only reset color if not clicked
+                        nameLabel.setColor(Color.WHITE);
+                    }
                     //descLabel = new Label("", skin);
                     descMenu.removeActor(descLabel);
                     isHover = false;
