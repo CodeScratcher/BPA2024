@@ -32,7 +32,7 @@ public class DialogueMenu implements Menu {
 
     @Override
     public void initialize(GameState g) {
-        maxLength = 5;
+        maxLength = 50;
         this.gameState = g;
         this.gameState.setPaused(true);
         stage = new Stage();

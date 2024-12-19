@@ -30,7 +30,7 @@ public class Main extends ApplicationAdapter {
     private ShapeRenderer sr;
     private Camera theCamera;
     private TiledTilemapHandler handler;
-    
+
     @Override
     public void create() {
 
@@ -57,7 +57,7 @@ public class Main extends ApplicationAdapter {
         WorldCoordinate playerPosition = player.getPosition();
         theCamera = new Camera(playerPosition);
         entities.add(theCamera);
-        
+
         Vector2 p1 = new Vector2(0, 0);
         Vector2 p2 = new Vector2(p1.x + TILE_SIZE, p1.y);
         Vector2 p3 = new Vector2(p1.x, p1.y + TILE_SIZE);
@@ -66,17 +66,18 @@ public class Main extends ApplicationAdapter {
         List<Triangle> tris = new ArrayList<>();
         tris.add(new Triangle(p1, p2, p3));
         tris.add(new Triangle(p2, p3, p4));
-        
+
         handler = new TiledTilemapHandler();
         handler.initialize("tileset/test.tmx", batch, theCamera);
         entities.add(handler.createTilemap());
         entities.add(player);
 
-        
-
-      
         InteractZone interactZone = new InteractZone(new TileCoordinate(2, 2), tris, (gameState, player) -> {
-            DialogueMenu test = new DialogueMenu("scubi jew");
+            DialogueMenu test = new DialogueMenu("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" +
+                " eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud" +
+                " exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in" +
+                " reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint" +
+                " occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
             gameState.setMenu(test);
         });
 
@@ -99,7 +100,7 @@ public class Main extends ApplicationAdapter {
 
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         batch.setProjectionMatrix(theCamera.getCamera().combined);
-        
+
         batch.begin();
         gameState.render(batch);
         batch.end();

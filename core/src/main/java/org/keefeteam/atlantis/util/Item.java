@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.keefeteam.atlantis.SQLLoader;
 
+import java.sql.ResultSet;
 import java.util.Map;
 
 @Getter
@@ -36,6 +37,8 @@ public class Item {
         this.recipes =  null;
     }
     public Item(String n){
-        SQLLoader query = new SQLLoader("SELECT * FROM items WHERE name=" + "\"" + n + "\"");
+        SQLLoader conn = new SQLLoader("SELECT * FROM items WHERE name=" + "\"" + n + "\"");
+        ResultSet rslt = null;
+        rslt = conn.select("SELECT * FROM player WHERE name=\"" + name + "\"");
     }
 }

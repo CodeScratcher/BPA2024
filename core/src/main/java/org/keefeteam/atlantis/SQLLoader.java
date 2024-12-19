@@ -10,7 +10,7 @@ public class SQLLoader {
         // Database credentials
         String url = "jdbc:mysql://localhost:3306/" + q;
         String user = "root";
-        String password = "";//I have no clue what to put here
+        String password = "Keefe2012";//I have no clue what to put here
 
         // Initialize the connection object
         Connection connection = null;
@@ -24,9 +24,7 @@ public class SQLLoader {
             statement = connection.createStatement();
 
             // If connection is successful
-            if (connection != null) {
-                System.out.println("Connected to the database!");
-            }
+            System.out.println("Connected to the database!");
         } catch (ClassNotFoundException e) {
             System.out.println("MySQL JDBC Driver not found. Include the driver in your library path.");
             e.printStackTrace();
@@ -46,7 +44,7 @@ public class SQLLoader {
             rs = statement.executeQuery(tQu);
         }
         catch(SQLException e){
-            //RODO Auto-generated catch block
+
             e.printStackTrace();
         }
         return rs;
