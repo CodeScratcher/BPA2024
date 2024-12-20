@@ -35,14 +35,18 @@ public class InventoryMenu implements Menu {
     private boolean fframe;
     private boolean submenu;
     private Label controlsLabel;
-    private  ClickableLabel descLabel;
+    private Label descLabel;
     private boolean isHover;
+    private Item[] craftSelect;
+    private int selectedItems;
     public InventoryMenu(Player player) {
         this.player = player;
     }
 
     @Override
     public void initialize(GameState g) {
+        craftSelect = new Item[2];
+        selectedItems = 0;
         isHover = false;
         this.fframe = true;
         this.submenu = false;
@@ -75,7 +79,7 @@ public class InventoryMenu implements Menu {
         for(int i = 0; i < size; i++){
             Item current = player.getInventory().get(i);
             System.out.println(current.getName() + "-" + current.getDescription());
-            ClickableLabel nameLabel = new ClickableLabel(current.getName(), skin);
+            ClickableLabel nameLabel = new ClickableLabel(current.getName() + i, skin, current);
 
             nameLabel.addListener(new ClickListener() {
                 @Override
@@ -83,24 +87,46 @@ public class InventoryMenu implements Menu {
                     // Put whatever you want the item to do here
                     System.out.println("Label clicked at: " + x + ", " + y);
                     if(!nameLabel.getIsClicked()){
-                        nameLabel.setIsClicked(true);
-                        nameLabel.setColor(Color.RED);
+                        if(selectedItems < 2){
+                            if(craftSelect[0] == null){
+                                craftSelect[0] = nameLabel.getLinkedItem();
+                            }
+                            else if(craftSelect[1] == null){
+                                craftSelect[1] = nameLabel.getLinkedItem();
+                            }
+                            nameLabel.setIsClicked(true);
+                            nameLabel.setColor(Color.RED);
+                            selectedItems++;
+                        }
+
                     }
                     else{
+                        for(int i = 0; i < craftSelect.length; i++){
+                            if(craftSelect[i] != null){
+                                if(craftSelect[i].getName().equals(nameLabel.getLinkedItem().getName())){
+                                    craftSelect[i] = null;
+                                    break;
+                                }
+                            }
+                        }
                         nameLabel.setIsClicked(false);
                         nameLabel.setColor(Color.WHITE);
+                        selectedItems--;
                     }
                 }
             });
             nameLabel.addListener(new InputListener() {
                 @Override
                 public boolean mouseMoved(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                    if(!isHover && !nameLabel.getIsClicked()){
-                        nameLabel.setColor(Color.BLUE);
+                    if(!isHover){
+                        if(!nameLabel.getIsClicked()){
+                            nameLabel.setColor(Color.BLUE);
+                        }
                         descMenu.row();
-                        descLabel = new ClickableLabel(current.getDescription(), skin);
+                        descLabel = new Label(current.getDescription(), skin);
                         descMenu.add(descLabel).padLeft(150);
                     }
+
                     isHover = true;
                     return true;
                 }
