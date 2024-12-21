@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
+import org.keefeteam.atlantis.ui.InputMenu;
 import org.keefeteam.atlantis.util.coordinates.TileCoordinate;
 import org.keefeteam.atlantis.util.coordinates.WorldCoordinate;
 import org.keefeteam.atlantis.entities.*;
@@ -81,7 +82,13 @@ public class Main extends ApplicationAdapter {
             gameState.setMenu(test);
         });
 
+        InteractZone interactZone2 = new InteractZone(new TileCoordinate(3, 3), tris, (gameState, player) -> {
+            InputMenu inputMenu = new InputMenu((str, state) -> System.out.println(str));
+            gameState.setMenu(inputMenu);
+        });
+
         entities.add(interactZone);
+        entities.add(interactZone2);
 
         gameState = new GameState(entities);
 
