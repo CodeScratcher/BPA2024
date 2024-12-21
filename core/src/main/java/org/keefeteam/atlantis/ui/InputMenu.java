@@ -30,17 +30,15 @@ public class InputMenu implements Menu {
         gameState.setPaused(true);
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
-
-        BitmapFont font = new BitmapFont();
         skin = new Skin(Gdx.files.internal("ui/pixthulhu-ui.json"));
-        skin.add("default-font", font);
-        skin.add("default", new Label.LabelStyle(font, Color.WHITE));
 
         menu = new Table();
+        stage.addActor(menu);
 
         TextField textField = new TextField("", skin);
+        textField.setWidth(500);
 
-        TextButton textButton = new TextButton("Input", skin);
+        TextButton textButton = new TextButton("Confirm", skin);
         textButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
@@ -50,10 +48,11 @@ public class InputMenu implements Menu {
             }
         });
 
-        menu.add(textField).row();
+        menu.add(textField).width(500).row();
         menu.add(textButton);
+        menu.setFillParent(true);
 
-        stage.addActor(menu);
+
     }
 
     @Override
