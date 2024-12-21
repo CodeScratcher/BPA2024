@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import org.keefeteam.atlantis.ui.InputMenu;
+import org.keefeteam.atlantis.util.Item;
 import org.keefeteam.atlantis.util.coordinates.TileCoordinate;
 import org.keefeteam.atlantis.util.coordinates.WorldCoordinate;
 import org.keefeteam.atlantis.entities.*;
@@ -46,7 +47,10 @@ public class Main extends ApplicationAdapter {
 
 
         player = new Player(img2);
-
+        Item temp1 = new Item("Key Half One");
+        Item temp2 = new Item("Key Half Two");
+        player.addItem(temp1);
+        player.addItem(temp2);
         entities = new ArrayList<>();
 
         /*

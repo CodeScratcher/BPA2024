@@ -147,4 +147,7 @@ public class Player implements Entity, Renderable {
     public void addItem(Item a){
         this.inventory.add(a);
     }
+    public void removeItem(Item a){
+        this.inventory.remove(a);
+    }
 }

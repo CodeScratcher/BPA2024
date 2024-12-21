@@ -16,12 +16,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import org.keefeteam.atlantis.GameState;
+import org.keefeteam.atlantis.SQLLoader;
 import org.keefeteam.atlantis.entities.Player;
 import org.keefeteam.atlantis.util.ClickableLabel;
 import org.keefeteam.atlantis.util.Item;
 import org.keefeteam.atlantis.util.input.InputEvent;
 
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
@@ -39,6 +42,8 @@ public class InventoryMenu implements Menu {
     private boolean isHover;
     private Item[] craftSelect;
     private int selectedItems;
+    private Label combineLabel;
+    private int resultInt;
     public InventoryMenu(Player player) {
         this.player = player;
     }
@@ -59,8 +64,10 @@ public class InventoryMenu implements Menu {
         tempSkin.add("default-font", font);
         tempSkin.add("default", new Label.LabelStyle(font, Color.WHITE));
         skin = tempSkin;
-        controlsLabel = new Label("Press Esc to Return", skin);
+
         //skin = new Skin(Gdx.files.internal("ui/pixthulhu-ui.json"));
+        controlsLabel = new Label("Press Esc to Return", skin);
+
         Gdx.input.setInputProcessor(stage);
         menu = new Table();
         descMenu = new Table();
@@ -71,15 +78,17 @@ public class InventoryMenu implements Menu {
         menu.row();
 
         //adds three temporary items to the inventory for debugger purposes
+        /*
         for(int i = 0; i < 3; i++){
-            Item goofyTemp = new Item("ITEMNAME", "ITEMDESC");
+            Item goofyTemp = new Item("ITEMNAME" + i, "ITEMDESC");
             player.addItem(goofyTemp);
         }
+        */
         int size = player.getInventory().size();
         for(int i = 0; i < size; i++){
             Item current = player.getInventory().get(i);
             System.out.println(current.getName() + "-" + current.getDescription());
-            ClickableLabel nameLabel = new ClickableLabel(current.getName() + i, skin, current);
+            ClickableLabel nameLabel = new ClickableLabel(current.getName(), skin, current);
 
             nameLabel.addListener(new ClickListener() {
                 @Override
@@ -112,6 +121,73 @@ public class InventoryMenu implements Menu {
                         nameLabel.setIsClicked(false);
                         nameLabel.setColor(Color.WHITE);
                         selectedItems--;
+                    }
+                    if(craftSelect[0] != null && craftSelect[1] != null){
+                        //Check to see if items can combine
+                        int rowCount = 0;
+                        SQLLoader conn = new SQLLoader("itemsdb");
+                        ResultSet rslt = null;
+                        rslt = conn.select("SELECT * FROM recipes WHERE item_id = "
+                            + craftSelect[0].getId() + " AND combines_with_id =" + craftSelect[1].getId());
+                        try{
+                            while(rslt.next()){
+                                rowCount++;
+                                resultInt = rslt.getInt(1);
+                                System.out.println(rslt.getInt(2));
+                                System.out.println(rslt.getInt(3));
+                            }
+                        }
+                        catch(SQLException e){
+                            e.printStackTrace();
+                        }
+                        if(rowCount == 0){
+                            // try again but swap the vars
+                            rslt = conn.select("SELECT * FROM recipes WHERE item_id = "
+                                + craftSelect[1].getId() + " AND combines_with_id =" + craftSelect[0].getId());
+                            try{
+                                while(rslt.next()){
+                                    resultInt = rslt.getInt(1);
+                                    System.out.println(rslt.getInt(2));
+                                    System.out.println(rslt.getInt(3));
+                                }
+                            }
+                            catch(SQLException e){
+                                e.printStackTrace();
+                            }
+                        }
+                        if(rowCount != 0){
+                            combineLabel = new Label("COMBINE", skin);
+                            combineLabel.addListener(new ClickListener() {
+                                @Override
+                                public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                                    System.out.println("CLICKED COMBINE");
+                                    SQLLoader conn = new SQLLoader("itemsdb");
+                                    ResultSet rslt = null;
+                                    rslt = conn.select("SELECT * FROM items WHERE id = " + resultInt);
+                                    try{
+                                        while(rslt.next()){
+                                            System.out.println(rslt.getString(2));
+                                            player.removeItem(craftSelect[0]);
+                                            player.removeItem(craftSelect[1]);
+                                            craftSelect[0] = null;
+                                            craftSelect[1] = null;
+                                            Item newItem = new Item(rslt.getString(2));
+                                            player.addItem(newItem);
+                                            dispose();
+                                            initialize(g);
+                                        }
+                                    }
+                                    catch(SQLException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                            menu.add(combineLabel);
+                            menu.row();
+                        }
+                    }
+                    else if(combineLabel != null){
+                        menu.removeActor(combineLabel);
                     }
                 }
             });
