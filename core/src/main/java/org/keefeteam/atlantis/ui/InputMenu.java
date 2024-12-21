@@ -45,6 +45,7 @@ public class InputMenu implements Menu {
                 super.clicked(event, x, y);
                 onEntry.accept(textField.getText(), gameState);
                 gameState.setMenu(null);
+                gameState.setPaused(false);
             }
         });
 
