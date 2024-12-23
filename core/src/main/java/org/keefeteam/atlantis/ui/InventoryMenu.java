@@ -146,6 +146,7 @@ public class InventoryMenu implements Menu {
                                 + craftSelect[1].getId() + " AND combines_with_id =" + craftSelect[0].getId());
                             try{
                                 while(rslt.next()){
+                                    rowCount++;
                                     resultInt = rslt.getInt(1);
                                     System.out.println(rslt.getInt(2));
                                     System.out.println(rslt.getInt(3));
