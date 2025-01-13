@@ -38,13 +38,12 @@ public class SQLLoader {
 
     }
     public ResultSet select(String tQu) {
-
+        //This executes the query and returns rows
         ResultSet rs = null;
         try {
             rs = statement.executeQuery(tQu);
         }
         catch(SQLException e){
-
             e.printStackTrace();
         }
         return rs;

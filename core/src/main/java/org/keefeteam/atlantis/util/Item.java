@@ -19,21 +19,16 @@ public class Item {
     private Texture picture;
     private Map<Item, Item> recipes;
     private int id;
-    public Item(){
-        this.id = -1;
-        this.name = "";
-        this.description = "";
-        this.picture = null;
-        this.recipes =  null;
-    }
-    public Item(String n, String d, Texture p, Map<Item, Item> m, int i){
+
+    //Simple constructor that gets info from the sql
+    public Item(String n, String d, Texture p, Map<Item, Item> r, int i){
         this.name = n;
         this.description = d;
         this.picture = p;
-        this.recipes =  m;
+        this.recipes =  r;
         this.id = i;
     }
-    //Only use this constructor for inventory testing
+    //Only use this constructor for inventory testing, everything else uses sql
     public Item(String n, String d){
         this.name = n;
         this.description = d;
@@ -41,12 +36,14 @@ public class Item {
         this.recipes =  null;
         this.id = -1;
     }
+    //This Constructor does all the sql inside of it
     public Item(String n){
         SQLLoader conn = new SQLLoader("itemsdb");
         ResultSet rslt = null;
         rslt = conn.select("SELECT * FROM items WHERE name=" + "\"" + n + "\"");
         try{
             while(rslt.next()){
+                //This should always return one row due to the name not being ambiguous
                 this.id = rslt.getInt(1);
                 this.name = rslt.getString(2);
                 this.description = rslt.getString(3);

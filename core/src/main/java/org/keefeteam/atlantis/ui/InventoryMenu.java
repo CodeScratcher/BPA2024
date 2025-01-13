@@ -33,16 +33,25 @@ public class InventoryMenu implements Menu {
     private GameState gameState;
     private Stage stage;
     private Skin skin;
+    //This is the main menu
     private Table menu;
+    //The description menu is different for positioning
     private Table descMenu;
+    //fframe checks for the first frame, this solves a bug where the menu doesn't stay open
     private boolean fframe;
-    private boolean submenu;
+    //A different label that tells you that pressing esc can close the menu
     private Label controlsLabel;
+    //Same thing but with the description
     private Label descLabel;
+    //Checks if the label is hovered to set it blue
     private boolean isHover;
+    //simply holds the two items to combine
     private Item[] craftSelect;
+    //counts the items selected
     private int selectedItems;
+    //Says combine when two applicable items are selected
     private Label combineLabel;
+    //ID of the crafted item
     private int resultInt;
     public InventoryMenu(Player player) {
         this.player = player;
@@ -50,11 +59,12 @@ public class InventoryMenu implements Menu {
 
     @Override
     public void initialize(GameState g) {
+
+        //initialize all of the variables
         craftSelect = new Item[2];
         selectedItems = 0;
         isHover = false;
         this.fframe = true;
-        this.submenu = false;
         this.gameState = g;
         this.gameState.setPaused(true);
         stage = new Stage();
@@ -65,6 +75,7 @@ public class InventoryMenu implements Menu {
         tempSkin.add("default", new Label.LabelStyle(font, Color.WHITE));
         skin = tempSkin;
 
+        //set up the menu and the descMenu
         //skin = new Skin(Gdx.files.internal("ui/pixthulhu-ui.json"));
         controlsLabel = new Label("Press Esc to Return", skin);
 
@@ -76,40 +87,39 @@ public class InventoryMenu implements Menu {
         descMenu.setFillParent(true);
         menu.add(controlsLabel);
         menu.row();
-
-        //adds three temporary items to the inventory for debugger purposes
-        /*
-        for(int i = 0; i < 3; i++){
-            Item goofyTemp = new Item("ITEMNAME" + i, "ITEMDESC");
-            player.addItem(goofyTemp);
-        }
-        */
+        // Get the size of the inventory and then print all the items out with labels
         int size = player.getInventory().size();
         for(int i = 0; i < size; i++){
             Item current = player.getInventory().get(i);
             System.out.println(current.getName() + "-" + current.getDescription());
             ClickableLabel nameLabel = new ClickableLabel(current.getName(), skin, current);
 
+            // Set up the "Clickable" part of the clickable label
             nameLabel.addListener(new ClickListener() {
                 @Override
                 public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                     // Put whatever you want the item to do here
                     System.out.println("Label clicked at: " + x + ", " + y);
+                    //first check its click status
                     if(!nameLabel.getIsClicked()){
+                        // if it's not clicked
+                        // check if there are less than two items
                         if(selectedItems < 2){
+                            // if the first section is null, fill it. If not, fill the second one but only if its null
                             if(craftSelect[0] == null){
                                 craftSelect[0] = nameLabel.getLinkedItem();
                             }
                             else if(craftSelect[1] == null){
                                 craftSelect[1] = nameLabel.getLinkedItem();
                             }
-                            nameLabel.setIsClicked(true);
+                            nameLabel.setClicked(true);
                             nameLabel.setColor(Color.RED);
                             selectedItems++;
                         }
 
                     }
                     else{
+                        // If it is clicked, remove it from  the array and then set it to not clicked
                         for(int i = 0; i < craftSelect.length; i++){
                             if(craftSelect[i] != null){
                                 if(craftSelect[i].getName().equals(nameLabel.getLinkedItem().getName())){
@@ -118,7 +128,7 @@ public class InventoryMenu implements Menu {
                                 }
                             }
                         }
-                        nameLabel.setIsClicked(false);
+                        nameLabel.setClicked(false);
                         nameLabel.setColor(Color.WHITE);
                         selectedItems--;
                     }
@@ -157,6 +167,7 @@ public class InventoryMenu implements Menu {
                             }
                         }
                         if(rowCount != 0){
+                            //all this does is set up the combine label if the number of rows is not zero
                             combineLabel = new Label("COMBINE", skin);
                             combineLabel.addListener(new ClickListener() {
                                 @Override
@@ -164,6 +175,7 @@ public class InventoryMenu implements Menu {
                                     System.out.println("CLICKED COMBINE");
                                     SQLLoader conn = new SQLLoader("itemsdb");
                                     ResultSet rslt = null;
+                                    //pulls from the items table the result of the combine
                                     rslt = conn.select("SELECT * FROM items WHERE id = " + resultInt);
                                     try{
                                         while(rslt.next()){
@@ -195,6 +207,7 @@ public class InventoryMenu implements Menu {
             nameLabel.addListener(new InputListener() {
                 @Override
                 public boolean mouseMoved(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                    //just check if the label is hovered on
                     if(!isHover){
                         if(!nameLabel.getIsClicked()){
                             nameLabel.setColor(Color.BLUE);
@@ -210,6 +223,7 @@ public class InventoryMenu implements Menu {
 
                 @Override
                 public void exit(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y, int pointer, Actor toActor) {
+                    // Check when the mouse is no longer hovered on
                     if (!nameLabel.getIsClicked()) { // Only reset color if not clicked
                         nameLabel.setColor(Color.WHITE);
                     }
@@ -230,8 +244,8 @@ public class InventoryMenu implements Menu {
     public void update(Set<InputEvent> inputEvents) {
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+        //make it so the menu appears AFTER the first frame because that makes the menu not want to open properly
         if(inputEvents.contains(InputEvent.Inventory) && !fframe){
-
             gameState.setMenu(null);
             menu.remove();
             descMenu.remove();

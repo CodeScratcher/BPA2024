@@ -14,17 +14,25 @@ import org.keefeteam.atlantis.util.input.InputEvent;
 import java.util.*;
 
 public class DialogueMenu implements Menu {
+    // The text that is being displayed
     private String text;
+    // the maximum number of characters to be displayed
     private int maxLength;
+    // where the text starts
     private int textIndexOne;
+    // where the text ends
     private int textIndexTwo;
+    // checks if there is no more text to display
     private boolean textFinished;
     boolean inputControl;
+
     private Stage stage;
     private Table table;
     private Skin skin;
-    private Label textLabel;
     private GameState gameState;
+
+    //Where the text is printed
+    private Label textLabel;
 
     public DialogueMenu(String t){
         this.text = t;
@@ -32,6 +40,7 @@ public class DialogueMenu implements Menu {
 
     @Override
     public void initialize(GameState g) {
+
         maxLength = 50;
         this.gameState = g;
         this.gameState.setPaused(true);
