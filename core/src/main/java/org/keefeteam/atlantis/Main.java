@@ -83,7 +83,9 @@ public class Main extends ApplicationAdapter {
         });
 
         InteractZone interactZone2 = new InteractZone(new TileCoordinate(13, 14), tris, (gameState, player) -> {
-            InputMenu inputMenu = new InputMenu((str, state) -> System.out.println(str));
+            //InputMenu inputMenu = new InputMenu((str, state) -> System.out.println(str));
+            InputMenu inputMenu = new InputMenu("Atlantis", (state) -> System.out.println(""), (state) -> System.out.println(""));
+
             gameState.setMenu(inputMenu);
         });
 
