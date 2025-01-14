@@ -28,7 +28,7 @@ public class InputMenu implements Menu {
         this((str, state) -> {
             if (isCorrect.equals(str)) correct.accept(state); 
             else incorrect.accept(state);
-        })
+        });
     }
     
     public InputMenu(){
