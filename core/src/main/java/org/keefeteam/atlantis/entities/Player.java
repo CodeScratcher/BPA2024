@@ -22,7 +22,7 @@ import static org.keefeteam.atlantis.util.coordinates.TileCoordinate.TILE_SIZE;
 public class Player implements Entity, Renderable {
     @Getter
     @Setter
-    private WorldCoordinate position = new WorldCoordinate(new Vector2(-1, -1));
+    private WorldCoordinate position = new WorldCoordinate(new Vector2(230, 20));
 
     @Setter
     @NonNull

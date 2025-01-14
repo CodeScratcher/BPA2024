@@ -23,7 +23,9 @@ public class InputMenu implements Menu {
     public InputMenu(BiConsumer<String, GameState> onEntry) {
         this.onEntry = onEntry;
     }
+    public InputMenu(){
 
+    }
     @Override
     public void initialize(GameState gameState) {
         this.gameState = gameState;

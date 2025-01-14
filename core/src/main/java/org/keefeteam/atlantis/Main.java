@@ -78,15 +78,11 @@ public class Main extends ApplicationAdapter {
         entities.add(player);
 
         InteractZone interactZone = new InteractZone(new TileCoordinate(2, 2), tris, (gameState, player) -> {
-            DialogueMenu test = new DialogueMenu("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do" +
-                " eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud" +
-                " exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in" +
-                " reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint" +
-                " occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+            DialogueMenu test = new DialogueMenu("Lorem ipsum dolor sit amet");
             gameState.setMenu(test);
         });
 
-        InteractZone interactZone2 = new InteractZone(new TileCoordinate(3, 3), tris, (gameState, player) -> {
+        InteractZone interactZone2 = new InteractZone(new TileCoordinate(13, 14), tris, (gameState, player) -> {
             InputMenu inputMenu = new InputMenu((str, state) -> System.out.println(str));
             gameState.setMenu(inputMenu);
         });
