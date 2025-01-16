@@ -76,7 +76,7 @@ public class InventoryMenu implements Menu {
         skin = tempSkin;
 
         //set up the menu and the descMenu
-        //skin = new Skin(Gdx.files.internal("ui/pixthulhu-ui.json"));
+        skin = new Skin(Gdx.files.internal("ui/pixthulhu-ui.json"));
         controlsLabel = new Label("Press Esc to Return", skin);
 
         Gdx.input.setInputProcessor(stage);
@@ -137,7 +137,7 @@ public class InventoryMenu implements Menu {
                         int rowCount = 0;
                         SQLLoader conn = new SQLLoader("itemsdb");
                         ResultSet rslt = null;
-                        rslt = conn.select("SELECT * FROM recipes WHERE item_id = "
+                        rslt = conn.select("SELECT result_id, item_id, combines_with_id FROM recipes WHERE item_id = "
                             + craftSelect[0].getId() + " AND combines_with_id =" + craftSelect[1].getId());
                         try{
                             while(rslt.next()){
@@ -152,7 +152,7 @@ public class InventoryMenu implements Menu {
                         }
                         if(rowCount == 0){
                             // try again but swap the vars
-                            rslt = conn.select("SELECT * FROM recipes WHERE item_id = "
+                            rslt = conn.select("SELECT result_id, item_id, combines_with_id FROM recipes WHERE item_id = "
                                 + craftSelect[1].getId() + " AND combines_with_id =" + craftSelect[0].getId());
                             try{
                                 while(rslt.next()){
@@ -214,7 +214,8 @@ public class InventoryMenu implements Menu {
                         }
                         descMenu.row();
                         descLabel = new Label(current.getDescription(), skin);
-                        descMenu.add(descLabel).padLeft(150);
+                        descMenu.padTop(50);
+                        descMenu.add(descLabel).padLeft(450);
                     }
 
                     isHover = true;
@@ -232,7 +233,7 @@ public class InventoryMenu implements Menu {
                     isHover = false;
                 }
             });
-            menu.add(nameLabel).padLeft(-150);
+            menu.add(nameLabel).padRight(450);
             menu.row();
         }
         stage.addActor(menu);

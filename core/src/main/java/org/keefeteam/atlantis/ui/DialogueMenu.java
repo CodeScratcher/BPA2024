@@ -47,11 +47,7 @@ public class DialogueMenu implements Menu {
         stage = new Stage();
 
         BitmapFont font = new BitmapFont();
-        Skin tempSkin = new Skin();
-        tempSkin.add("default-font", font);
-        tempSkin.add("default", new Label.LabelStyle(font, Color.WHITE));
-        skin = tempSkin;
-        //skin = new Skin(Gdx.files.internal("ui/pixthulhu-ui.json"));
+        skin = new Skin(Gdx.files.internal("ui/pixthulhu-ui.json"));
         Gdx.input.setInputProcessor(stage);
         table = new Table();
         table.setFillParent(true);
@@ -74,7 +70,7 @@ public class DialogueMenu implements Menu {
 
     @Override
     public void update(Set<InputEvent> inputEvents) {
-        if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+        if (inputEvents.contains(InputEvent.Interact)) {
             System.out.println(this.text);
         }
         stage.act(Gdx.graphics.getDeltaTime());
