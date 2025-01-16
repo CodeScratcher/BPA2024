@@ -107,7 +107,7 @@ public class TiledTilemapHandler implements Renderable {
         renderer.renderTileLayer((TiledMapTileLayer)map.getLayers().get(0));
         renderer.renderTileLayer((TiledMapTileLayer)map.getLayers().get(1));
         for (int i = 0; i < doorsActive.size(); i++) {
-            renderer.renderTileLayer((TiledMapTileLayer)map.getLayers().get(2 + i));
+            if (doorsActive.get(i)) renderer.renderTileLayer((TiledMapTileLayer)map.getLayers().get(2 + i));
         }
     }
 }
