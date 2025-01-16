@@ -108,10 +108,6 @@ public class Enemy implements Entity, Renderable, Collider {
             }
         }
 
-        if (!colliding) {
-            System.out.println("Not colliding");
-        }
-
 
     }
 
