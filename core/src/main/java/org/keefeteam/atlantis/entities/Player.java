@@ -63,8 +63,6 @@ public class Player implements Entity, Renderable {
 
         handleCollision(gameState, posChange, events);
 
-        System.out.println("HP: " + hp);
-
         iframes -= gameState.getDelta();
 
         if (events.contains(InputEvent.Inventory) && gameState.getMenu() == null) {

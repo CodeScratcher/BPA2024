@@ -15,7 +15,6 @@ public class Tile {
     private final List<Triangle> colliders;
 
     public List<Triangle> getTriangles(TileCoordinate tileCoordinate) {
-        System.out.println(colliders);
         Vector2 basis = tileCoordinate.toWorldCoordinate().getCoord();
 
         return colliders.
