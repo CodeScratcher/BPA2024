@@ -42,6 +42,7 @@ public class TiledTilemapHandler implements Renderable {
     TiledMap map;
     OrthogonalTiledMapRenderer renderer;
     Camera camera;
+    List<Boolean> doorsActive = new ArrayList();
     
     public void initialize(String url, SpriteBatch batch, Camera camera) {
         map = new TmxMapLoader().load(url);
@@ -72,15 +73,41 @@ public class TiledTilemapHandler implements Renderable {
             }
         }
         
-        Tilemap tm = new Tilemap(tiles, this);
+        List<List<TileCoordinate>> doors = new ArrayList();
+        
+        for (int i = 2; i < map.getLayers().getCount(); i++) {
+            doors.add(new ArrayList());
+            doorsActive.add(true);
+            TiledMapTileLayer doorLayer = (TiledMapTileLayer)map.getLayers().get(i);
+            for (int k = 0; k < doorLayer.getWidth(); k++) {
+                for (int l = 0; l < doorLayer.getHeight(); l++) {
+                    if (doorLayer.getCell(k, l) != null) {
+                        doors.get(i - 2).add(new TileCoordinate(k, l));
+                        tiles.put(new TileCoordinate(k, l), new Tile(tris));
+                    }
+                }
+            }
+        }
+        
+        Tilemap tm = new Tilemap(tiles, doors, this);
         
         return tm;
     }
 
+    public void disableDoor(Tilemap tm, int layer) {
+        doorsActive.set(layer, false);
+        for (TileCoordinate coord : tm.getDoors().get(layer)) {
+            tm.getTiles().get(coord).setColliders(new ArrayList<>());
+        }
+    }
+    
     @Override
     public void render(SpriteBatch batch) {
         renderer.setView(camera.getCamera());
         renderer.renderTileLayer((TiledMapTileLayer)map.getLayers().get(0));
         renderer.renderTileLayer((TiledMapTileLayer)map.getLayers().get(1));
+        for (int i = 0; i < doorsActive.size(); i++) {
+            renderer.renderTileLayer((TiledMapTileLayer)map.getLayers().get(2 + i));
+        }
     }
 }

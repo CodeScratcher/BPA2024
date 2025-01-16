@@ -14,15 +14,19 @@ import org.keefeteam.atlantis.util.input.InputEvent;
 import org.keefeteam.atlantis.util.collision.Triangle;
 
 import java.util.*;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.keefeteam.atlantis.util.TiledTilemapHandler;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
 public class Tilemap implements Entity, Collider, Renderable {
-    private Map<TileCoordinate, Tile> tiles = new HashMap<>();
-    private TiledTilemapHandler handler;
+    @NonNull private Map<TileCoordinate, Tile> tiles = new HashMap<>();
+    private List<List<TileCoordinate>> doors = new ArrayList<>();
+    @NonNull private TiledTilemapHandler handler;
 
     public void addTiles(TileCoordinate coord, Tile tile) {
         tiles.put(coord, tile);
