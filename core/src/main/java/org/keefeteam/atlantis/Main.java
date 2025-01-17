@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import org.keefeteam.atlantis.ui.InputMenu;
@@ -32,6 +33,7 @@ public class Main extends ApplicationAdapter {
     private ShapeRenderer sr;
     private Camera theCamera;
     private TiledTilemapHandler handler;
+    private Tilemap tilemap;
 
     @Override
     public void create() {
@@ -74,7 +76,8 @@ public class Main extends ApplicationAdapter {
 
         handler = new TiledTilemapHandler();
         handler.initialize("tileset/test.tmx", batch, theCamera);
-        entities.add(handler.createTilemap());
+        tilemap = handler.createTilemap();
+        entities.add(tilemap);
         entities.add(player);
 
         InteractZone interactZone = new InteractZone(new TileCoordinate(2, 2), tris, (gameState, player) -> {
@@ -84,7 +87,9 @@ public class Main extends ApplicationAdapter {
 
         InteractZone interactZone2 = new InteractZone(new TileCoordinate(13, 14), tris, (gameState, player) -> {
             //InputMenu inputMenu = new InputMenu((str, state) -> System.out.println(str));
-            InputMenu inputMenu = new InputMenu("Atlantis", (state) -> System.out.println(""), (state) -> System.out.println(""));
+            InputMenu inputMenu = new InputMenu("Atlantis", (state) -> {
+                handler.disableDoor(tilemap, 0);
+            }, (state) -> gameState.setMenu(new DialogueMenu("Incorrect!")));
 
             gameState.setMenu(inputMenu);
         });

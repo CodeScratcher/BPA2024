@@ -81,8 +81,8 @@ public class Triangle {
             t.lineOverlapsTriangle(p1, p2) || t.lineOverlapsTriangle(p2, p3) || t.lineOverlapsTriangle(p3, p1);
     }
 
-    @Override
-    public String toString() {
+   @Override
+   public String toString() {
         return p1 + " " + p2 +  " " + p3;
     }
 }

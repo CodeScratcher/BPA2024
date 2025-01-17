@@ -26,9 +26,8 @@ public class InputMenu implements Menu {
 
     public InputMenu(String isCorrect, Consumer<GameState> correct, Consumer<GameState> incorrect) {
         this((str, state) -> {
-            if (isCorrect.equals(str)){
+            if (isCorrect.equalsIgnoreCase(str)){
                 correct.accept(state);
-                System.out.println("SUPER REALLY LONG TEXT TO SEE IF THIS WORKS SUPER REALLY LONG TEXT TO SEE IF THIS WORKS SUPER REALLY LONG TEXT TO SEE IF THIS WORKS");
             }
             else incorrect.accept(state);
         });
