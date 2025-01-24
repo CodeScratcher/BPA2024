@@ -55,19 +55,15 @@ public class Main extends ApplicationAdapter {
         player.addItem(temp2);
         entities = new ArrayList<>();
 
-        /*
-        Enemy enemy = new Enemy(new WorldCoordinate(new Vector2(300,  300)), img2, null);
-        entities.add(enemy);
-        */
 
 
         WorldCoordinate playerPosition = player.getPosition();
         theCamera = new Camera(playerPosition);
         entities.add(theCamera);
 
-        Vector2 p1 = new Vector2(0, 0);
-        Vector2 p2 = new Vector2(p1.x + TILE_SIZE, p1.y);
-        Vector2 p3 = new Vector2(p1.x, p1.y + TILE_SIZE);
+        Vector2 p1 = new Vector2(1, 1);
+        Vector2 p2 = new Vector2(p1.x + TILE_SIZE - 2, p1.y);
+        Vector2 p3 = new Vector2(p1.x, p1.y + TILE_SIZE - 2);
         Vector2 p4 = new Vector2(p2.x, p3.y);
 
         List<Triangle> tris = new ArrayList<>();
@@ -80,12 +76,12 @@ public class Main extends ApplicationAdapter {
         entities.add(tilemap);
         entities.add(player);
 
-        InteractZone interactZone = new InteractZone(new TileCoordinate(2, 2), tris, (gameState, player) -> {
+        InteractZone interactZone = new InteractZone(new TileCoordinate(44, 20/16), tris, (gameState, player) -> {
             DialogueMenu test = new DialogueMenu("Lorem ipsum dolor sit amet");
             gameState.setMenu(test);
         });
 
-        InteractZone interactZone2 = new InteractZone(new TileCoordinate(13, 14), tris, (gameState, player) -> {
+        InteractZone interactZone2 = new InteractZone(new TileCoordinate(44, 220/16), tris, (gameState, player) -> {
             //InputMenu inputMenu = new InputMenu((str, state) -> System.out.println(str));
             InputMenu inputMenu = new InputMenu("Atlantis", (state) -> {
                 handler.disableDoor(tilemap, 0);
