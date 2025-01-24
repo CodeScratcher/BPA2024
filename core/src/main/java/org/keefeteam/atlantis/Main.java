@@ -55,10 +55,6 @@ public class Main extends ApplicationAdapter {
         player.addItem(temp2);
         entities = new ArrayList<>();
 
-        /*
-        Enemy enemy = new Enemy(new WorldCoordinate(new Vector2(300,  300)), img2, null);
-        entities.add(enemy);
-        */
 
 
         WorldCoordinate playerPosition = player.getPosition();
@@ -80,12 +76,12 @@ public class Main extends ApplicationAdapter {
         entities.add(tilemap);
         entities.add(player);
 
-        InteractZone interactZone = new InteractZone(new TileCoordinate(2, 2), tris, (gameState, player) -> {
+        InteractZone interactZone = new InteractZone(new TileCoordinate(44, 20/16), tris, (gameState, player) -> {
             DialogueMenu test = new DialogueMenu("Lorem ipsum dolor sit amet");
             gameState.setMenu(test);
         });
 
-        InteractZone interactZone2 = new InteractZone(new TileCoordinate(13, 14), tris, (gameState, player) -> {
+        InteractZone interactZone2 = new InteractZone(new TileCoordinate(44, 220/16), tris, (gameState, player) -> {
             //InputMenu inputMenu = new InputMenu((str, state) -> System.out.println(str));
             InputMenu inputMenu = new InputMenu("Atlantis", (state) -> {
                 handler.disableDoor(tilemap, 0);
