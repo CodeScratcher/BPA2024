@@ -61,9 +61,9 @@ public class Main extends ApplicationAdapter {
         theCamera = new Camera(playerPosition);
         entities.add(theCamera);
 
-        Vector2 p1 = new Vector2(0, 0);
-        Vector2 p2 = new Vector2(p1.x + TILE_SIZE, p1.y);
-        Vector2 p3 = new Vector2(p1.x, p1.y + TILE_SIZE);
+        Vector2 p1 = new Vector2(1, 1);
+        Vector2 p2 = new Vector2(p1.x + TILE_SIZE - 2, p1.y);
+        Vector2 p3 = new Vector2(p1.x, p1.y + TILE_SIZE - 2);
         Vector2 p4 = new Vector2(p2.x, p3.y);
 
         List<Triangle> tris = new ArrayList<>();
