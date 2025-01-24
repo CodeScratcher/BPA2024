@@ -78,4 +78,4 @@ INSERT INTO recipes (item_id, combines_with_id, result_id) VALUES
 (14, 17, 18), -- Circle + Spear end = Dish Set
 (14, 13, 19), -- Circle + Meat = Improper Meal
 (18, 13, 20), -- Dish Set + Meat = Meal
-(19, 17, 20); -- Imporper Meal + Spear end = Meal
+(19, 17, 20); -- Improper Meal + Spear end = Meal
