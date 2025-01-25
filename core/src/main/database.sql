@@ -15,9 +15,9 @@ CREATE TABLE IF NOT EXISTS recipes (
     result_id INTEGER NOT NULL,
     item_id INTEGER NOT NULL,
     combines_with_id INTEGER NOT NULL,
-	FOREIGN KEY (item_id) REFERENCES Items (id),
-    FOREIGN KEY (combines_with_id) REFERENCES Items (id),
-    FOREIGN KEY (result_id) REFERENCES Items (id)
+	FOREIGN KEY (item_id) REFERENCES items (id),
+    FOREIGN KEY (combines_with_id) REFERENCES items (id),
+    FOREIGN KEY (result_id) REFERENCES items (id)
 );
 
 
