@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
+import org.keefeteam.atlantis.ui.ChoiceMenu;
 import org.keefeteam.atlantis.ui.InputMenu;
 import org.keefeteam.atlantis.util.Item;
 import org.keefeteam.atlantis.util.coordinates.TileCoordinate;
@@ -85,13 +86,22 @@ public class Main extends ApplicationAdapter {
             //InputMenu inputMenu = new InputMenu((str, state) -> System.out.println(str));
             InputMenu inputMenu = new InputMenu("Atlantis", (state) -> {
                 handler.disableDoor(tilemap, 0);
-            }, (state) -> gameState.setMenu(new DialogueMenu("Incorrect!")));
+            }, (state) -> gameState.setMenu(new DialogueMenu("Incorrect!")), "Confirm");
 
             gameState.setMenu(inputMenu);
         });
-
+        InteractZone interactZone3 = new InteractZone(new TileCoordinate(75, 500/16), tris, (gameState, player) -> {
+            //InputMenu inputMenu = new InputMenu((str, state) -> System.out.println(str));
+            List<String> pullT = new ArrayList<>();
+            pullT.add("Pull Lever");
+            ChoiceMenu inputMenu = new ChoiceMenu(pullT, (Test, state) -> {
+                handler.disableDoor(tilemap, 1);
+            });
+            gameState.setMenu(inputMenu);
+        });
         entities.add(interactZone);
         entities.add(interactZone2);
+        entities.add(interactZone3);
 
         gameState = new GameState(entities);
 
