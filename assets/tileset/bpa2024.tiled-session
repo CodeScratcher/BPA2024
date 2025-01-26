@@ -7,13 +7,37 @@
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "keyhole.tsx": {
+            "scaleInDock": 1
+        },
+        "last.tsx": {
+            "scaleInDock": 1
+        },
+        "metal.tsx": {
+            "scaleInDock": 1
+        },
+        "metal_wall.tsx": {
+            "scaleInDock": 1
+        },
+        "sp_hammer.tsx": {
+            "scaleInDock": 1
+        },
+        "sp_key_half.tsx": {
+            "scaleInDock": 1
+        },
         "test.tmx": {
             "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 253.66666666666663,
-                "y": 186
+                "y": 345.66666666666663
             }
+        },
+        "ts_bronze_floor.tsx": {
+            "scaleInDock": 1
+        },
+        "ts_bronze_wall.tsx": {
+            "scaleInDock": 1
         },
         "ts_outerworld.tsx": {
             "scaleInDock": 1,
