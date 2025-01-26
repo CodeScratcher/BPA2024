@@ -35,7 +35,12 @@ public class Main extends ApplicationAdapter {
     private Camera theCamera;
     private TiledTilemapHandler handler;
     private Tilemap tilemap;
-
+    private boolean earlDone;
+    private InteractZone interactZone4;
+    private InteractZone interactZone5;
+    private InteractZone interactZone7;
+    private InteractZone interactZone8;
+    private InteractZone interactZone9;
     @Override
     public void create() {
 
@@ -50,10 +55,6 @@ public class Main extends ApplicationAdapter {
 
 
         player = new Player(img2);
-        Item temp1 = new Item("Key Half One");
-        Item temp2 = new Item("Key Half Two");
-        player.addItem(temp1);
-        player.addItem(temp2);
         entities = new ArrayList<>();
 
 
@@ -77,11 +78,24 @@ public class Main extends ApplicationAdapter {
         entities.add(tilemap);
         entities.add(player);
 
-        InteractZone interactZone = new InteractZone(new TileCoordinate(44, 20/16), tris, (gameState, player) -> {
-            DialogueMenu test = new DialogueMenu("Lorem ipsum dolor sit amet");
+        // Talk to earl
+        InteractZone interactZone = new InteractZone(new TileCoordinate(17, 460/16), tris, (gameState, player) -> {
+            DialogueMenu test = null;
+            if(earlDone){
+                test = new DialogueMenu("Just get me what I need mate.");
+            }
+            else{
+                test = new DialogueMenu("Hey mate. The name's Earl. There are never usually outsiders down here." +
+                    "Look im very busy, but I cannot cross these spikes and finish research without armor. Please take this " +
+                    "cloth and use it to make me some armor there mate.");
+                player.addItem(new Item("Cloth"));
+                earlDone = true;
+            }
+
             gameState.setMenu(test);
         });
 
+        // Enter Atlantis
         InteractZone interactZone2 = new InteractZone(new TileCoordinate(44, 220/16), tris, (gameState, player) -> {
             //InputMenu inputMenu = new InputMenu((str, state) -> System.out.println(str));
             InputMenu inputMenu = new InputMenu("Atlantis", (state) -> {
@@ -90,19 +104,108 @@ public class Main extends ApplicationAdapter {
 
             gameState.setMenu(inputMenu);
         });
+        // Pull lever in maze
         InteractZone interactZone3 = new InteractZone(new TileCoordinate(75, 500/16), tris, (gameState, player) -> {
             //InputMenu inputMenu = new InputMenu((str, state) -> System.out.println(str));
-            List<String> pullT = new ArrayList<>();
-            pullT.add("Pull Lever");
-            ChoiceMenu inputMenu = new ChoiceMenu(pullT, (Test, state) -> {
+            List<String> text = new ArrayList<>();
+            text.add("Pull Lever");
+            ChoiceMenu inputMenu = new ChoiceMenu(text, (Test, state) -> {
                 handler.disableDoor(tilemap, 1);
             });
+            gameState.setMenu(inputMenu);
+        });
+
+        // Hammer
+        interactZone4 = new InteractZone(new TileCoordinate(82, 520/16), tris, (gameState, player) -> {
+            //InputMenu inputMenu = new InputMenu((str, state) -> System.out.println(str));
+            List<String> text = new ArrayList<>();
+            text.add("Grab Hammer");
+            ChoiceMenu inputMenu = new ChoiceMenu(text, (Test, state) -> {
+                handler.disableDoor(tilemap, 3);
+                entities.remove(interactZone4);
+                player.addItem(new Item("Hammer"));
+            });
+
+            gameState.setMenu(inputMenu);
+        });
+        //Break wall
+        interactZone5 = new InteractZone(new TileCoordinate(3, 420/16), tris, (gameState, player) -> {
+            List<Item> tempItems = player.getInventory();
+            ChoiceMenu inputMenu = null;
+            for(Item c : tempItems){
+                if(c.getName().equals("Hammer")){
+                    List<String> text = new ArrayList<>();
+                    text.add("Use Hammer");
+                    inputMenu = new ChoiceMenu(text, (Test, state) -> {
+                        handler.disableDoor(tilemap, 2);
+                        entities.remove(interactZone5);
+                        player.removeItem(new Item("Hammer"));
+                    });
+                    break;
+                }
+            }
+
+            gameState.setMenu(inputMenu);
+        });
+        //first number
+        InteractZone interactZone6 = new InteractZone(new TileCoordinate(1, 375/16), tris, (gameState, player) -> {
+            DialogueMenu test = new DialogueMenu("The first number is the quantity of atoms in one molecule of " +
+                "the liquid used to cool the lava");
+            gameState.setMenu(test);
+        });
+        //key1
+        interactZone7 = new InteractZone(new TileCoordinate(39, 220/16), tris, (gameState, player) -> {
+            //InputMenu inputMenu = new InputMenu((str, state) -> System.out.println(str));
+            List<String> text = new ArrayList<>();
+            text.add("Grab Key Fragment");
+            ChoiceMenu inputMenu = new ChoiceMenu(text, (Test, state) -> {
+                handler.disableDoor(tilemap, 4);
+                entities.remove(interactZone7);
+                player.addItem(new Item("Key Half One"));
+            });
+
+            gameState.setMenu(inputMenu);
+        });
+        //key2
+        interactZone8 = new InteractZone(new TileCoordinate(50, 255/16), tris, (gameState, player) -> {
+            //InputMenu inputMenu = new InputMenu((str, state) -> System.out.println(str));
+            List<String> text = new ArrayList<>();
+            text.add("Grab Key Fragment");
+            ChoiceMenu inputMenu = new ChoiceMenu(text, (Test, state) -> {
+                handler.disableDoor(tilemap, 5);
+                entities.remove(interactZone8);
+                player.addItem(new Item("Key Half Two"));
+            });
+
+            gameState.setMenu(inputMenu);
+        });
+        interactZone9 = new InteractZone(new TileCoordinate(44, 290/16), tris, (gameState, player) -> {
+            List<Item> tempItems = player.getInventory();
+            ChoiceMenu inputMenu = null;
+            for(Item c : tempItems){
+                if(c.getName().equals("Full Key")){
+                    List<String> text = new ArrayList<>();
+                    text.add("Use Key");
+                    inputMenu = new ChoiceMenu(text, (Test, state) -> {
+                        handler.disableDoor(tilemap, 6);
+                        entities.remove(interactZone5);
+                        player.removeItem(new Item("Full Key"));
+                    });
+                    break;
+                }
+            }
+
             gameState.setMenu(inputMenu);
         });
         entities.add(interactZone);
         entities.add(interactZone2);
         entities.add(interactZone3);
-
+        entities.add(interactZone4);
+        entities.add(interactZone5);
+        entities.add(interactZone6);
+        entities.add(interactZone7);
+        entities.add(interactZone8);
+        entities.add(interactZone9);
         gameState = new GameState(entities);
 
     }
