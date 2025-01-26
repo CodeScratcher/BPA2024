@@ -23,7 +23,8 @@ public class ChoiceMenu implements Menu {
     private BiConsumer<String, GameState> onEntry;
     private List<String> choices;
 
-    public ChoiceMenu(List<String> choices, BiConsumer<String, GameState> onEntry) {
+    public ChoiceMenu(List<String> c, BiConsumer<String, GameState> onEntry) {
+        this.choices = c;
         this.onEntry = onEntry;
     }
 

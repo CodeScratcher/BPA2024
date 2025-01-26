@@ -43,28 +43,28 @@ public class TiledTilemapHandler implements Renderable {
     OrthogonalTiledMapRenderer renderer;
     Camera camera;
     List<Boolean> doorsActive = new ArrayList();
-    
+
     public void initialize(String url, SpriteBatch batch, Camera camera) {
         map = new TmxMapLoader().load(url);
         float unitScale = 1f;
         renderer = new OrthogonalTiledMapRenderer(map, unitScale, batch);
         this.camera = camera;
     }
-    
+
     public Tilemap createTilemap() {
-        Vector2 p1 = new Vector2(1, 1);
-        Vector2 p2 = new Vector2(p1.x + TILE_SIZE - 2, p1.y);
-        Vector2 p3 = new Vector2(p1.x, p1.y + TILE_SIZE - 2);
+        Vector2 p1 = new Vector2(0, 0);
+        Vector2 p2 = new Vector2(p1.x + TILE_SIZE, p1.y);
+        Vector2 p3 = new Vector2(p1.x, p1.y + TILE_SIZE);
         Vector2 p4 = new Vector2(p2.x, p3.y);
 
         List<Triangle> tris = new ArrayList<>();
         tris.add(new Triangle(p1, p2, p3));
         tris.add(new Triangle(p2, p3, p4));
-    
+
         Map<TileCoordinate, Tile> tiles = new HashMap<>();
-        
+
         TiledMapTileLayer layer = (TiledMapTileLayer)map.getLayers().get(1);
-        
+
         for (int i = 0; i < layer.getWidth(); i++) {
             for (int j = 0; j < layer.getHeight(); j++) {
                 if (layer.getCell(i, j) != null) {
@@ -72,9 +72,9 @@ public class TiledTilemapHandler implements Renderable {
                 }
             }
         }
-        
+
         List<List<TileCoordinate>> doors = new ArrayList();
-        
+
         for (int i = 2; i < map.getLayers().getCount(); i++) {
             doors.add(new ArrayList());
             doorsActive.add(true);
@@ -88,9 +88,9 @@ public class TiledTilemapHandler implements Renderable {
                 }
             }
         }
-        
+
         Tilemap tm = new Tilemap(tiles, doors, this);
-        
+
         return tm;
     }
 
@@ -100,7 +100,7 @@ public class TiledTilemapHandler implements Renderable {
             tm.getTiles().get(coord).setColliders(new ArrayList<>());
         }
     }
-    
+
     @Override
     public void render(SpriteBatch batch) {
         renderer.setView(camera.getCamera());

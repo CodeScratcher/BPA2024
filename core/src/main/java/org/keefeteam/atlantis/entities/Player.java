@@ -44,8 +44,9 @@ public class Player implements Entity, Renderable {
 
     public List<Triangle> getTris(Vector2 p1) {
         List<Triangle> tris = new ArrayList<Triangle>();
-        Vector2 p2 = new Vector2(p1.x + 16, p1.y);
-        Vector2 p3 = new Vector2(p1.x, p1.y + 16);
+        Vector2 alteredP1 = new Vector2(1, 1).add(p1);
+        Vector2 p2 = new Vector2(p1.x + 14, p1.y);
+        Vector2 p3 = new Vector2(p1.x, p1.y + 14);
         Vector2 p4 = new Vector2(p2.x, p3.y);
         tris.add(new Triangle(p1, p2, p3));
         tris.add(new Triangle(p2, p3, p4));

@@ -18,19 +18,21 @@ public class InputMenu implements Menu {
     private Stage stage;
     private Skin skin;
     private Table menu;
+    private String buttonText;
     private BiConsumer<String, GameState> onEntry;
 
     public InputMenu(BiConsumer<String, GameState> onEntry) {
         this.onEntry = onEntry;
     }
 
-    public InputMenu(String isCorrect, Consumer<GameState> correct, Consumer<GameState> incorrect) {
+    public InputMenu(String isCorrect, Consumer<GameState> correct, Consumer<GameState> incorrect, String bText) {
         this((str, state) -> {
             if (isCorrect.equalsIgnoreCase(str)){
                 correct.accept(state);
             }
             else incorrect.accept(state);
         });
+        this.buttonText = bText;
     }
 
     public InputMenu(){
@@ -50,7 +52,7 @@ public class InputMenu implements Menu {
         TextField textField = new TextField("", skin);
         textField.setWidth(500);
 
-        TextButton textButton = new TextButton("Confirm", skin);
+        TextButton textButton = new TextButton(buttonText, skin);
         textButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
