@@ -77,7 +77,7 @@ public class InventoryMenu implements Menu {
 
         //set up the menu and the descMenu
         skin = new Skin(Gdx.files.internal("ui/pixthulhu-ui.json"));
-        controlsLabel = new Label("Press Esc to Return", skin);
+        controlsLabel = new Label("Press Q to Return", skin);
 
         Gdx.input.setInputProcessor(stage);
         menu = new Table();
