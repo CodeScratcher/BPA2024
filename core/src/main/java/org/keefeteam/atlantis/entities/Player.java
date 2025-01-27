@@ -31,7 +31,7 @@ public class Player implements Entity, Renderable {
     private double iframes = 0;
     private int hp = 100;
 
-    public static final int PLAYER_SPEED = 100;
+    public static final int PLAYER_SPEED = 150;
     public static final float REPAIR_SPEED = 1f;
 
     @Getter
@@ -58,9 +58,11 @@ public class Player implements Entity, Renderable {
 
     @Override
     public void update(GameState gameState, Set<InputEvent> events) {
+
         Vector2 posChange = move(events);
         position = WorldCoordinate.addWorldCoordinates(position, new WorldCoordinate(posChange.nor().scl(PLAYER_SPEED * gameState.getDelta())));
 
+        System.out.println(position.getCoord().x/16 + " ; " + position.getCoord().y/16);
 
         handleCollision(gameState, posChange, events);
 

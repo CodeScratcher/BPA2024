@@ -28,7 +28,7 @@ public class ChoiceMenu implements Menu {
         this.onEntry = onEntry;
     }
 
-    public ChoiceMenu(List<String> choices,String isCorrect, Consumer<GameState> correct, Consumer<GameState> incorrect) {
+    public ChoiceMenu(List<String> choices, String isCorrect, Consumer<GameState> correct, Consumer<GameState> incorrect) {
         this(choices, (str, state) -> {
             if (isCorrect.equals(str)){
                 correct.accept(state);

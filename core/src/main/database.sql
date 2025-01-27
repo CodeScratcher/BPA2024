@@ -7,8 +7,7 @@ USE itemsDB;
 CREATE TABLE IF NOT EXISTS items (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(30) NOT NULL,
-    description VARCHAR(200),
-    texture VARCHAR(20)
+    description VARCHAR(200)
 );
 
 CREATE TABLE IF NOT EXISTS recipes (
@@ -21,51 +20,51 @@ CREATE TABLE IF NOT EXISTS recipes (
 );
 
 
-INSERT INTO items (name, description, texture) VALUES
+INSERT INTO items (name, description) VALUES
 -- 1
-('Hammer', 'A really super duper strong hammer', 'hammer'),
+('Hammer', 'A really super duper strong hammer'),
 -- 2
-('Key Half One', 'Half a key, likely broken by the passage of time.\n It\'s the ring of the key.', 'key_half_one'),
+('Key Half One', 'Half a key, likely broken by the passage of time.\n It\'s the ring of the key.'),
 -- 3
-('Key Half Two', 'Half a key, likely broken by the passage of time.\n It\'s the teeth of the key.', 'key_half_two'),
+('Key Half Two', 'Half a key, likely broken by the passage of time.\n It\'s the teeth of the key.'),
 -- 4
-('Rubble Chunk', 'A Small solid chunk of rubble, likely collapsed from the wall or ceiling.', 'rubble'),
+('Rubble Chunk', 'A Small solid chunk of rubble, likely collapsed from the wall or ceiling.'),
 -- 5
-('Stick', 'Sticks and stone combined will break my bones, but words will never hurt me', 'stick'),
+('Stick', 'Sticks and stone combined will break my bones, but words will never hurt me'),
 -- 6
-('Full Key', 'Used to open doors or chests.', 'key'),
+('Full Key', 'Used to open doors or chests.'),
 -- 7
-('Scale', 'Fish Scale, Slimy, Smelly, and Slippery...gross', "fish_scale"),
+('Scale', 'Fish Scale, Slimy, Smelly, and Slippery...gross'),
 -- 8
-('Cloth', 'Suprisingly dry cloth, likely found from previous explorers, or sunken equipment.', 'cloth'),
+('Cloth', 'Suprisingly dry cloth, likely found from previous explorers, or sunken equipment.'),
 -- 9
-('Scale Armor', 'Durable armor that can take the hit from enemies or traps...still gross', 'scale_armor'),
+('Scale Armor', 'Durable armor that can take the hit from enemies or traps...still gross'),
 -- 10
-('Queen Fragment', 'She broke like an egg', 'queen_fragment'),
+('Queen Fragment', 'She broke like an egg'),
 -- 11
-('Chess Queen', 'Okay you the queen... burger queen', 'chess_queen'),
+('Chess Queen', 'Okay you the queen... burger queen'),
 -- 12
-('Wooden Spear', 'Neolithic combat just got a whole lot cooler', 'spear'),
+('Wooden Spear', 'Neolithic combat just got a whole lot cooler'),
 -- 13
-('Fishy Meat', 'Tasty when cooked, unless you are a caveman, it looks like the hunter a little', 'meat'),
+('Fishy Meat', 'Tasty when cooked, unless you are a caveman, it looks like the hunter a little'),
 -- 14
-('Pie Shaped object', 'Pun intened, the edges are sharp enough to cut wood, not to mention it\'s divot can hold something', 'circle_object'),
+('Pie Shaped object', 'Pun intened, the edges are sharp enough to cut wood, not to mention it\'s divot can hold something'),
 -- 15
-('Pythagoras Shaped object', 'It reads \"High voltage\", wonderful', 'triangle_object'),
+('Pythagoras Shaped object', 'It reads \"High voltage\", wonderful'),
 -- 16
-('Black Rectangle', 'CENSORED', 'rectangle_object'),
+('Black Rectangle', 'CENSORED'),
 -- 17
-('Spear End', 'You forked up the spear!', 'fork'),
+('Spear End', 'You forked up the spear!'),
 -- 18
-('Dish Set', 'An Elegantly Exquisite dish set', 'dish_set'),
+('Dish Set', 'An Elegantly Exquisite dish set'),
 -- 19
-('Improper Meal', 'Using your hands? What are you, some sore of barbarian?', 'improper_meal'),
+('Improper Meal', 'Using your hands? What are you, some sore of barbarian?'),
 -- 20
-('Meal', 'A meal fit for a lowerclassman', 'meal'),
+('Meal', 'A meal fit for a lowerclassman'),
 -- 21
-('Voltage Sign', 'A shocking solution I know', 'volt_sign'),
+('Voltage Sign', 'A shocking solution I know'),
 -- 22
-('Half Queen', 'When does half queen three release?', 'queen_half');
+('Half Queen', 'When does half queen three release?');
 
 INSERT INTO recipes (item_id, combines_with_id, result_id) VALUES
 (2, 3, 6), -- Key Half One + Key Half Two = Full Key
