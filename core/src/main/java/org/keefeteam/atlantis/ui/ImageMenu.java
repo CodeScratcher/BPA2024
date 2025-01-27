@@ -14,6 +14,7 @@ import org.keefeteam.atlantis.GameState;
 import org.keefeteam.atlantis.util.input.InputEvent;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 public class ImageMenu implements Menu {
     // The text that is being displayed
@@ -22,12 +23,20 @@ public class ImageMenu implements Menu {
     private Table table;
     private Skin skin;
     private GameState gameState;
+    private Supplier<Boolean> onEnd;
 
     //Where the text is printed
 
     public ImageMenu(Texture i){
         this.image = i;
+        onEnd = () -> false;
     }
+
+    public ImageMenu(Texture i, Supplier<Boolean> onEnd) {
+        this.image = i;
+        this.onEnd = onEnd;
+    }
+
 
     @Override
     public void initialize(GameState g) {
@@ -48,8 +57,9 @@ public class ImageMenu implements Menu {
     public void update(Set<InputEvent> inputEvents) {
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
-        
+
         if(inputEvents.contains(InputEvent.UIConfirm)){
+            if (onEnd.get()) return;
             table.remove();
             gameState.setMenu(null);
             this.gameState.setPaused(false);

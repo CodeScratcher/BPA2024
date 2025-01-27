@@ -12,6 +12,7 @@ import org.keefeteam.atlantis.GameState;
 import org.keefeteam.atlantis.util.input.InputEvent;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 public class DialogueMenu implements Menu {
     // The text that is being displayed
@@ -34,8 +35,16 @@ public class DialogueMenu implements Menu {
     //Where the text is printed
     private Label textLabel;
 
+    private Supplier<Boolean> onEnd;
+
     public DialogueMenu(String t){
         this.text = t;
+        this.onEnd = () -> false;
+    }
+
+    public DialogueMenu(String text, Supplier<Boolean> onEnd) {
+        this.text = text;
+        this.onEnd = onEnd;
     }
 
     @Override
@@ -93,6 +102,7 @@ public class DialogueMenu implements Menu {
             }
             else{
                 //Destroy label
+                if (onEnd.get()) return;
                 table.remove();
                 gameState.setMenu(null);
                 this.gameState.setPaused(false);

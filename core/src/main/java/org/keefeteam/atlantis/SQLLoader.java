@@ -10,7 +10,7 @@ public class SQLLoader {
         // Database credentials
         String url = "jdbc:mysql://localhost:3306/" + q;
         String user = "root";
-        String password = "Roman2008@";//I have no clue what to put here
+        String password = "Keefe2012";//I have no clue what to put here
 
         // Initialize the connection object
         Connection connection = null;

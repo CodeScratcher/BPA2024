@@ -45,10 +45,10 @@ public class Player implements Entity, Renderable {
     public List<Triangle> getTris(Vector2 p1) {
         List<Triangle> tris = new ArrayList<Triangle>();
         Vector2 alteredP1 = new Vector2(1, 1).add(p1);
-        Vector2 p2 = new Vector2(p1.x + 14, p1.y);
-        Vector2 p3 = new Vector2(p1.x, p1.y + 14);
+        Vector2 p2 = new Vector2(p1.x + 15, p1.y);
+        Vector2 p3 = new Vector2(p1.x, p1.y + 15);
         Vector2 p4 = new Vector2(p2.x, p3.y);
-        tris.add(new Triangle(p1, p2, p3));
+        tris.add(new Triangle(alteredP1, p2, p3));
         tris.add(new Triangle(p2, p3, p4));
         return tris;
     }
@@ -85,26 +85,28 @@ public class Player implements Entity, Renderable {
                     Vector2 change = new Vector2(posChange).nor().scl(PLAYER_SPEED * gameState.getDelta());
                     position = WorldCoordinate.addWorldCoordinates(position, new WorldCoordinate(new Vector2(posChange).nor().scl(-PLAYER_SPEED * gameState.getDelta())));
 
+                    double actualSpeed = PLAYER_SPEED * gameState.getDelta();
+
                     double amount = 0.0f;
 
                     while (Math.abs(amount) < Math.abs(change.x) && !collider.collidesWith(getTris())) {
-                        amount += change.x * REPAIR_SPEED / PLAYER_SPEED;
-                        position.getCoord().x += change.x * REPAIR_SPEED / PLAYER_SPEED;
+                        amount += change.x * REPAIR_SPEED / actualSpeed;
+                        position.getCoord().x += change.x * REPAIR_SPEED / actualSpeed;
                     }
 
                     if (collider.collidesWith(getTris())) {
-                        position.getCoord().x -= change.x * REPAIR_SPEED / PLAYER_SPEED;
+                        position.getCoord().x -= change.x * REPAIR_SPEED / actualSpeed;
                     }
 
                     amount = 0.0f;
 
                     while (Math.abs(amount) < Math.abs(change.y) && !collider.collidesWith(getTris())) {
-                        amount += change.y * REPAIR_SPEED / PLAYER_SPEED;
-                        position.getCoord().y += change.y * REPAIR_SPEED / PLAYER_SPEED;
+                        amount += change.y * REPAIR_SPEED / actualSpeed;
+                        position.getCoord().y += change.y * REPAIR_SPEED / actualSpeed;
                     }
 
                     if (collider.collidesWith(getTris())) {
-                        position.getCoord().y -= change.y * REPAIR_SPEED / PLAYER_SPEED;
+                        position.getCoord().y -= change.y * REPAIR_SPEED / actualSpeed;
                     }
                 }
 
