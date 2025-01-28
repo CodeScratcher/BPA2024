@@ -177,21 +177,35 @@ public class InventoryMenu implements Menu {
                                     ResultSet rslt = null;
                                     //pulls from the items table the result of the combine
                                     rslt = conn.select("SELECT * FROM items WHERE id = " + resultInt);
-                                    try{
-                                        while(rslt.next()){
-                                            System.out.println(rslt.getString(2));
-                                            player.removeItem(craftSelect[0]);
-                                            player.removeItem(craftSelect[1]);
-                                            craftSelect[0] = null;
-                                            craftSelect[1] = null;
-                                            Item newItem = new Item(rslt.getString(2));
-                                            player.addItem(newItem);
-                                            dispose();
-                                            initialize(g);
+                                    if(resultInt != 17){
+                                        try{
+                                            while(rslt.next()){
+                                                System.out.println(rslt.getString(2));
+                                                player.removeItem(craftSelect[0]);
+                                                player.removeItem(craftSelect[1]);
+                                                craftSelect[0] = null;
+                                                craftSelect[1] = null;
+                                                player.addItem(new Item(rslt.getString(2)));
+                                                dispose();
+                                                initialize(g);
+                                            }
+                                        }
+                                        catch(SQLException e){
+                                            e.printStackTrace();
                                         }
                                     }
-                                    catch(SQLException e){
-                                        e.printStackTrace();
+                                    else{
+                                        player.removeItem(craftSelect[0]);
+                                        player.removeItem(craftSelect[1]);
+                                        craftSelect[0] = null;
+                                        craftSelect[1] = null;
+                                        // Hard coded several item giver
+                                        player.addItem(new Item("Spear End"));
+                                        player.addItem(new Item("Pie Shaped object"));
+                                        player.addItem(new Item("Stick"));
+
+                                        dispose();
+                                        initialize(g);
                                     }
                                 }
                             });

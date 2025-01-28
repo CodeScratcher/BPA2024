@@ -97,7 +97,10 @@ public class TiledTilemapHandler implements Renderable {
     public void disableDoor(Tilemap tm, int layer) {
         doorsActive.set(layer, false);
         for (TileCoordinate coord : tm.getDoors().get(layer)) {
-            tm.getTiles().get(coord).setColliders(new ArrayList<>());
+            if(((TiledMapTileLayer)map.getLayers().get(1)).getCell(coord.getX(), coord.getY()) == null){
+                tm.getTiles().get(coord).setColliders(new ArrayList<>());
+            }
+
         }
     }
 

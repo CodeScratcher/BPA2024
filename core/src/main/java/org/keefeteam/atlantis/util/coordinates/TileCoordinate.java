@@ -3,7 +3,9 @@ package org.keefeteam.atlantis.util.coordinates;
 import com.badlogic.gdx.math.Vector2;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
+@Getter
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class TileCoordinate extends Coordinate {

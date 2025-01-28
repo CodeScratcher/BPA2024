@@ -36,6 +36,11 @@ public class Main extends ApplicationAdapter {
     private TiledTilemapHandler handler;
     private Tilemap tilemap;
     private boolean earlDone;
+    private boolean machDone;
+    private boolean hunterDone;
+    private boolean oracleFail;
+    private boolean earlComplete;
+    private boolean machComplete;
     private boolean[] dones;
     private InteractZone interactZone4;
     private InteractZone interactZone5;
@@ -54,7 +59,7 @@ public class Main extends ApplicationAdapter {
         sr = new ShapeRenderer();
 
         image = new Texture("libgdx.png");
-        Texture img2 = new Texture("blackplaceholder.png");
+        Texture img2 = new Texture("..\\assets\\sprites\\sp_forward_player.png");
         controller = new Controller();
 
 
@@ -86,15 +91,27 @@ public class Main extends ApplicationAdapter {
         // Talk to earl
         InteractZone interactZone = new InteractZone(new TileCoordinate(17, 460/16), tris, (gameState, player) -> {
             DialogueMenu test = null;
-            if(earlDone){
-                test = new DialogueMenu("Just get me what I need mate.");
+            if(!earlComplete){
+                if(earlDone){
+                    if(player.checkInventory("Scale Armor")){
+                        player.removeItem(new Item("Scale Armor"));
+                        test = new DialogueMenu("Excellent there mate, I can now conduct needed research");
+                        earlComplete = true;
+                    }
+                    else{
+                        test = new DialogueMenu("Just get me what I need mate.");
+                    }
+                }
+                else{
+                    test = new DialogueMenu("Hey mate. The name's Earl. There are never usually outsiders down here." +
+                        "Look im very busy, but I cannot cross these spikes and finish research without armor. Please take this " +
+                        "cloth and use it to make me some armor there mate.");
+                    player.addItem(new Item("Cloth"));
+                    earlDone = true;
+                }
             }
             else{
-                test = new DialogueMenu("Hey mate. The name's Earl. There are never usually outsiders down here." +
-                    "Look im very busy, but I cannot cross these spikes and finish research without armor. Please take this " +
-                    "cloth and use it to make me some armor there mate.");
-                player.addItem(new Item("Cloth"));
-                earlDone = true;
+                test = new DialogueMenu("Carry on now mate.");
             }
 
             gameState.setMenu(test);
@@ -104,10 +121,15 @@ public class Main extends ApplicationAdapter {
         InteractZone interactZone2 = new InteractZone(new TileCoordinate(44, 220/16), tris, (gameState, player) -> {
 
             InputMenu inputMenu = new InputMenu("Atlantis", (state) -> {
-                handler.disableDoor(tilemap, 0);
-            }, (state) -> gameState.setMenu(new DialogueMenu("Incorrect!")), "Confirm");
 
-            gameState.setMenu(inputMenu);
+                handler.disableDoor(tilemap, 0);
+                gameState.setMenu(new DialogueMenu("(You feel a strong urge to check your pockets with Q)"));
+            }, (state) -> gameState.setMenu(new DialogueMenu("Incorrect!")), "Confirm");
+            DialogueMenu dialogueMenu = new DialogueMenu("Speak the name of this place to enter.", () -> {
+                gameState.setMenu(inputMenu);
+                return true;
+            });
+            gameState.setMenu(dialogueMenu);
         });
         // Pull lever in maze
         InteractZone interactZone3 = new InteractZone(new TileCoordinate(75, 500/16), tris, (gameState, player) -> {
@@ -134,7 +156,6 @@ public class Main extends ApplicationAdapter {
         });
         //Break wall
         interactZone5 = new InteractZone(new TileCoordinate(3, 420/16), tris, (gameState, player) -> {
-            System.out.println("HELMP ME PLEASE GOD WHY");
             List<Item> tempItems = player.getInventory();
             ChoiceMenu inputMenu = null;
             for(Item c : tempItems){
@@ -244,25 +265,32 @@ public class Main extends ApplicationAdapter {
                 entities.remove(interactZone13);
             }, (state) -> gameState.setMenu(new DialogueMenu("Incorrect!")), "Confirm");
 
-            gameState.setMenu(inputMenu);
+            DialogueMenu dialogueMenu = new DialogueMenu("He likes circles, what\'s his favourite snack", () -> {
+                gameState.setMenu(inputMenu);
+                return true;
+            });
+            gameState.setMenu(dialogueMenu);
         });
         //triangle
         interactZone14 = new InteractZone(new TileCoordinate(52, 42), tris, (gameState, player) -> {
 
             List<String> text = new ArrayList<>();
-            text.add("One");
-            text.add("Two");
-            text.add("Three");
-            text.add("Four");
-            ChoiceMenu inputMenu = new ChoiceMenu(text, "Three", (Test) -> {
+            text.add("Opposite");
+            text.add("Cosine");
+            text.add("Hypotenuse");
+            text.add("Tangent");
+            ChoiceMenu inputMenu = new ChoiceMenu(text, "Hypotenuse", (Test) -> {
                 handler.disableDoor(tilemap, 9);
                 entities.remove(interactZone14);
                 player.addItem(new Item("Pythagoras Shaped object"));
             }, (Test) ->{
                 System.out.println("WRONG");
             });
-
-            gameState.setMenu(inputMenu);
+            DialogueMenu dialogueMenu = new DialogueMenu("Shortest distance between two points", () -> {
+                gameState.setMenu(inputMenu);
+                return true;
+            });
+            gameState.setMenu(dialogueMenu);
         });
         //rectangle
         interactZone15 = new InteractZone(new TileCoordinate(55, 42), tris, (gameState, player) -> {
@@ -272,8 +300,62 @@ public class Main extends ApplicationAdapter {
                 handler.disableDoor(tilemap, 8);
                 entities.remove(interactZone15);
             }, (state) -> gameState.setMenu(new DialogueMenu("Incorrect!")), "Confirm");
+            DialogueMenu dialogueMenu = new DialogueMenu("Every square is a rectangle is a square but not every rectangle is a _____", () -> {
+                gameState.setMenu(inputMenu);
+                return true;
+            });
+            gameState.setMenu(dialogueMenu);
+        });
+        //Machine
+        InteractZone interactZone16 = new InteractZone(new TileCoordinate(35, 41), tris, (gameState, player) -> {
+            DialogueMenu test = null;
+            if(machComplete){
+                test = new DialogueMenu("Thanks, now we just sit back and watch, except I forgot what it was supposed to do");
+            }
+            else if(player.checkInventory("Pythagoras Shaped object") && machDone){
+                test = new DialogueMenu("Hmmm, I see that triangle you go there. that might be too much voltage for" +
+                    " the machine to handle, if only there was less voltage");
+            }
+            else if(player.checkInventory("Voltage Sign") && machDone){
+                test = new DialogueMenu("Perfecto my friend. Take one of my scales... also have this thing I found on the ground");
+                player.removeItem(new Item("Voltage Sign"));
+                machComplete = true;
+                player.addItem(new Item("Scale"));
+                player.addItem(new Item("Queen Fragment"));
+                handler.disableDoor(tilemap, 11);
+            }
+            else if(machDone){
+                test = new DialogueMenu("I Just can't think of anything, please give me a solution!");
+            }
+            else{
+                test = new DialogueMenu("Hey! You! Please help an Atlantean out! My machine doesn't work and I" +
+                    " cannot figure out why! Everything I think of comes to reality. And NO I cannot just \"Think of a working machine\"" +
+                    " because it has never worked before, so I have no basis. Look, can you just lend me a hand?");
+                machDone = true;
+            }
 
-            gameState.setMenu(inputMenu);
+            gameState.setMenu(test);
+        });
+        //Hunter
+        InteractZone interactZone17 = new InteractZone(new TileCoordinate(52, 54), tris, (gameState, player) -> {
+            DialogueMenu test = null;
+            if(!hunterDone){
+                test = new DialogueMenu("Please... I need some food to live. Take my spear and get me some food.");
+                player.addItem(new Item("Wooden Spear"));
+                gameState.setMenu(test);
+                hunterDone = true;
+            }
+            else if(player.checkInventory("Fishy Meat")){
+                test = new DialogueMenu("What? Am I a troglodyte to you? At least put it on a plate with a fork.");
+            }
+            else if(player.checkInventory("Meal")){
+                test = new DialogueMenu("Oh my, thank you so much. Please take this thing I found. Also, take the spear, its on the house.");
+                player.addItem(new Item("Queen Fragment"));
+            }
+            else{
+                test = new DialogueMenu("...");
+            }
+            gameState.setMenu(test);
         });
         entities.add(interactZone);
         entities.add(interactZone2);
@@ -290,9 +372,14 @@ public class Main extends ApplicationAdapter {
         entities.add(interactZone13);
         entities.add(interactZone14);
         entities.add(interactZone15);
-        //rect 49 42
-        //tri 52 42
-        //cric 55 42
+        entities.add(interactZone16);
+        entities.add(interactZone17);
+        //entities.add(interactZone18);
+        //entities.add(interactZone19);
+        //entities.add(interactZone20);
+        //73 ; 22 Water
+        //34 ; 52 oracle
+        //43 ; 48 chess
 
         gameState = new GameState(entities);
 

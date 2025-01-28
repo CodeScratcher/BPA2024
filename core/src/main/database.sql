@@ -75,6 +75,6 @@ INSERT INTO recipes (item_id, combines_with_id, result_id) VALUES
 (14, 12, 17), -- Circle + Spear = Spear End + circle + stick //!!!! WORK ON ITEM REWORK IN JAVA WITH THIS ONE OTHERWISE IT WONT WORK !!!!
 (15, 16, 21), -- Triangle + Rectangle = Voltage Sign
 (14, 17, 18), -- Circle + Spear end = Dish Set
-(14, 13, 19), -- Circle + Meat = Improper Meal
-(18, 13, 20), -- Dish Set + Meat = Meal
-(19, 17, 20); -- Improper Meal + Spear end = Meal
+#(14, 13, 19), -- Circle + Meat = Improper Meal
+(18, 13, 20); -- Dish Set + Meat = Meal
+# (19, 17, 20); -- Improper Meal + Spear end = Meal

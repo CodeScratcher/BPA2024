@@ -141,7 +141,16 @@ public class Player implements Entity, Renderable {
 
         return posChange;
     }
-
+    public boolean checkInventory(String itemName){
+        boolean ret = false;
+        for(Item i : inventory){
+            if(i.getName().equals(itemName)){
+                ret = true;
+                break;
+            }
+        }
+        return ret;
+    }
 
     @Override
     public void render(SpriteBatch batch) {
