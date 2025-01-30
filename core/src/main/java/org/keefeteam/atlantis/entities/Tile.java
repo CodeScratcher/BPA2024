@@ -10,12 +10,24 @@ import org.keefeteam.atlantis.util.collision.Triangle;
 import java.util.List;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @AllArgsConstructor
+/**
+ * A tile in a tilemap
+ */
 public class Tile {
+    /**
+     * The hitbox of the tile
+     */
     private List<Triangle> colliders;
 
+    /**
+     * Get the tile's collision relative to its position
+     * @param tileCoordinate The position of the tile
+     * @return A list of triangles representing the tile's collision
+     */
     public List<Triangle> getTriangles(TileCoordinate tileCoordinate) {
         Vector2 basis = tileCoordinate.toWorldCoordinate().getCoord();
 

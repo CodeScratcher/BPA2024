@@ -16,6 +16,9 @@ import org.keefeteam.atlantis.util.input.InputEvent;
 import java.util.*;
 import java.util.function.Supplier;
 
+/**
+ * A menu that displays an image
+ */
 public class ImageMenu implements Menu {
     // The text that is being displayed
     private Texture image;
@@ -27,11 +30,20 @@ public class ImageMenu implements Menu {
 
     //Where the text is printed
 
+    /**
+     * Create an image menu
+     * @param i The image displayed
+     */
     public ImageMenu(Texture i){
         this.image = i;
         onEnd = () -> false;
     }
 
+    /**
+     * Create an image menu that does something upon completion
+     * @param i The image menu
+     * @param onEnd The function called upon completion
+     */
     public ImageMenu(Texture i, Supplier<Boolean> onEnd) {
         this.image = i;
         this.onEnd = onEnd;

@@ -28,6 +28,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * A menu for representing the inventory
+ */
 public class InventoryMenu implements Menu {
     private Player player;
     private GameState gameState;

@@ -22,7 +22,7 @@ public class TilemapTest {
         Triangle t3 = new Triangle(new Vector2(1, 0), new Vector2(-1, 4), new Vector2(3, 2));
 
         List<Triangle> tris = Arrays.asList(t2, t3);
-        Tile tile = new Tile(tris, Mockito.mock(Texture.class));
+        Tile tile = new Tile(tris);
 
         Tilemap tm = new Tilemap();
         tm.addTiles(new TileCoordinate(0, 0), tile);
@@ -36,7 +36,7 @@ public class TilemapTest {
         Triangle t3 = new Triangle(new Vector2(1, 0), new Vector2(-1, 4), new Vector2(3, 2));
 
         List<Triangle> tris = Arrays.asList(t2, t3);
-        Tile tile = new Tile(tris, Mockito.mock(Texture.class));
+        Tile tile = new Tile(tris);
 
         Tilemap tm = new Tilemap();
         tm.addTiles(new TileCoordinate(0, 1), tile);
@@ -50,7 +50,7 @@ public class TilemapTest {
         Triangle t3 = new Triangle(new Vector2(1, 0), new Vector2(-1, 4), new Vector2(3, 2));
 
         List<Triangle> tris = Arrays.asList(t2, t3);
-        Tile tile = new Tile(tris, Mockito.mock(Texture.class));
+        Tile tile = new Tile(tris);
 
         Tilemap tm = new Tilemap();
         tm.addTiles(new TileCoordinate(0, 0), tile);

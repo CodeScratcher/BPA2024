@@ -19,11 +19,20 @@ import static org.keefeteam.atlantis.util.coordinates.TileCoordinate.TILE_SIZE;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
+/**
+ * The character controlled by the player.
+ */
 public class Player implements Entity, Renderable {
+    /**
+     * The position of the player
+     */
     @Getter
     @Setter
     private WorldCoordinate position = new WorldCoordinate(new Vector2(704, 20));
 
+    /**
+     * The texture of the player
+     */
     @Setter
     @NonNull
     private Texture texture;
@@ -31,17 +40,35 @@ public class Player implements Entity, Renderable {
     private double iframes = 0;
     private int hp = 100;
 
+    /**
+     * The speed of the player
+     */
     public static final int PLAYER_SPEED = 150;
+    /**
+     * The size of the increments by which the player steps in case of collision
+     */
     public static final float REPAIR_SPEED = 1f;
 
+    /**
+     * The inventory of the player
+     */
     @Getter
     @Setter
     private List<Item> inventory = new ArrayList<>();
 
+    /**
+     * Gets the hitbox of the player based on their position
+     * @return The hitbox of the player
+     */
     public List<Triangle> getTris() {
         return getTris(position.getCoord());
     }
 
+    /**
+     * Gets the hitbox of the player
+     * @param p1 Where the hitbox is located, relative to world coordinates
+     * @return The hitbox, shifted to that location
+     */
     public List<Triangle> getTris(Vector2 p1) {
         List<Triangle> tris = new ArrayList<Triangle>();
         Vector2 alteredP1 = new Vector2(1, 1).add(p1);
@@ -141,10 +168,16 @@ public class Player implements Entity, Renderable {
 
         return posChange;
     }
-    public boolean checkInventory(String itemName){
+
+    /**
+     * Check if inventory contains item
+     * @param itemName The item to check for
+     * @return Whether the inventory contains the item
+     */
+    public boolean checkInventory(String itemName) {
         boolean ret = false;
-        for(Item i : inventory){
-            if(i.getName().equals(itemName)){
+        for (Item i : inventory) {
+            if (i.getName().equals(itemName)) {
                 ret = true;
                 break;
             }
@@ -156,10 +189,20 @@ public class Player implements Entity, Renderable {
     public void render(SpriteBatch batch) {
         batch.draw(texture, position.getCoord().x, position.getCoord().y, 16, 16);
     }
-    public void addItem(Item a){
+
+    /**
+     * Add an item to the inventory
+     * @param a The item to add
+     */
+    public void addItem(Item a) {
         this.inventory.add(a);
     }
-    public void removeItem(Item a){
+
+    /**
+     * Remove an item from the inventory
+     * @param a The idem to remove
+     */
+    public void removeItem(Item a) {
         this.inventory.remove(a);
     }
 }

@@ -7,8 +7,9 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@ToString
 public class WorldCoordinate extends Coordinate {
-    Vector2 coord;
+    private Vector2 coord;
 
     @Override
     public WorldCoordinate toWorldCoordinate() {

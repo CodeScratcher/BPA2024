@@ -14,6 +14,9 @@ import org.keefeteam.atlantis.util.input.InputEvent;
 import java.util.*;
 import java.util.function.Supplier;
 
+/**
+ * A menu that just displays text
+ */
 public class DialogueMenu implements Menu {
     // The text that is being displayed
     private String text;
@@ -37,11 +40,20 @@ public class DialogueMenu implements Menu {
 
     private Supplier<Boolean> onEnd;
 
+    /**
+     * Create a dialogue menu
+     * @param t The text of the dialogue menu
+     */
     public DialogueMenu(String t){
         this.text = t;
         this.onEnd = () -> false;
     }
 
+    /**
+     * Create a dialogue menu that does something on completion
+     * @param text The text
+     * @param onEnd The function to run on completion
+     */
     public DialogueMenu(String text, Supplier<Boolean> onEnd) {
         this.text = text;
         this.onEnd = onEnd;

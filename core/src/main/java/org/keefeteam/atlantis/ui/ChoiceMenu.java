@@ -15,6 +15,9 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+/**
+ * A menu where the player selects from options
+ */
 public class ChoiceMenu implements Menu {
     private GameState gameState;
     private Stage stage;
@@ -23,11 +26,23 @@ public class ChoiceMenu implements Menu {
     private BiConsumer<String, GameState> onEntry;
     private List<String> choices;
 
+    /**
+     * Creates a choicemenu
+     * @param c The list of options
+     * @param onEntry A function when an option is chosen, taking in the chosen option and gamestate
+     */
     public ChoiceMenu(List<String> c, BiConsumer<String, GameState> onEntry) {
         this.choices = c;
         this.onEntry = onEntry;
     }
 
+    /**
+     * Creates a choice menu with a correct option
+     * @param choices The list of options
+     * @param isCorrect The correct choice
+     * @param correct A function to do if the player is correct
+     * @param incorrect A function to do if the player is incorrect
+     */
     public ChoiceMenu(List<String> choices, String isCorrect, Consumer<GameState> correct, Consumer<GameState> incorrect) {
         this(choices, (str, state) -> {
             if (isCorrect.equals(str)){
@@ -38,9 +53,6 @@ public class ChoiceMenu implements Menu {
         });
     }
 
-    public ChoiceMenu(){
-
-    }
     @Override
     public void initialize(GameState gameState) {
         this.gameState = gameState;
