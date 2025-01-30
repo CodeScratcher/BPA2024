@@ -56,6 +56,11 @@ public class InventoryMenu implements Menu {
     private Label combineLabel;
     //ID of the crafted item
     private int resultInt;
+
+    /**
+     * Creates an inventory menu
+     * @param player The player whose inventory it is
+     */
     public InventoryMenu(Player player) {
         this.player = player;
     }
