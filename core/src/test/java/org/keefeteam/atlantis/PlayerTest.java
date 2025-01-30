@@ -3,10 +3,15 @@ package org.keefeteam.atlantis;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import org.junit.jupiter.api.Test;
-import org.keefeteam.atlantis.coordinates.WorldCoordinate;
+import org.keefeteam.atlantis.util.coordinates.WorldCoordinate;
+import org.keefeteam.atlantis.entities.Entity;
+import org.keefeteam.atlantis.entities.Player;
+import org.keefeteam.atlantis.util.input.InputEvent;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -22,7 +27,7 @@ public class PlayerTest {
         GameState gameState = new GameState(entities);
 
 
-        List<InputEvent> inputs = new ArrayList<>();
+        Set<InputEvent> inputs = new HashSet<>();
 
         assertEquals(player.getPosition(), new WorldCoordinate(new Vector2(0, 0)));
 
@@ -46,13 +51,13 @@ public class PlayerTest {
 
         gameState.setDelta(1);
 
-        List<InputEvent> inputs = new ArrayList<>();
+        Set<InputEvent> inputs = new HashSet<>();
         inputs.add(InputEvent.Left);
 
         player.update(gameState, inputs);
 
         assertEquals(player.getPosition(), new WorldCoordinate(new Vector2(-Player.PLAYER_SPEED, 0)));
-        
+
 
         player.update(gameState, inputs);
 
@@ -72,7 +77,7 @@ public class PlayerTest {
 
         gameState.setDelta(1);
 
-        List<InputEvent> inputs = new ArrayList<>();
+        Set<InputEvent> inputs = new HashSet<>();
         inputs.add(InputEvent.Right);
 
         player.update(gameState, inputs);
@@ -97,7 +102,7 @@ public class PlayerTest {
 
         gameState.setDelta(1);
 
-        List<InputEvent> inputs = new ArrayList<>();
+        Set<InputEvent> inputs = new HashSet<>();
         inputs.add(InputEvent.Up);
 
         player.update(gameState, inputs);
@@ -122,7 +127,7 @@ public class PlayerTest {
 
         gameState.setDelta(1);
 
-        List<InputEvent> inputs = new ArrayList<>();
+        Set<InputEvent> inputs = new HashSet<>();
         inputs.add(InputEvent.Down);
 
         player.update(gameState, inputs);
@@ -148,7 +153,7 @@ public class PlayerTest {
 
         gameState.setDelta(1);
 
-        List<InputEvent> inputs = new ArrayList<>();
+        Set<InputEvent> inputs = new HashSet<>();
         inputs.add(InputEvent.Down);
         inputs.add(InputEvent.Left);
 
@@ -161,7 +166,7 @@ public class PlayerTest {
         assertEquals(player.getPosition().getCoord().dst(new Vector2(0, 0)), Player.PLAYER_SPEED * 2);
 
         player.setPosition(new WorldCoordinate(new Vector2(0, 0)));
-        inputs.removeFirst();
+        inputs.remove(InputEvent.Down);
         inputs.add(InputEvent.Up);
 
         player.update(gameState, inputs);
@@ -173,7 +178,7 @@ public class PlayerTest {
         assertEquals(player.getPosition().getCoord().dst(new Vector2(0, 0)), Player.PLAYER_SPEED * 2);
 
         player.setPosition(new WorldCoordinate(new Vector2(0, 0)));
-        inputs.removeFirst();
+        inputs.remove(InputEvent.Left);
         inputs.add(InputEvent.Right);
 
         player.update(gameState, inputs);
@@ -185,7 +190,7 @@ public class PlayerTest {
         assertEquals(player.getPosition().getCoord().dst(new Vector2(0, 0)), Player.PLAYER_SPEED * 2);
 
         player.setPosition(new WorldCoordinate(new Vector2(0, 0)));
-        inputs.removeFirst();
+        inputs.remove(InputEvent.Up);
         inputs.add(InputEvent.Down);
 
         player.update(gameState, inputs);

@@ -1,0 +1,65 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "test.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "keyhole.tsx": {
+            "scaleInDock": 1
+        },
+        "last.tsx": {
+            "scaleInDock": 1
+        },
+        "metal.tsx": {
+            "scaleInDock": 1
+        },
+        "metal_wall.tsx": {
+            "scaleInDock": 1
+        },
+        "sp_hammer.tsx": {
+            "scaleInDock": 1
+        },
+        "sp_key_half.tsx": {
+            "scaleInDock": 1
+        },
+        "test.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 253.66666666666663,
+                "y": 345.66666666666663
+            }
+        },
+        "ts_bronze_floor.tsx": {
+            "scaleInDock": 1
+        },
+        "ts_bronze_wall.tsx": {
+            "scaleInDock": 1
+        },
+        "ts_outerworld.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "/run/media/afisher/4176eaa7-be85-4010-ac4c-3499b5ddc770",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "openFiles": [
+        "ts_outerworld.tsx",
+        "test.tmx"
+    ],
+    "project": "bpa2024.tiled-project",
+    "recentFiles": [
+        "ts_outerworld.tsx",
+        "test.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

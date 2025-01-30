@@ -2,14 +2,17 @@ package org.keefeteam.atlantis;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.keefeteam.atlantis.entities.Entity;
+import org.keefeteam.atlantis.entities.Renderable;
+import org.keefeteam.atlantis.ui.Menu;
+import org.keefeteam.atlantis.util.input.InputEvent;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,7 +23,7 @@ public class GameState {
     private float delta = 0.0f;
     private boolean paused = false;
 
-    public void update(List<InputEvent> events) {
+    public void update(Set<InputEvent> events) {
         delta = Gdx.graphics.getDeltaTime();
 
         for (Entity entity : entities) {
@@ -40,5 +43,6 @@ public class GameState {
         if (this.menu != null) this.menu.dispose();
         if (menu != null) menu.initialize(this);
         this.menu = menu;
+        System.out.println(this.menu == null);
     }
 }
