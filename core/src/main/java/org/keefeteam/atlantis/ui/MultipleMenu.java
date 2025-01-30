@@ -58,14 +58,14 @@ public class MultipleMenu implements Menu {
             buttons.add(textButton);
 
             i++;
-            if (i == 2) {
+            if (i == 3) {
                 i = 0;
                 menu.row();
             }
             menu.setFillParent(true);
         }
 
-        if (choices.size() % 2 != 0)  menu.row();
+        if (choices.size() % 3 != 0)  menu.row();
 
         TextButton textButton = new TextButton("Submit", skin);
         textButton.addListener(new ClickListener() {
