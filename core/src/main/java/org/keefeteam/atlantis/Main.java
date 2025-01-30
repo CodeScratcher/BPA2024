@@ -6,9 +6,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.LittleEndianInputStream;
 import com.badlogic.gdx.utils.ScreenUtils;
 import org.keefeteam.atlantis.ui.ChoiceMenu;
 import org.keefeteam.atlantis.ui.InputMenu;
+import org.keefeteam.atlantis.ui.MultipleMenu;
 import org.keefeteam.atlantis.util.Item;
 import org.keefeteam.atlantis.util.coordinates.TileCoordinate;
 import org.keefeteam.atlantis.util.coordinates.WorldCoordinate;
@@ -42,6 +44,8 @@ public class Main extends ApplicationAdapter {
     private boolean earlComplete;
     private boolean machComplete;
     private boolean[] dones;
+    private boolean hasFish;
+    private InteractZone interactZone3;
     private InteractZone interactZone4;
     private InteractZone interactZone5;
     private InteractZone interactZone7;
@@ -50,6 +54,7 @@ public class Main extends ApplicationAdapter {
     private InteractZone interactZone13;
     private InteractZone interactZone14;
     private InteractZone interactZone15;
+    private InteractZone interactZone18;
     @Override
     public void create() {
 
@@ -132,12 +137,13 @@ public class Main extends ApplicationAdapter {
             gameState.setMenu(dialogueMenu);
         });
         // Pull lever in maze
-        InteractZone interactZone3 = new InteractZone(new TileCoordinate(75, 500/16), tris, (gameState, player) -> {
+        interactZone3 = new InteractZone(new TileCoordinate(75, 500/16), tris, (gameState, player) -> {
 
             List<String> text = new ArrayList<>();
             text.add("Pull Lever");
             ChoiceMenu inputMenu = new ChoiceMenu(text, (Test, state) -> {
                 handler.disableDoor(tilemap, 1);
+                entities.remove(interactZone3);
             });
             gameState.setMenu(inputMenu);
         });
@@ -258,7 +264,6 @@ public class Main extends ApplicationAdapter {
         });
         //circle
         interactZone13 = new InteractZone(new TileCoordinate(49, 42), tris, (gameState, player) -> {
-
             InputMenu inputMenu = new InputMenu("pi", (state) -> {
                 player.addItem(new Item("Pie Shaped object"));
                 handler.disableDoor(tilemap, 10);
@@ -267,9 +272,13 @@ public class Main extends ApplicationAdapter {
 
             DialogueMenu dialogueMenu = new DialogueMenu("He likes circles, what\'s his favourite snack", () -> {
                 gameState.setMenu(inputMenu);
+
                 return true;
             });
-            gameState.setMenu(dialogueMenu);
+            if(hasFish){
+                gameState.setMenu(dialogueMenu);
+            }
+
         });
         //triangle
         interactZone14 = new InteractZone(new TileCoordinate(52, 42), tris, (gameState, player) -> {
@@ -350,12 +359,62 @@ public class Main extends ApplicationAdapter {
             }
             else if(player.checkInventory("Meal")){
                 test = new DialogueMenu("Oh my, thank you so much. Please take this thing I found. Also, take the spear, its on the house.");
+                player.removeItem(new Item("Meal"));
                 player.addItem(new Item("Queen Fragment"));
             }
             else{
                 test = new DialogueMenu("...");
             }
             gameState.setMenu(test);
+        });
+        //Get fish
+        interactZone18 = new InteractZone(new TileCoordinate(73, 22), tris, (gameState, player) -> {
+            List<Item> tempItems = player.getInventory();
+            ChoiceMenu inputMenu = null;
+            for(Item c : tempItems){
+                if(c.getName().equals("Wooden Spear")){
+                    List<String> text = new ArrayList<>();
+                    text.add("Fish");
+                    inputMenu = new ChoiceMenu(text, (Test, state) -> {
+                        handler.disableDoor(tilemap, 12);
+                        player.addItem(new Item("Fishy Meat"));
+                        hasFish = true;
+                        entities.remove(interactZone18);
+                    });
+                    break;
+                }
+            }
+
+            gameState.setMenu(inputMenu);
+        });
+        //Oracle
+        /*InteractZone interactZone19 = new InteractZone(new TileCoordinate(44, 220/16), tris, (gameState, player) -> {
+
+            InputMenu inputMenu = new InputMenu("Earl", (state) -> {
+
+                gameState.setMenu(new DialogueMenu("Correct, next question. What doe he want.", () ->{
+                    //gameState.setMenu();
+                    return true;
+                }));
+
+            }, (state) -> gameState.setMenu(new DialogueMenu("Incorrect!")), "Confirm");
+            DialogueMenu dialogueMenu = new DialogueMenu("What is his name.", () -> {
+                gameState.setMenu(inputMenu);
+                return true;
+            });
+            gameState.setMenu(dialogueMenu);
+        });*/
+        InteractZone interactZone99 = new InteractZone(new TileCoordinate( 44, 5), tris, (gameState, player) -> {
+            ArrayList<String> choice = new ArrayList<>();
+            for (int i = 1; i <= 12; i++) {
+                choice.add(String.valueOf(i));
+            }
+            MultipleMenu multi = new MultipleMenu(choice, (choices, state) -> {
+                if (choices.contains("2") && choices.contains("5") && choices.contains("7") && choices.contains("8") && choices.contains("9") && choices.contains("11")) {
+                    gameState.setMenu(new DialogueMenu("THIS WORKED"));
+                }
+            });
+            gameState.setMenu(multi);
         });
         entities.add(interactZone);
         entities.add(interactZone2);
@@ -374,10 +433,10 @@ public class Main extends ApplicationAdapter {
         entities.add(interactZone15);
         entities.add(interactZone16);
         entities.add(interactZone17);
-        //entities.add(interactZone18);
+        entities.add(interactZone18);
         //entities.add(interactZone19);
+        entities.add(interactZone99);
         //entities.add(interactZone20);
-        //73 ; 22 Water
         //34 ; 52 oracle
         //43 ; 48 chess
 

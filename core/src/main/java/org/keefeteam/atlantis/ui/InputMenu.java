@@ -68,9 +68,10 @@ public class InputMenu implements Menu {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                onEntry.accept(textField.getText(), gameState);
                 gameState.setMenu(null);
                 gameState.setPaused(false);
+                onEntry.accept(textField.getText(), gameState);
+
             }
         });
 

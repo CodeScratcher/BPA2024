@@ -47,25 +47,30 @@ public class MultipleMenu implements Menu {
         skin = new Skin(Gdx.files.internal("ui/pixthulhu-ui.json"));
 
         menu = new Table();
+        Table options = new Table();
         stage.addActor(menu);
 
         int i = 0;
 
+        buttons = new ArrayList<>();
         for (String choice : choices) {
             TextButton textButton = new TextButton(choice, skin, "toggle");
 
-            menu.add(textButton);
+            options.add(textButton);
             buttons.add(textButton);
 
             i++;
-            if (i == 2) {
+            if (i == 3) {
                 i = 0;
-                menu.row();
+                options.row();
             }
-            menu.setFillParent(true);
         }
 
-        if (choices.size() % 2 != 0)  menu.row();
+        menu.add(options);
+
+        menu.row();
+        menu.setFillParent(true);
+
 
         TextButton textButton = new TextButton("Submit", skin);
         textButton.addListener(new ClickListener() {
@@ -79,13 +84,15 @@ public class MultipleMenu implements Menu {
 
                 for (TextButton button : buttons) {
                     if (button.isChecked()) {
-                        choice.add(button.getName());
+                        choice.add(button.getLabel().getText().toString());
                     }
                 }
 
                 onEntry.accept(choice, gameState);
             }
         });
+
+        menu.add(textButton);
 
     }
 
