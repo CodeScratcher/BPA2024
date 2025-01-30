@@ -36,9 +36,14 @@ public class Player implements Entity, Renderable {
     @Setter
     @NonNull
     private Texture texture;
+    Texture playerForward = new Texture("..\\assets\\sprites\\sp_forward_player.png");
+    Texture playerRight = new Texture("..\\assets\\sprites\\sp_right_player.png");
+    Texture playerLeft = new Texture("..\\assets\\sprites\\sp_left_player.png");
+    Texture playerBack = new Texture("..\\assets\\sprites\\sp_back_player.png");
 
     private double iframes = 0;
     private int hp = 100;
+
 
     /**
      * The speed of the player
@@ -152,19 +157,22 @@ public class Player implements Entity, Renderable {
             switch (event) {
                 case Up:
                     posChange.y += 1;
+                    texture = (playerBack);
                     break;
                 case Down:
                     posChange.y -= 1;
+                    texture = (playerForward);
                     break;
                 case Left:
                     posChange.x -= 1;
+                    texture = (playerLeft);
                     break;
                 case Right:
                     posChange.x += 1;
+                    texture = (playerRight);
                     break;
             }
         }
-
 
         return posChange;
     }

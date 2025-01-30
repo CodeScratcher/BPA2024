@@ -65,6 +65,7 @@ public class Main extends ApplicationAdapter {
 
         image = new Texture("libgdx.png");
         Texture img2 = new Texture("..\\assets\\sprites\\sp_forward_player.png");
+
         controller = new Controller();
 
 
@@ -91,6 +92,7 @@ public class Main extends ApplicationAdapter {
         tilemap = handler.createTilemap();
         entities.add(tilemap);
         entities.add(player);
+
 
         dones = new boolean[3];
         // Talk to earl
