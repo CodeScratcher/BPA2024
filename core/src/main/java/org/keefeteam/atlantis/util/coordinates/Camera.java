@@ -24,6 +24,7 @@ public class Camera implements Entity {
 
         Vector2 camCoords = pos.getCoord();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());  // Set the width and height
+        camera.zoom = 0.5f;
         camera.position.set(camCoords.x + 31, camCoords.y + 31, 0);  // Set the camera position to the player
         camera.update();
     }

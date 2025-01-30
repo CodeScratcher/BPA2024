@@ -23,6 +23,7 @@ public class PlayerTest {
     // Still worth testing
     @Test public void updateStationary() {
         List<Entity> entities = new ArrayList<>();
+        player.setPosition(new WorldCoordinate(new Vector2(0, 0)));
         entities.add(player);
         GameState gameState = new GameState(entities);
 
@@ -46,6 +47,7 @@ public class PlayerTest {
 
     @Test public void updateLeft() {
         List<Entity> entities = new ArrayList<>();
+        player.setPosition(new WorldCoordinate(new Vector2(0, 0)));
         entities.add(player);
         GameState gameState = new GameState(entities);
 
@@ -72,6 +74,7 @@ public class PlayerTest {
 
     @Test public void updateRight() {
         List<Entity> entities = new ArrayList<>();
+        player.setPosition(new WorldCoordinate(new Vector2(0, 0)));
         entities.add(player);
         GameState gameState = new GameState(entities);
 
@@ -97,6 +100,7 @@ public class PlayerTest {
 
     @Test public void updateUp() {
         List<Entity> entities = new ArrayList<>();
+        player.setPosition(new WorldCoordinate(new Vector2(0, 0)));
         entities.add(player);
         GameState gameState = new GameState(entities);
 
@@ -122,6 +126,7 @@ public class PlayerTest {
 
     @Test public void updateDown() {
         List<Entity> entities = new ArrayList<>();
+        player.setPosition(new WorldCoordinate(new Vector2(0, 0)));
         entities.add(player);
         GameState gameState = new GameState(entities);
 
@@ -148,6 +153,7 @@ public class PlayerTest {
     // Ensure diagonal movement is constant speed
     @Test public void updateDiagonal() {
         List<Entity> entities = new ArrayList<>();
+        player.setPosition(new WorldCoordinate(new Vector2(0, 0)));
         entities.add(player);
         GameState gameState = new GameState(entities);
 
