@@ -410,7 +410,7 @@ public class Main extends ApplicationAdapter {
                 choice.add(String.valueOf(i));
             }
             MultipleMenu multi = new MultipleMenu(choice, (choices, state) -> {
-                if (choices.contains("2") && choices.contains("5") && choices.contains("7") && choices.contains("8") && choices.contains("9") && choices.contains("11")) {
+                if (new HashSet<>(choices).containsAll(List.of("2", "5", "7", "8", "9", "11")) && Set.of("2", "5", "7", "8", "9", "11").containsAll(choices)) {
                     gameState.setMenu(new DialogueMenu("THIS WORKED"));
                 }
             });
