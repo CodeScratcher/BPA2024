@@ -5,7 +5,6 @@
 package org.keefeteam.atlantis.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -25,7 +24,6 @@ import org.keefeteam.atlantis.util.input.InputEvent;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -109,7 +107,7 @@ public class InventoryMenu implements Menu {
                     // Put whatever you want the item to do here
                     System.out.println("Label clicked at: " + x + ", " + y);
                     //first check its click status
-                    if(!nameLabel.getIsClicked()){
+                    if(!nameLabel.isClicked()){
                         // if it's not clicked
                         // check if there are less than two items
                         if(selectedItems < 2){
@@ -231,7 +229,7 @@ public class InventoryMenu implements Menu {
                 public boolean mouseMoved(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                     //just check if the label is hovered on
                     if(!isHover){
-                        if(!nameLabel.getIsClicked()){
+                        if(!nameLabel.isClicked()){
                             nameLabel.setColor(Color.BLUE);
                         }
                         descMenu.row();
@@ -247,7 +245,7 @@ public class InventoryMenu implements Menu {
                 @Override
                 public void exit(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y, int pointer, Actor toActor) {
                     // Check when the mouse is no longer hovered on
-                    if (!nameLabel.getIsClicked()) { // Only reset color if not clicked
+                    if (!nameLabel.isClicked()) { // Only reset color if not clicked
                         nameLabel.setColor(Color.WHITE);
                     }
                     //descLabel = new Label("", skin);

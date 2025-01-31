@@ -10,33 +10,36 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
+/**
+ * This is an item that the player can use to interact with certain zones and craft with other items
+ */
 @Getter
 @Setter
 @EqualsAndHashCode
+
 public class Item {
     private String name;
     private String description;
-    private Texture picture;
-    private Map<Item, Item> recipes;
     private int id;
 
-    //Simple constructor that gets info from the sql
-    public Item(String n, String d, Texture p, Map<Item, Item> r, int i){
+    /**
+     * Simple constructor that gets hard coded info that is passed into the item
+     * @param n the name of the item
+     * @param d the description of the item
+     * @param i the id of the item
+     */
+    public Item(String n, String d, int i){
         this.name = n;
         this.description = d;
-        this.picture = p;
-        this.recipes =  r;
         this.id = i;
     }
-    //Only use this constructor for inventory testing, everything else uses sql
-    public Item(String n, String d){
-        this.name = n;
-        this.description = d;
-        this.picture = null;
-        this.recipes =  null;
-        this.id = -1;
-    }
+
     //This Constructor does all the sql inside of it
+
+    /**
+     * This grabs only the name of the item from the parameter and the rest from the table
+     * @param n The name of the item
+     */
     public Item(String n){
         SQLLoader conn = new SQLLoader("itemsdb");
         ResultSet rslt = null;
@@ -47,8 +50,6 @@ public class Item {
                 this.id = rslt.getInt(1);
                 this.name = rslt.getString(2);
                 this.description = rslt.getString(3);
-                this.picture = null;
-                this.recipes =  null;
             }
         }
         catch(SQLException e){
