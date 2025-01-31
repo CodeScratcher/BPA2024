@@ -1,6 +1,7 @@
 package org.keefeteam.atlantis;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -8,14 +9,11 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
 import com.badlogic.gdx.utils.ScreenUtils;
-import org.keefeteam.atlantis.ui.ChoiceMenu;
-import org.keefeteam.atlantis.ui.InputMenu;
-import org.keefeteam.atlantis.ui.MultipleMenu;
+import org.keefeteam.atlantis.ui.*;
 import org.keefeteam.atlantis.util.Item;
 import org.keefeteam.atlantis.util.coordinates.TileCoordinate;
 import org.keefeteam.atlantis.util.coordinates.WorldCoordinate;
 import org.keefeteam.atlantis.entities.*;
-import org.keefeteam.atlantis.ui.DialogueMenu;
 import org.keefeteam.atlantis.util.coordinates.Camera;
 import org.keefeteam.atlantis.util.input.Controller;
 import org.keefeteam.atlantis.util.input.InputEvent;
@@ -435,22 +433,25 @@ public class Main extends ApplicationAdapter {
         //Place Chess Piece
         interactZone20 = new InteractZone(new TileCoordinate(43, 48), tris, (gameState, player) -> {
             List<Item> tempItems = player.getInventory();
-            ChoiceMenu inputMenu = null;
+            ImageMenu imageMenu = null;
             for(Item c : tempItems){
                 if(c.getName().equals("Chess Queen")){
-                    List<String> text = new ArrayList<>();
-                    text.add("Place Queen Piece");
-                    inputMenu = new ChoiceMenu(text, (Test, state) -> {
-                        handler.disableDoor(tilemap, 13);
-                        entities.remove(interactZone20);
-                        player.removeItem(new Item("Chess Queen"));
-
+                    Texture texture = new Texture(Gdx.files.internal("chess.png"));
+                    imageMenu = new ImageMenu(texture, () -> {
+                        InputMenu inputMenu = new InputMenu("g5", state -> {
+                            handler.disableDoor(tilemap, 13);
+                            entities.remove(interactZone20);
+                            player.removeItem(new Item("Chess Queen"));
+                        }, state -> {},"Submit");
+                        DialogueMenu dialogueMenu = new DialogueMenu("Where should the queen be to checkmate?", () -> {gameState.setMenu(inputMenu); return true;});
+                        gameState.setMenu(dialogueMenu);
+                        return true;
                     });
                     break;
                 }
             }
 
-            gameState.setMenu(inputMenu);
+            gameState.setMenu(imageMenu);
         });
         InteractZone interactZone21 = new InteractZone(new TileCoordinate( 43, 69), tris, (gameState, player) -> {
             ArrayList<String> choice = new ArrayList<>();
