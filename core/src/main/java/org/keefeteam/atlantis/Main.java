@@ -103,12 +103,12 @@ public class Main extends ApplicationAdapter {
         // Talk to earl
         InteractZone interactZone = new InteractZone(new TileCoordinate(17, 460/16), tris, (gameState, player) -> {
             DialogueMenu test = null;
-            if(!earlComplete){
+            if(!earlHelped){
                 if(earlDone){
                     if(player.checkInventory("Scale Armor")){
                         player.removeItem(new Item("Scale Armor"));
                         test = new DialogueMenu("Excellent there mate, I can now conduct needed research");
-                        earlComplete = true;
+                        earlHelped = true;
                     }
                     else{
                         test = new DialogueMenu("Just get me what I need mate.");
@@ -464,16 +464,16 @@ public class Main extends ApplicationAdapter {
             }
             MultipleMenu multi = new MultipleMenu(choice, (choices, state) -> {
                 if (new HashSet<>(choices).containsAll(List.of("2", "5", "7", "8", "9", "11")) && Set.of("2", "5", "7", "8", "9", "11").containsAll(choices)) {
-                    end = new DialogueMenu("Congration. Your winner.", () -> {
+                    end = new DialogueMenu("As you input the shape, you hear a loud rumbling...", () -> {
 
                         entities.clear();
                         DialogueMenu t = null;
                         if(earlHelped){
                             //TODO write lore
-                            t = new DialogueMenu("your winner (good)");
+                            t = new DialogueMenu("Earl runs into the control room and screams \"DON'T PRESS THAT BUTTON!\" Earl explains that after continuing his research, he found that the button would release a demonic entity to emerge, and that pressing the button would doom not only all of Atlantis, but the world.");
                         }
                         else{
-                            t = new DialogueMenu("your winner (bad)");
+                            t = new DialogueMenu("As you press the button, a dark viscous sludge emerges from the cracks of the ground, and starts to crack the ground until it shatters, as an eldritch demon rises out of the ground. You hear the panic of dozens of Atlanians as they attempt to escape to safety, but it is too late, as Atlantis crumbles around you.");
                         }
                         gameState.setMenu(t);
                         return true;
