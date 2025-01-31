@@ -17,7 +17,7 @@ public class MainMenu extends ChoiceMenu {
         super(List.of("Start", "Help", "Credits", "Exit"), (s, gameState) -> {
             switch (s) {
                 case "Help":
-                    DialogueMenu dialogueMenu = new DialogueMenu("INSERT HELP TEXT HERE", () -> {
+                    DialogueMenu dialogueMenu = new DialogueMenu("Explore Atlantis to discover the secrets within. Use WASD to move around, E to interact, and Q to open your inventory. Use your mind, exploration, and experimentation to work out puzzles and give the correct answers.", () -> {
                         gameState.setMenu(new MainMenu());
                         return true;
                     });
