@@ -506,6 +506,7 @@ public class Main extends ApplicationAdapter {
         entities.add(interactZone21);
 
         gameState = new GameState(entities);
+        gameState.setMenu(new MainMenu());
 
     }
 

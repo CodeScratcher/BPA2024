@@ -20,11 +20,12 @@ import java.util.function.Consumer;
  */
 public class ChoiceMenu implements Menu {
     private GameState gameState;
-    private Stage stage;
-    private Skin skin;
-    private Table menu;
+    protected Stage stage;
+    protected Skin skin;
+    protected Table menu;
     private BiConsumer<String, GameState> onEntry;
     private List<String> choices;
+    protected int perRow = 2;
 
     /**
      * Creates a choicemenu
@@ -81,7 +82,7 @@ public class ChoiceMenu implements Menu {
 
             menu.add(textButton);
             i++;
-            if (i == 2) {
+            if (i == perRow) {
                 i = 0;
                 menu.row();
             }

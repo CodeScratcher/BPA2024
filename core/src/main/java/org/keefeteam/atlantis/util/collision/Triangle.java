@@ -5,13 +5,25 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+/**
+ * A triangle, useful for collision detection
+ */
 @AllArgsConstructor
 @Getter
 @EqualsAndHashCode
 public class Triangle {
-    Vector2 p1;
-    Vector2 p2;
-    Vector2 p3;
+    /**
+     * The first point
+     */
+    public Vector2 p1;
+    /**
+     * The second point
+     */
+    public Vector2 p2;
+    /**
+     * The third point
+     */
+    public Vector2 p3;
 
     private boolean pointRightSign(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 pt) {
         if (p1.x == p2.x) {
@@ -27,6 +39,12 @@ public class Triangle {
     }
 
 
+    /**
+     * Check if a line segment overlaps with this triangle
+     * @param pa The first point in the line segment
+     * @param pb The second point in the line segment
+     * @return Whether there's an overlap
+     */
     public boolean lineOverlapsTriangle(Vector2 pa, Vector2 pb) {
         if (pointInTriangle(pa) || pointInTriangle(pb)) {
             return true;
@@ -71,9 +89,21 @@ public class Triangle {
 
     }
 
+    /**
+     * Check if a point is in the triangle
+     * @param p The point
+     * @return Whether the point overlaps
+     */
+
     public boolean pointInTriangle(Vector2 p) {
         return pointRightSign(p1, p2, p3, p) && pointRightSign(p2, p3, p1, p) && pointRightSign(p3, p1, p2, p);
     }
+
+    /**
+     * Checks if the triangle and another triangle overlap
+     * @param t The other triangle
+     * @return Whether there's an overlap
+     */
 
     public boolean triangleOverlap(Triangle t) {
         // return triangleInside(t) || t.triangleInside(this);
