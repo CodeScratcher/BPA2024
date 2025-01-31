@@ -105,7 +105,6 @@ public class Player implements Entity, Renderable {
         }
 
     }
-
     private void handleCollision(GameState gameState, Vector2 posChange, Set<InputEvent> events) {
         boolean colliding = false;
 

@@ -24,12 +24,16 @@ import org.keefeteam.atlantis.util.TiledTilemapHandler;
 import static org.keefeteam.atlantis.util.coordinates.TileCoordinate.TILE_SIZE;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
+
+/**
+ * This is the function where everything runs
+ */
 public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private Texture image;
     private GameState gameState;
     private ArrayList<Entity> entities;
-    private Player player; // TODO REMOVE AND REPLACE LOGIC FOR RENDERING, JUST FOR TESTING
+    private Player player;
     private Controller controller;
     private ShapeRenderer sr;
     private Camera theCamera;

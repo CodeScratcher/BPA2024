@@ -8,6 +8,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Controller is a class that takes in keyboard input and makes them execute events
+ */
 public class Controller {
     /**
      * Converts key presses into input events

@@ -1,7 +1,7 @@
 package org.keefeteam.atlantis.util.input;
 
 /**
- * This en
+ * This enum that holds the values of the key presses
  */
 public enum InputEvent {
     Left,
