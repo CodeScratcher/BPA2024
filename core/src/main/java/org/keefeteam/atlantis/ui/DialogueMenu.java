@@ -21,14 +21,9 @@ public class DialogueMenu implements Menu {
     // The text that is being displayed
     private String text;
     // the maximum number of characters to be displayed
-    private int maxLength;
-    // where the text starts
-    private int textIndexOne;
-    // where the text ends
-    private int textIndexTwo;
+    private List<String> messages;
     // checks if there is no more text to display
-    private boolean textFinished;
-    boolean inputControl;
+    private int messageIndex = 0;
 
     private Stage stage;
     private Table table;
@@ -62,7 +57,6 @@ public class DialogueMenu implements Menu {
     @Override
     public void initialize(GameState g) {
 
-        maxLength = 50;
         this.gameState = g;
         this.gameState.setPaused(true);
         stage = new Stage();
@@ -72,17 +66,28 @@ public class DialogueMenu implements Menu {
         Gdx.input.setInputProcessor(stage);
         table = new Table();
         table.setFillParent(true);
-        String firstOutput = "";
-        if(text.length() > maxLength){
-            firstOutput =  text.substring(0, maxLength);
-            this.textFinished = false;
-        }
-        else{
-            firstOutput = text;
-            this.textFinished = true;
-        }
 
-        textLabel = new Label(firstOutput, skin);
+        messages = new ArrayList<>();
+
+        String building = "";
+        int num = 0;
+
+        for (char c : text.toCharArray()) {
+            if (c == ' ') {
+                num++;
+            }
+            if (num == 10) {
+                num = 0;
+                messages.add(building);
+                building = "";
+                continue;
+            }
+            building += c;
+
+        }
+        if (!building.isEmpty()) messages.add(building);
+
+        textLabel = new Label(messages.get(messageIndex), skin);
 
         table.add(textLabel);
         table.setFillParent(true);
@@ -96,23 +101,19 @@ public class DialogueMenu implements Menu {
         }
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
-        if(inputEvents.contains(InputEvent.UIConfirm)){
-            if(!textFinished){
-                textIndexOne += maxLength;
-                textIndexTwo = textIndexOne + maxLength;
-                if(textIndexTwo > text.length()){
-                    textIndexTwo = text.length();
-                    textFinished = true;
-                }
-                String newValue = text.substring(textIndexOne, textIndexTwo);
+
+        if (inputEvents.contains(InputEvent.UIConfirm)) {
+            messageIndex++;
+
+            if (messageIndex < messages.size()){
                 table.remove(); // Safely remove the old table
-                textLabel = new Label(newValue, skin);
+                textLabel = new Label(messages.get(messageIndex), skin);
                 table = new Table();
                 table.setFillParent(true);
                 table.add(textLabel);
                 stage.addActor(table);
             }
-            else{
+            else {
                 //Destroy label
                 if (onEnd.get()) return;
                 table.remove();
