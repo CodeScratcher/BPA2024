@@ -71,7 +71,7 @@ INSERT INTO recipes (item_id, combines_with_id, result_id) VALUES
 (4, 5, 1), -- Stick + Rubble = Hammer
 (7, 8, 9), -- Cloth + Scale = Scale Armor
 (10, 10, 22), -- Queen Fragment + Queen Fragment = Queen Half
-(10, 21, 11), -- Queen Fragment + Queen Half = Chess Queen
+(10, 22, 11), -- Queen Fragment + Queen Half = Chess Queen
 (14, 12, 17), -- Circle + Spear = Spear End + circle + stick //!!!! WORK ON ITEM REWORK IN JAVA WITH THIS ONE OTHERWISE IT WONT WORK !!!!
 (15, 16, 21), -- Triangle + Rectangle = Voltage Sign
 (14, 17, 18), -- Circle + Spear end = Dish Set

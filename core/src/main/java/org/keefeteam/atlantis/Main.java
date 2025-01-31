@@ -40,11 +40,13 @@ public class Main extends ApplicationAdapter {
     private boolean earlDone;
     private boolean machDone;
     private boolean hunterDone;
-    private boolean oracleFail;
+    private boolean oracleDone;
     private boolean earlComplete;
     private boolean machComplete;
     private boolean[] dones;
     private boolean hasFish;
+    private boolean earlHelped;
+    private DialogueMenu end;
     private InteractZone interactZone3;
     private InteractZone interactZone4;
     private InteractZone interactZone5;
@@ -55,6 +57,7 @@ public class Main extends ApplicationAdapter {
     private InteractZone interactZone14;
     private InteractZone interactZone15;
     private InteractZone interactZone18;
+    private InteractZone interactZone20;
     @Override
     public void create() {
 
@@ -390,33 +393,94 @@ public class Main extends ApplicationAdapter {
             gameState.setMenu(inputMenu);
         });
         //Oracle
-        /*InteractZone interactZone19 = new InteractZone(new TileCoordinate(44, 220/16), tris, (gameState, player) -> {
+        InteractZone interactZone19 = new InteractZone(new TileCoordinate(34, 52), tris, (gameState, player) -> {
 
-            InputMenu inputMenu = new InputMenu("Earl", (state) -> {
+            InputMenu qOne = new InputMenu("Earl", (state) -> {
 
-                gameState.setMenu(new DialogueMenu("Correct, next question. What doe he want.", () ->{
-                    //gameState.setMenu();
+                gameState.setMenu(new DialogueMenu("Correct, next question. What does he want.", () ->{
+                    List<String> text = new ArrayList<>();
+                    text.add("Research");
+                    text.add("Money");
+                    text.add("Fame");
+                    text.add("Friends");
+                    ChoiceMenu qTwo = new ChoiceMenu(text, "Research", (Test) -> {
+                        List<String> nextText = new ArrayList<>();
+                        nextText.add("Wooden Stick");
+                        nextText.add("Scale Armor");
+                        nextText.add("Fish");
+                        nextText.add("Hammer");
+                        ChoiceMenu qThree = new ChoiceMenu(nextText, "Scale Armor", (Test2) -> {
+                            oracleDone = true;
+                            gameState.setMenu(new DialogueMenu("Well Done, please check your pockets."));
+                            player.addItem(new Item("Queen Fragment"));
+
+                        }, (Test2) ->{
+                            gameState.setMenu(new DialogueMenu("Wrong!"));
+                        });
+                        gameState.setMenu(qThree);
+                    }, (Test) ->{
+                        gameState.setMenu(new DialogueMenu("Wrong!"));
+                    });
+                    gameState.setMenu(qTwo);
                     return true;
                 }));
 
-            }, (state) -> gameState.setMenu(new DialogueMenu("Incorrect!")), "Confirm");
+            }, (state) -> gameState.setMenu(new DialogueMenu("WRONG!")), "Confirm");
             DialogueMenu dialogueMenu = new DialogueMenu("What is his name.", () -> {
-                gameState.setMenu(inputMenu);
+                gameState.setMenu(qOne);
                 return true;
             });
             gameState.setMenu(dialogueMenu);
-        });*/
-        InteractZone interactZone99 = new InteractZone(new TileCoordinate( 44, 5), tris, (gameState, player) -> {
+        });
+        //Place Chess Piece
+        interactZone20 = new InteractZone(new TileCoordinate(43, 48), tris, (gameState, player) -> {
+            List<Item> tempItems = player.getInventory();
+            ChoiceMenu inputMenu = null;
+            for(Item c : tempItems){
+                if(c.getName().equals("Chess Queen")){
+                    List<String> text = new ArrayList<>();
+                    text.add("Place Queen Piece");
+                    inputMenu = new ChoiceMenu(text, (Test, state) -> {
+                        handler.disableDoor(tilemap, 13);
+                        entities.remove(interactZone20);
+                        player.removeItem(new Item("Chess Queen"));
+
+                    });
+                    break;
+                }
+            }
+
+            gameState.setMenu(inputMenu);
+        });
+        InteractZone interactZone21 = new InteractZone(new TileCoordinate( 43, 69), tris, (gameState, player) -> {
             ArrayList<String> choice = new ArrayList<>();
             for (int i = 1; i <= 12; i++) {
                 choice.add(String.valueOf(i));
             }
             MultipleMenu multi = new MultipleMenu(choice, (choices, state) -> {
                 if (new HashSet<>(choices).containsAll(List.of("2", "5", "7", "8", "9", "11")) && Set.of("2", "5", "7", "8", "9", "11").containsAll(choices)) {
-                    gameState.setMenu(new DialogueMenu("THIS WORKED"));
+                    end = new DialogueMenu("Congration. Your winner.", () -> {
+
+                        entities.clear();
+                        DialogueMenu t = null;
+                        if(earlHelped){
+                            //TODO write lore
+                            t = new DialogueMenu("your winner (good)");
+                        }
+                        else{
+                            t = new DialogueMenu("your winner (bad)");
+                        }
+                        gameState.setMenu(t);
+                        return true;
+                    });
+                    gameState.setMenu(end);
                 }
             });
-            gameState.setMenu(multi);
+            DialogueMenu prompt = new DialogueMenu("What is the shape of this place?", () -> {
+                gameState.setMenu(multi);
+                return true;
+            });
+            gameState.setMenu(prompt);
         });
         entities.add(interactZone);
         entities.add(interactZone2);
@@ -436,11 +500,9 @@ public class Main extends ApplicationAdapter {
         entities.add(interactZone16);
         entities.add(interactZone17);
         entities.add(interactZone18);
-        //entities.add(interactZone19);
-        entities.add(interactZone99);
-        //entities.add(interactZone20);
-        //34 ; 52 oracle
-        //43 ; 48 chess
+        entities.add(interactZone19);
+        entities.add(interactZone20);
+        entities.add(interactZone21);
 
         gameState = new GameState(entities);
 

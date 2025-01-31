@@ -48,7 +48,7 @@ public class Player implements Entity, Renderable {
     /**
      * The speed of the player
      */
-    public static final int PLAYER_SPEED = 150;
+    public static final int PLAYER_SPEED = 100;
     /**
      * The size of the increments by which the player steps in case of collision
      */
