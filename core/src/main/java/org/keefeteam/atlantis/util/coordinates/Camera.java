@@ -10,6 +10,9 @@ import org.keefeteam.atlantis.util.input.InputEvent;
 
 import java.util.Set;
 
+/**
+ * A camera class that wraps OrthographicCamera
+ */
 @Getter
 public class Camera implements Entity {
     private int follow;

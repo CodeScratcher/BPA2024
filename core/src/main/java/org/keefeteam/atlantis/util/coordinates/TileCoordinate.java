@@ -5,11 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+/**
+ * A coordinate in tilespace (i.e a grid where x and y are given in units of tiles)
+ */
 @Getter
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class TileCoordinate extends Coordinate {
-    int x, y;
+    private int x, y;
+    /**
+     * The size of a tile in world space
+     */
     public static final float TILE_SIZE = 16.0f;
     @Override
     public WorldCoordinate toWorldCoordinate() {
